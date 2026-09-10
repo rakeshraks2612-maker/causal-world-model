@@ -100,47 +100,37 @@ def simulate_candidate_oracle(
     mean_cpu = float(np.mean(obs[:, 4]))
     mean_pow = float(np.mean(obs[:, 7]))
 
-    # Hard safety check: T_core < 95, P_sys < 5.5, F_cool > 8.0
-    violations = []
-    if peak_t_core >= 95.0:
-        violations.append(f"T_core ({peak_t_core:.1f}°C) >= 95.0°C")
-    if max_p_sys >= 5.5:
-        violations.append(f"P_sys ({max_p_sys:.2f} bar) >= 5.5 bar")
-    if min_f_cool <= 8.0:
-        violations.append(f"F_cool ({min_f_cool:.1f} L/min) <= 8.0 L/min")
+    from prism.planning.cost_model import DecisionCostConfig, ActionCostModel
 
-    is_safe = (len(violations) == 0)
-
-    # Operational costs:
-    # Valve actuation cost
-    val_diff = abs(act_t0[0] - base_act_seq[0, 0])
-    actuation_cost = 0.05 * (val_diff / 50.0)
-    # Pump energy cost
-    pump_cost = 0.1 * (act_t0[2] / 4.0)
-    # Throttling performance penalty (loss from 100% compute)
-    throttle_loss = 2.0 * max(0.0, (100.0 - mean_cpu) / 100.0)
-    # Total operational cost
-    op_cost = float(actuation_cost + pump_cost + throttle_loss)
-
-    # True Utility = Performance - Thermal Risk - Operational Cost - (1000 if unsafe)
-    thermal_penalty = 0.5 * max(0.0, (peak_t_core - 70.0) / 10.0)
-    true_utility = (mean_cpu / 100.0) - thermal_penalty - op_cost - (1000.0 if not is_safe else 0.0)
+    # Canonical objective evaluation on true ground-truth physical trajectory
+    canonical_cost_model = ActionCostModel(DecisionCostConfig())
+    is_compound = (cand_spec.secondary_target is not None)
+    breakdown = canonical_cost_model.evaluate_cost(
+        peak_t_core=peak_t_core,
+        max_pressure=max_p_sys,
+        min_flow=min_f_cool,
+        mean_cpu_load=mean_cpu,
+        actions_at_t_star=act_t0,
+        baseline_actions_at_t_star=base_act_seq[0],
+        is_compound_intervention=is_compound,
+    )
 
     return OracleCandidateOutcome(
         candidate_id=cand_spec.candidate_id,
         spec=cand_spec,
-        is_safe=is_safe,
-        safety_violations=violations,
+        is_safe=breakdown.is_safe,
+        safety_violations=breakdown.safety_violations,
         peak_t_core=peak_t_core,
         max_pressure=max_p_sys,
         min_flow=min_f_cool,
         mean_cpu_load=mean_cpu,
         mean_power=mean_pow,
-        operational_cost=op_cost,
-        true_utility=true_utility,
+        operational_cost=breakdown.total_cost,
+        true_utility=breakdown.net_utility,
         ground_truth_states=states,
         ground_truth_observations=obs,
     )
+
 
 
 def generate_scenario_1_do_nothing() -> Tuple[OracleDecisionScenario, OracleEpisode]:

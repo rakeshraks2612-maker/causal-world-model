@@ -172,14 +172,17 @@ def generate_causal_explanation(
     for cand in all_candidates:
         if cand.candidate_id == best_candidate.candidate_id:
             continue
+        target_str = cand.candidate_id if (cand.spec is None or cand.spec.target in ["none", "do_nothing"]) else f"{cand.spec.target}={cand.spec.value:.1f}"
         if not cand.is_safe:
             reason = f"Rejected due to safety violations: {'; '.join(cand.safety_violations)}"
         else:
+            diff = cand.utility_score - best_candidate.utility_score
             reason = (
-                f"Sub-optimal utility ({cand.utility_score:.2f} vs {best_candidate.utility_score:.2f}) — "
+                f"Sub-optimal utility ({cand.utility_score:+.4f} vs {best_candidate.utility_score:+.4f}, ΔU={diff:+.4f}) — "
                 f"Peak T_core: {cand.peak_t_core:.1f}°C, Mean CPU Load: {cand.mean_cpu_load:.1f}%"
             )
-        rejected.append({"candidate": f"{cand.spec.target}={cand.spec.value}", "reason": reason})
+        rejected.append({"candidate": target_str, "reason": reason})
+
 
     verdict = "🟢 SAFE & OPTIMAL" if best_candidate.is_safe else "🔴 SAFETY BLOCKED / ABSTAIN"
 

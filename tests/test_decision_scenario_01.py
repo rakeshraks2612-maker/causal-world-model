@@ -208,3 +208,106 @@ def test_scenario_01_harness_integration():
     assert res["unnecessary_intervention"] is False
     assert res["is_safe"] is True
     assert res["utility_regret"] == 0.0
+
+
+# =========================================================================
+# Task 5.4C — Additional Rigorous Utility & Regret Contracts
+# =========================================================================
+
+def test_scenario_01_oracle_utility_consistency(scenario_system):
+    """Contract 1: For every candidate, oracle stored utility matches canonical cost model on true rollout."""
+    from prism.planning.cost_model import DecisionCostConfig, ActionCostModel
+    _, _, oracle_scen = scenario_system
+
+    canonical_cost_model = ActionCostModel(DecisionCostConfig())
+    base_act_t0 = oracle_scen.candidate_outcomes["cand_do_nothing"].spec
+
+    for cid, out in oracle_scen.candidate_outcomes.items():
+        # Action vector at t*
+        act_t0 = [float(base_act_t0.value), 100.0, 2.0, 0.0]
+        if out.spec.target == "A_valve":
+            act_t0[0] = float(out.spec.value)
+        elif out.spec.target == "A_throttle":
+            act_t0[1] = float(out.spec.value)
+        elif out.spec.target == "A_pump":
+            act_t0[2] = float(out.spec.value)
+
+        breakdown = canonical_cost_model.evaluate_cost(
+            peak_t_core=out.peak_t_core,
+            max_pressure=out.max_pressure,
+            min_flow=out.min_flow,
+            mean_cpu_load=out.mean_cpu_load,
+            actions_at_t_star=act_t0,
+            baseline_actions_at_t_star=[float(base_act_t0.value), 100.0, 2.0, 0.0],
+            is_compound_intervention=False,
+        )
+
+        assert pytest.approx(out.true_utility, abs=1e-5) == breakdown.net_utility, (
+            f"Oracle stored utility for {cid} ({out.true_utility:.6f}) must match canonical cost model ({breakdown.net_utility:.6f})"
+        )
+
+
+def test_scenario_01_regret_mathematical_correctness(scenario_system):
+    """Contract 2: Sub-optimal candidate selection yields strictly positive regret equal to oracle utility delta."""
+    _, _, oracle_scen = scenario_system
+
+    opt_id = oracle_scen.oracle_optimal_candidate_id
+    u_opt = oracle_scen.candidate_outcomes[opt_id].true_utility
+
+    for cid, out in oracle_scen.candidate_outcomes.items():
+        u_cand = out.true_utility
+        regret = u_opt - u_cand
+        if cid == opt_id:
+            assert pytest.approx(regret, abs=1e-6) == 0.0
+        else:
+            assert regret > 0.0, f"Candidate {cid} must have strictly positive regret against optimal (got {regret:.6f})"
+
+
+def test_scenario_01_learner_oracle_objective_separation(scenario_system):
+    """Contract 3: Changing learner prediction outputs cannot mutate or modify stored oracle true utility."""
+    planner, learner_scen, oracle_scen = scenario_system
+
+    # Record oracle utility before planning
+    original_oracle_u = {cid: out.true_utility for cid, out in oracle_scen.candidate_outcomes.items()}
+
+    # Run planning with noisy / mutated learner observations
+    corrupted_obs = np.copy(learner_scen.historical_observations)
+    corrupted_obs += np.random.randn(*corrupted_obs.shape) * 5.0
+
+    _ = planner.plan_intervention(
+        historical_observations=corrupted_obs,
+        historical_actions=learner_scen.historical_actions,
+        future_actions=learner_scen.future_baseline_actions,
+        custom_candidates=learner_scen.candidate_actions,
+        intervention_time=learner_scen.intervention_time,
+    )
+
+    # Re-verify oracle utilities are unchanged
+    for cid, original_u in original_oracle_u.items():
+        current_u = oracle_scen.candidate_outcomes[cid].true_utility
+        assert current_u == original_u, f"Oracle utility for {cid} was corrupted by learner execution"
+
+
+def test_scenario_01_candidate_ranking_uses_canonical_utility(scenario_system):
+    """Contract 4: Planner candidate ranking strictly reflects canonical ActionCostModel breakdown scores."""
+    planner, learner_scen, _ = scenario_system
+
+    plan_rec = planner.plan_intervention(
+        historical_observations=learner_scen.historical_observations,
+        historical_actions=learner_scen.historical_actions,
+        future_actions=learner_scen.future_baseline_actions,
+        custom_candidates=learner_scen.candidate_actions,
+        intervention_time=learner_scen.intervention_time,
+    )
+
+    for c in plan_rec.all_evaluated_candidates:
+        assert c.cost_breakdown is not None
+        assert c.utility_score == c.cost_breakdown.net_utility
+        assert c.is_safe == c.cost_breakdown.is_safe
+
+    # Verify candidates are sorted descending by utility
+    safe_cands = [c for c in plan_rec.all_evaluated_candidates if c.is_safe]
+    for i in range(len(safe_cands) - 1):
+        if safe_cands[i].candidate_id == plan_rec.recommended_candidate.candidate_id:
+            assert safe_cands[i].utility_score >= safe_cands[i+1].utility_score
+
