@@ -1,0 +1,80 @@
+protocol:
+  dataset_version: "0.2.0"
+  schema_version: "1.1.0"
+  protocol_version: "1.0.0"
+  simulator_version: "1.1.0"
+  time_step_sec: 1.0
+  episode_length: 120
+  random_seed_policy: "deterministic_hierarchical_seed_sequence"
+
+splits:
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
+
+training_distribution:
+  nominal_fraction: 0.70 # Standard nominal PI feedback control
+  load_var_fraction: 0.15 # Moderate workload modulation (L_cpu 30-75%)
+  ambient_var_fraction: 0.10 # Moderate ambient variation (T_amb 22-30°C)
+  wear_var_fraction: 0.05 # Mild wear variation (W_wear 0.05-0.25)
+
+ood_regimes:
+  ood_1_extreme_ambient:
+    category: "environmental_extrapolation"
+    t_amb_min: 38.0
+    t_amb_max: 46.0 # Severe facility heatwave (outside train [22, 30]°C)
+  ood_2_extreme_wear:
+    category: "latent_degradation_extrapolation"
+    w_wear_min: 0.80
+    w_wear_max: 0.95 # Severe interface degradation & stiction (outside train [0, 0.25])
+  ood_3_combined_stress:
+    category: "compositional_joint_ood"
+    l_cpu_min: 85.0
+    t_amb_min: 38.0
+    w_wear_min: 0.75 # Rare joint composition of 3 simultaneous stress factors (P(joint|train) = 0)
+  ood_4_latent_hotspot:
+    category: "severe_latent_cause_extrapolation"
+    q_internal_min: 1.20
+    q_internal_max: 2.50 # Extreme unobserved internal silicon hotspot (outside train [0.05, 0.35] kW)
+  ood_5_leak_degradation:
+    category: "severe_latent_cause_extrapolation"
+    xi_leak_min: 25.0
+    xi_leak_max: 48.0 # Extreme unobserved hydraulic seal leak (outside train ~0 mL/hr)
+
+confounding_protocol:
+  confounder_variable: "T_amb"
+  natural_workload_coupling: 1.2 # L_target = 35.0 + 1.2 * T_amb
+  seasons: ["summer_peak_ambient", "winter_baseline_ambient"]
+  interventions_tested:
+    - "observational_natural"
+    - "do(L_cpu = 20%)"
+    - "do(L_cpu = 80%)"
+  evaluation_design: "2x3_factorial_matched_ambient_grid"
+
+pilot_counts:
+  train: 20
+  val: 5
+  test: 5
+  ood_per_regime: 5 # 5 x 5 = 25 episodes
+  confounding: 10
+  intervention: 5
+  counterfactual: 5
+  stress: 5
+
+production_counts:
+  train: 1000
+  val: 200
+  test: 300
+  ood_total: 300
+  confounding: 300
+  intervention: 300
+  counterfactual: 300
+  stress: 300
+
+schema_constraints:
+  observable_dim: 8
+  latent_dim: 4
+  state_dim: 12
+  action_dim: 4
+  noise_dim: 12
+  allow_latent_in_learner: false

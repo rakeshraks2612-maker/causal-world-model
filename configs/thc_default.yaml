@@ -1,0 +1,96 @@
+# THC-SCM System Parameters & Configuration
+# Ground-Truth Structural Causal Model for ThermoHydro-Compute System
+
+physics:
+  delta_t: 1.0 # Simulation time step in seconds
+
+  # Electrical & Workload
+  p_idle: 0.35 # Idle power in kW
+  beta_l: 3.8 # Workload power scaling factor in kW
+  p_elec_exp: 1.25 # Non-linear workload power exponent
+  eta_elec: 0.92 # Fraction of electrical power converted to nominal heat
+  alpha_amb: 0.015 # Ambient heat absorption coefficient (kW/°C)
+
+  # Latent Hotspot Flux
+  q_hotspot_ar: 0.92 # Autoregressive persistence of internal hotspot flux
+  q_hotspot_mean: 0.20 # Baseline internal hotspot mean (kW)
+
+  # Actuator & Valve
+  tau_valve_base: 2.5 # Base valve actuator response time in seconds
+  valve_wear_lag_scale: 1.5 # Actuator slowdown per unit wear
+  valve_flow_exp: 1.35 # Flow non-linearity exponent over valve opening
+
+  # Hydraulics & Flow
+  p_base: 1.8 # Base mechanical pump head pressure (bar)
+  pump_stage_scale: 0.35 # Additional head pressure per pump stage
+  pump_stage_offset: 0.60 # Base multiplier offset for pump stage 1
+  h_nominal: 2.5 # Nominal head pressure normalization factor (bar)
+  f_max: 55.0 # Maximum ideal volumetric flow rate (L/min)
+  k_pressure: 1.6 # Dynamic backpressure scaling factor (bar)
+  delta_leak_pressure: 0.7 # Depressurization scale for micro-leaks (bar)
+  wear_flow_loss: 0.35 # Flow reduction factor at maximum wear
+  flush_flow_surge: 12.0 # Volumetric flow surge during emergency flush (L/min)
+
+  # Mechanical Vibration
+  gamma_vib_base: 1.0 # Base chassis acoustic vibration (mm/s)
+  gamma_vib_pump: 0.8 # Pump RPM contribution coefficient
+  gamma_vib_press: 0.9 # Hydraulic pressure contribution coefficient
+  gamma_vib_wear: 2.2 # Mechanical wear vibration coefficient
+
+  # Thermal Capacities & Heat Transfer
+  c_core: 0.085 # Core heat capacity in kJ/°C
+  c_loop: 0.45 # Fluid loop heat capacity in kJ/°C
+  k_transfer_base: 0.12 # Base convective thermal transfer coefficient (kW/°C)
+  k_transfer_wear_loss: 0.45 # Thermal interface degradation at max wear
+  f_scale: 14.0 # Flow rate scaling constant in exponential transfer model (L/min)
+  k_ambient_loss: 0.005 # Passive heat dissipation from silicon to chassis (kW/°C)
+  k_radiator: 0.065 # Radiator heat rejection coefficient to ambient air (kW/°C)
+  flush_temp_drop: 4.5 # Cold reservoir inrush temperature drop (°C)
+
+  # Latent Degradation Rates
+  lambda_wear: 0.0001 # Wear accumulation rate per second above 75°C
+  t_wear_threshold: 75.0 # Temperature threshold for thermal wear accumulation (°C)
+  flush_wear_relief: 0.03 # Fouling relief from emergency purge
+  lambda_leak: 0.005 # Micro-leak rate increase per second above 4.2 bar
+  p_leak_threshold: 4.2 # Pressure threshold for seal degradation (bar)
+
+stochastic:
+  # Ambient Ornstein-Uhlenbeck Process
+  theta_amb: 0.02 # Mean-reversion speed
+  mu_amb: 27.0 # Long-term ambient temperature mean (°C)
+  sigma_amb: 0.15 # Ambient noise volatility
+
+  # Innovation Standard Deviations
+  sigma_p_elec: 0.02
+  sigma_q: 0.04
+  sigma_q_int: 0.02
+  sigma_v: 0.10
+  sigma_p: 0.02
+  sigma_f: 0.15
+  sigma_vib: 0.08
+  sigma_t_core: 0.08
+  sigma_t_cool: 0.05
+  sigma_w: 0.00005
+  sigma_xi: 0.002
+
+sensors:
+  # Observation Sensor Noise (Standard Deviations)
+  noise_t_core: 0.40 # °C
+  noise_t_cool: 0.30 # °C
+  noise_p_sys: 0.05 # bar
+  noise_f_cool: 0.20 # L/min
+  noise_l_cpu: 0.50 # %
+  noise_v_pos: 0.20 # %
+  noise_vib_pump: 0.15 # mm/s
+  noise_p_elec: 0.02 # kW
+
+safety:
+  t_core_runaway_thresh: 105.0 # °C
+  t_core_runaway_duration: 3 # Consecutive seconds
+  p_sys_overpressure_thresh: 5.5 # bar
+  f_cool_cavitation_thresh: 2.0 # L/min
+  v_pos_cavitation_thresh: 50.0 # %
+  a_pump_cavitation_thresh: 2 # Minimum pump stage
+
+protocol:
+  episode_length: 120 # Steps per standard episode

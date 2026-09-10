@@ -1,0 +1,45 @@
+# PRISM Causal World Model Architecture Specification - Baseline 002
+
+model:
+  obs_dim: 8
+  action_dim: 4
+  latent_dim: 64
+  min_std: 0.001
+  max_std: 10.0
+
+encoder:
+  type: "gru"
+  hidden_dim: 64
+  num_layers: 2
+  dropout: 0.1
+  bidirectional: false
+
+transition:
+  hidden_dim: 64
+  num_layers: 2
+  dropout: 0.1
+  residual: true
+
+decoder:
+  hidden_dim: 64
+  num_layers: 2
+  dropout: 0.1
+  learn_variance: true
+
+loss_weights:
+  lambda_obs: 1.0
+  lambda_trans: 1.0
+  beta_kl: 0.001
+
+training:
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  grad_clip_norm: 10.0
+  batch_size: 16
+  max_epochs: 30
+  early_stopping_patience: 8
+
+rollout:
+  horizons: [1, 5, 10, 20, 40]
+  num_samples: 50
+  confidence_level: 0.90

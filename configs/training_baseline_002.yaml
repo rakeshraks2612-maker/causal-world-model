@@ -1,0 +1,64 @@
+# PRISM Baseline 002 World Model Training Configuration
+
+experiment:
+  name: "baseline_002"
+  seed: 42
+  device: "cpu"
+
+dataset:
+  train_dir: "data/pilot/learner/train"
+  val_dir: "data/pilot/learner/validation"
+  test_dir: "data/pilot/learner/test"
+  context_length: 40
+  prediction_length: 1
+  stride: 2
+
+normalization:
+  enabled: true
+  save_path: "artifacts/baseline_002/normalization.yaml"
+
+masking:
+  enabled: true
+  dropout_prob: 0.05  # Training-time sensor dropout probability
+
+model:
+  obs_dim: 8
+  action_dim: 4
+  latent_dim: 64
+  min_std: 0.001
+  max_std: 10.0
+
+encoder:
+  type: "gru"
+  hidden_dim: 64
+  num_layers: 2
+  dropout: 0.1
+
+transition:
+  hidden_dim: 64
+  num_layers: 2
+  dropout: 0.1
+  residual: true
+
+decoder:
+  hidden_dim: 64
+  num_layers: 2
+  dropout: 0.1
+  learn_variance: true
+
+loss_weights:
+  lambda_obs: 1.0
+  lambda_trans: 1.0
+  beta_kl: 0.001
+
+training:
+  epochs: 30
+  batch_size: 16
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  grad_clip_norm: 10.0
+  early_stopping_patience: 8
+
+checkpointing:
+  save_dir: "artifacts/baseline_002"
+  metrics_file: "artifacts/baseline_002/metrics.json"

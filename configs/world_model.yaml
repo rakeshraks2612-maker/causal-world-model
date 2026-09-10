@@ -1,0 +1,45 @@
+# PRISM Causal World Model Configuration
+
+model:
+  obs_dim: 8          # Observable sensors: T_core, T_cool, P_sys, F_cool, L_cpu, V_pos, Vib_pump, P_elec
+  action_dim: 4       # Control actions: A_valve, A_throttle, A_pump, A_flush
+  latent_dim: 32      # Latent dynamical state dimension d_z
+  min_std: 0.001      # Minimum standard deviation for numerical stability
+  max_std: 10.0       # Maximum standard deviation cap
+
+encoder:
+  type: "gru"         # Recurrent baseline
+  hidden_dim: 64
+  num_layers: 2
+  dropout: 0.1
+  bidirectional: false
+
+transition:
+  hidden_dim: 64
+  num_layers: 2
+  dropout: 0.1
+  residual: true
+
+decoder:
+  hidden_dim: 64
+  num_layers: 2
+  dropout: 0.1
+  learn_variance: true
+
+loss_weights:
+  lambda_obs: 1.0     # Observation reconstruction weight
+  lambda_trans: 1.0   # Transition consistency weight
+  beta_kl: 0.01       # Latent KL regularization weight
+
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  grad_clip_norm: 10.0
+  max_epochs: 50
+  early_stopping_patience: 10
+
+rollout:
+  horizons: [1, 5, 10, 20, 40]
+  num_samples: 50     # Monte Carlo samples for predictive intervals
+  confidence_level: 0.90
