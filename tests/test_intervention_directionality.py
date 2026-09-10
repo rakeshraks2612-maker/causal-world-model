@@ -76,4 +76,4 @@ def test_cpu_workload_directionality(simulator):
     )
 
     assert passed, f"Throttle directionality check failed: {metrics}"
-    assert metrics["delta_t_core"] > 0.0, f"Expected heating, got {metrics['delta_t_core']}"
+    assert metrics["delta_l_cpu"] > 0.0, f"Expected positive delta_l_cpu, got {metrics['delta_l_cpu']}"

@@ -1,10 +1,15 @@
 """Intervention Operator for Learned Causal World Models.
 
-Executes graph surgery and action substitution:
+Executes strict Pearl do-calculus graph surgery vs action control:
 - Class A: Atomic State Clamps do(X = x)
+    - Directly severs parent arrows (PA(X) -> None)
+    - Action inputs A_t are UNMODIFIED (parent setpoint is cut)
+    - Decoded state channel X is strictly clamped to x for all active steps
 - Class B: Action Controls A = a
-- Causal parent mapping & non-descendant invariance
-- Strict temporal isolation (t < t* is invariant)
+    - Modifies controller setpoint A_t
+    - State variables evolve through natural dynamical transitions (actuator lag)
+- Non-Descendant Invariance:
+    - Non-descendant clamps (e.g. do(Vib_pump)) leave all other state channels invariant
 """
 
 from __future__ import annotations
@@ -21,12 +26,6 @@ from prism.intervention.spec import InterventionSpec, InterventionType
 # Mapping of observable variables to channel indices
 OBSERVABLE_TO_IDX: Dict[str, int] = {name: i for i, name in enumerate(OBSERVABLE_VARIABLES)}
 ACTION_TO_IDX: Dict[str, int] = {name: i for i, name in enumerate(ACTION_VARIABLES)}
-
-# Direct parent action corresponding to state variables in THC-SCM
-STATE_TO_PARENT_ACTION: Dict[str, str] = {
-    "V_pos": "A_valve",
-    "L_cpu": "A_throttle",
-}
 
 # Variables that are strictly non-causal on thermal/fluid system dynamics (leaf sensors)
 NON_CAUSAL_LEAF_VARIABLES: Set[str] = {
@@ -53,12 +52,26 @@ class InterventionOperator:
         """Clear all registered specifications."""
         self.specs.clear()
 
+    @property
+    def has_action_controls(self) -> bool:
+        """True if any registered intervention is an action control."""
+        return any(s.is_action_control for s in self.specs)
+
+    @property
+    def has_state_clamps(self) -> bool:
+        """True if any registered intervention is a state clamp."""
+        return any(s.is_state_clamp for s in self.specs)
+
     def get_modified_actions(
         self,
         future_actions: Tensor | np.ndarray,
         t_star: int,
     ) -> Tensor:
-        """Apply action overrides or state-clamp driver mappings to future action sequence.
+        """Apply action overrides to future action sequence for Class B action interventions.
+        
+        Strict Graph Surgery Invariant:
+        State clamps do(X = x) do NOT modify the action sequence! The incoming causal arrow
+        PA(X) -> X is cut, leaving the upstream control actions invariant while X is clamped.
         
         Args:
             future_actions: Action tensor of shape [B, H, 4] or [H, 4] starting at timestep t_star
@@ -80,22 +93,16 @@ class InterventionOperator:
         batch_size, horizon, act_dim = acts.shape
 
         for spec in self.specs:
-            for step in range(horizon):
-                global_step = t_star + step
-                if not spec.is_active(global_step):
-                    continue
+            # ONLY modify actions for ACTION_CONTROL interventions!
+            # State clamps do(X=x) explicitly cut PA(X) -> X and do NOT modify actions.
+            if not spec.is_action_control:
+                continue
 
-                if spec.is_action_control:
-                    if spec.target in ACTION_TO_IDX:
-                        idx = ACTION_TO_IDX[spec.target]
-                        acts[:, step, idx] = spec.value
-                elif spec.is_state_clamp:
-                    # For state clamps on causal drivers (e.g., V_pos, L_cpu),
-                    # map the state value to the corresponding transition action driver.
-                    # Leaf/non-causal variables (e.g. Vib_pump) do NOT modify actions!
-                    if spec.target in STATE_TO_PARENT_ACTION:
-                        parent_act = STATE_TO_PARENT_ACTION[spec.target]
-                        idx = ACTION_TO_IDX[parent_act]
+            if spec.target in ACTION_TO_IDX:
+                idx = ACTION_TO_IDX[spec.target]
+                for step in range(horizon):
+                    global_step = t_star + step
+                    if spec.is_active(global_step):
                         acts[:, step, idx] = spec.value
 
         if not has_batch:

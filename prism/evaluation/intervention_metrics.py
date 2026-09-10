@@ -2,9 +2,11 @@
 
 Implements evaluation protocols comparing learned PRISM interventions against Oracle ground truth:
 - Causal error: E_causal = |Delta Y_learned - Delta Y_oracle|
+- Relative causal error: E_rel = |Delta Y_learned - Delta Y_oracle| / (|Delta Y_oracle| + epsilon)
 - Directional sign concordance
 - Peak outcome errors: peak T_core, max pressure, min flow
-- Failure prediction accuracy and Brier score
+- Rigorous Safety Classification: True Critical, False Safe, False Alarm, True Safe
+- Failure-time error for co-failure predictions
 """
 
 from __future__ import annotations
@@ -26,6 +28,19 @@ from prism.intervention.effects import CausalEffectSummary
 from prism.simulator.state import OBSERVABLE_VARIABLES
 
 
+# Small epsilon regularizer per variable to avoid division by zero in relative error
+EPSILON_BY_VAR: Dict[str, float] = {
+    "delta_t_core": 0.5,    # 0.5 °C noise floor
+    "delta_t_cool": 0.5,    # 0.5 °C noise floor
+    "delta_p_sys": 0.05,    # 0.05 bar noise floor
+    "delta_f_cool": 0.5,    # 0.5 L/min noise floor
+    "delta_l_cpu": 1.0,     # 1.0 % noise floor
+    "delta_v_pos": 1.0,     # 1.0 % noise floor
+    "delta_vib_pump": 0.1,  # 0.1 mm/s noise floor
+    "delta_p_elec": 0.05,   # 0.05 kW noise floor
+}
+
+
 @dataclass
 class PairedInterventionEvaluation:
     """Evaluation metrics for a single paired intervention episode."""
@@ -35,10 +50,11 @@ class PairedInterventionEvaluation:
     value: float
     intervention_time: int
     category: str
-    causal_errors: Dict[int, Dict[str, float]]       # horizon -> {var -> |Delta_pred - Delta_oracle|}
-    oracle_deltas: Dict[int, Dict[str, float]]       # horizon -> {var -> Delta_oracle}
-    learned_deltas: Dict[int, Dict[str, float]]      # horizon -> {var -> Delta_pred}
-    directional_concordance: Dict[int, Dict[str, bool]] # horizon -> {var -> sign_match}
+    causal_errors: Dict[int, Dict[str, float]]          # horizon -> {var -> |Delta_pred - Delta_oracle|}
+    relative_causal_errors: Dict[int, Dict[str, float]] # horizon -> {var -> E_rel}
+    oracle_deltas: Dict[int, Dict[str, float]]          # horizon -> {var -> Delta_oracle}
+    learned_deltas: Dict[int, Dict[str, float]]         # horizon -> {var -> Delta_pred}
+    directional_concordance: Dict[int, Dict[str, bool]]    # horizon -> {var -> sign_match}
     peak_t_core_error: float
     max_pressure_error: float
     min_flow_error: float
@@ -46,6 +62,21 @@ class PairedInterventionEvaluation:
     predicted_failed: bool
     oracle_failure_time: Optional[int]
     predicted_failure_time: Optional[int]
+    failure_time_error: Optional[float] = None
+
+
+@dataclass
+class SafetyClassificationSummary:
+    """4-way classification of safety-critical intervention outcomes."""
+
+    true_critical: int   # Oracle fails, Learned predicts fail (TP)
+    false_safe: int      # Oracle fails, Learned predicts safe (FN - critical risk!)
+    false_alarm: int     # Oracle safe, Learned predicts fail (FP)
+    true_safe: int       # Oracle safe, Learned predicts safe (TN)
+    false_safe_rate: float # false_safe / (true_critical + false_safe)
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
 
 
 @dataclass
@@ -54,8 +85,10 @@ class InterventionBenchmarkSummary:
 
     total_records: int
     horizons: List[int]
-    mean_causal_error_by_horizon: Dict[int, Dict[str, float]]  # horizon -> {var -> mean E_causal}
+    mean_causal_error_by_horizon: Dict[int, Dict[str, float]]     # horizon -> {var -> mean E_causal}
+    mean_relative_error_by_horizon: Dict[int, Dict[str, float]]   # horizon -> {var -> mean E_rel}
     overall_mean_causal_error: float
+    overall_mean_relative_error: float
     directional_accuracy_by_var: Dict[str, float]
     overall_directional_accuracy: float
     peak_t_core_mae: float
@@ -65,6 +98,8 @@ class InterventionBenchmarkSummary:
     failure_precision: float
     failure_recall: float
     failure_f1: float
+    failure_time_mae: Optional[float]
+    safety_summary: SafetyClassificationSummary
     breakdown_by_target: Dict[str, Dict[str, Any]]
     evaluations: List[PairedInterventionEvaluation] = field(default_factory=list)
 
@@ -75,7 +110,11 @@ class InterventionBenchmarkSummary:
             "mean_causal_error_by_horizon": {
                 str(h): errs for h, errs in self.mean_causal_error_by_horizon.items()
             },
+            "mean_relative_error_by_horizon": {
+                str(h): errs for h, errs in self.mean_relative_error_by_horizon.items()
+            },
             "overall_mean_causal_error": self.overall_mean_causal_error,
+            "overall_mean_relative_error": self.overall_mean_relative_error,
             "directional_accuracy_by_var": self.directional_accuracy_by_var,
             "overall_directional_accuracy": self.overall_directional_accuracy,
             "peak_t_core_mae": self.peak_t_core_mae,
@@ -85,14 +124,16 @@ class InterventionBenchmarkSummary:
             "failure_precision": self.failure_precision,
             "failure_recall": self.failure_recall,
             "failure_f1": self.failure_f1,
+            "failure_time_mae": self.failure_time_mae,
+            "safety_summary": self.safety_summary.to_dict(),
             "breakdown_by_target": self.breakdown_by_target,
         }
 
     def format_table(self, horizon: int = 10) -> str:
         """Format a summary markdown table of causal effect errors at a specific horizon."""
         lines = [
-            f"| Variable | Oracle Mean Δ | Learned Mean Δ | Causal Error E_causal | Sign Concordance |",
-            f"| :--- | :--- | :--- | :--- | :--- |",
+            f"| Variable | Oracle Mean Δ | Learned Mean Δ | Absolute E_causal | Relative E_rel | Sign Concordance |",
+            f"| :--- | :--- | :--- | :--- | :--- | :--- |",
         ]
         var_keys = [
             ("T_core", "delta_t_core", "°C"),
@@ -107,15 +148,17 @@ class InterventionBenchmarkSummary:
             oracle_vals = [e.oracle_deltas.get(horizon, {}).get(delta_key, 0.0) for e in self.evaluations]
             pred_vals = [e.learned_deltas.get(horizon, {}).get(delta_key, 0.0) for e in self.evaluations]
             err_vals = [e.causal_errors.get(horizon, {}).get(delta_key, 0.0) for e in self.evaluations]
+            rel_vals = [e.relative_causal_errors.get(horizon, {}).get(delta_key, 0.0) for e in self.evaluations]
             sign_vals = [e.directional_concordance.get(horizon, {}).get(delta_key, True) for e in self.evaluations]
 
             mean_orc = float(np.mean(oracle_vals)) if oracle_vals else 0.0
             mean_prd = float(np.mean(pred_vals)) if pred_vals else 0.0
             mean_err = float(np.mean(err_vals)) if err_vals else 0.0
+            mean_rel = float(np.mean(rel_vals)) if rel_vals else 0.0
             sign_acc = float(np.mean(sign_vals)) if sign_vals else 1.0
 
             lines.append(
-                f"| **{var_name}** | {mean_orc:+.2f} {unit} | {mean_prd:+.2f} {unit} | {mean_err:.3f} {unit} | {sign_acc:.1%} |"
+                f"| **{var_name}** | {mean_orc:+.2f} {unit} | {mean_prd:+.2f} {unit} | {mean_err:.3f} {unit} | {mean_rel:.1%} | {sign_acc:.1%} |"
             )
         return "\n".join(lines)
 
@@ -181,6 +224,7 @@ def evaluate_single_intervention(
     ]
 
     causal_errors: Dict[int, Dict[str, float]] = {}
+    relative_causal_errors: Dict[int, Dict[str, float]] = {}
     oracle_deltas: Dict[int, Dict[str, float]] = {}
     learned_deltas: Dict[int, Dict[str, float]] = {}
     directional_concordance: Dict[int, Dict[str, bool]] = {}
@@ -195,6 +239,7 @@ def evaluate_single_intervention(
             pred_h = result.effects.horizon_effects.get(h)
 
             h_errs: Dict[str, float] = {}
+            h_rels: Dict[str, float] = {}
             h_orc: Dict[str, float] = {}
             h_prd: Dict[str, float] = {}
             h_sign: Dict[str, bool] = {}
@@ -204,24 +249,35 @@ def evaluate_single_intervention(
                 prd_val = float(getattr(pred_h, vk)) if pred_h is not None else 0.0
                 err_val = abs(prd_val - orc_val)
 
-                # Sign concordance check (with 0.05 threshold deadband for noise)
+                # Relative causal error: E_rel = |Delta_pred - Delta_orc| / (|Delta_orc| + eps)
+                eps = EPSILON_BY_VAR.get(vk, 0.5)
+                rel_val = err_val / (abs(orc_val) + eps)
+
+                # Sign concordance check (with deadband for near-zero noise)
                 if abs(orc_val) < 0.05 and abs(prd_val) < 0.05:
                     sign_match = True
                 else:
                     sign_match = bool(np.sign(orc_val) == np.sign(prd_val))
 
                 h_errs[vk] = err_val
+                h_rels[vk] = rel_val
                 h_orc[vk] = orc_val
                 h_prd[vk] = prd_val
                 h_sign[vk] = sign_match
 
             causal_errors[h] = h_errs
+            relative_causal_errors[h] = h_rels
             oracle_deltas[h] = h_orc
             learned_deltas[h] = h_prd
             directional_concordance[h] = h_sign
 
     pred_failed = result.effects.failure_metrics.intervened_failed
     pred_fail_time = result.effects.failure_metrics.intervention_failure_time
+
+    # Compute failure time error if both failed
+    fail_time_err = None
+    if orc_failed and pred_failed and orc_fail_time is not None and pred_fail_time is not None:
+        fail_time_err = float(abs(pred_fail_time - orc_fail_time))
 
     return PairedInterventionEvaluation(
         intervention_id=inv_id,
@@ -230,6 +286,7 @@ def evaluate_single_intervention(
         intervention_time=t_star,
         category=cat,
         causal_errors=causal_errors,
+        relative_causal_errors=relative_causal_errors,
         oracle_deltas=oracle_deltas,
         learned_deltas=learned_deltas,
         directional_concordance=directional_concordance,
@@ -240,6 +297,7 @@ def evaluate_single_intervention(
         predicted_failed=pred_failed,
         oracle_failure_time=orc_fail_time,
         predicted_failure_time=pred_fail_time,
+        failure_time_error=fail_time_err,
     )
 
 
@@ -264,17 +322,28 @@ def aggregate_intervention_benchmark(
     ]
 
     mean_causal_error_by_horizon: Dict[int, Dict[str, float]] = {}
+    mean_relative_error_by_horizon: Dict[int, Dict[str, float]] = {}
     all_causal_errors: List[float] = []
+    all_relative_errors: List[float] = []
 
     for h in horizons:
         mean_causal_error_by_horizon[h] = {}
+        mean_relative_error_by_horizon[h] = {}
         for vk in var_keys:
             vals = [e.causal_errors[h][vk] for e in evaluations if h in e.causal_errors and vk in e.causal_errors[h]]
+            rels = [e.relative_causal_errors[h][vk] for e in evaluations if h in e.relative_causal_errors and vk in e.relative_causal_errors[h]]
+
             mean_val = float(np.mean(vals)) if vals else 0.0
+            mean_rel = float(np.mean(rels)) if rels else 0.0
+
             mean_causal_error_by_horizon[h][vk] = mean_val
+            mean_relative_error_by_horizon[h][vk] = mean_rel
+
             all_causal_errors.extend(vals)
+            all_relative_errors.extend(rels)
 
     overall_mean_causal_error = float(np.mean(all_causal_errors)) if all_causal_errors else 0.0
+    overall_mean_relative_error = float(np.mean(all_relative_errors)) if all_relative_errors else 0.0
 
     # Directional accuracy per variable
     directional_accuracy_by_var: Dict[str, float] = {}
@@ -295,16 +364,29 @@ def aggregate_intervention_benchmark(
     max_p_mae = float(np.mean([e.max_pressure_error for e in evaluations]))
     min_f_mae = float(np.mean([e.min_flow_error for e in evaluations]))
 
-    # Failure metrics (classification)
+    # Rigorous 4-Way Safety Classification
     tp = sum(1 for e in evaluations if e.oracle_failed and e.predicted_failed)
-    fp = sum(1 for e in evaluations if not e.oracle_failed and e.predicted_failed)
+    fn = sum(1 for e in evaluations if e.oracle_failed and not e.predicted_failed) # False safe!
+    fp = sum(1 for e in evaluations if not e.oracle_failed and e.predicted_failed) # False alarm
     tn = sum(1 for e in evaluations if not e.oracle_failed and not e.predicted_failed)
-    fn = sum(1 for e in evaluations if e.oracle_failed and not e.predicted_failed)
 
     fail_acc = (tp + tn) / max(1, (tp + tn + fp + fn))
     fail_prec = tp / max(1, (tp + fp))
     fail_rec = tp / max(1, (tp + fn))
     fail_f1 = (2 * fail_prec * fail_rec) / max(1e-4, (fail_prec + fail_rec))
+    false_safe_rate = fn / max(1, (tp + fn))
+
+    safety_summary = SafetyClassificationSummary(
+        true_critical=tp,
+        false_safe=fn,
+        false_alarm=fp,
+        true_safe=tn,
+        false_safe_rate=false_safe_rate,
+    )
+
+    # Failure time error for co-failures
+    co_fail_times = [e.failure_time_error for e in evaluations if e.failure_time_error is not None]
+    fail_time_mae = float(np.mean(co_fail_times)) if co_fail_times else None
 
     # Breakdown by target variable
     breakdown_by_target: Dict[str, Dict[str, Any]] = {}
@@ -312,13 +394,18 @@ def aggregate_intervention_benchmark(
     for tgt in targets:
         sub = [e for e in evaluations if e.target == tgt]
         sub_errs: List[float] = []
+        sub_rels: List[float] = []
         for e in sub:
             for h in horizons:
                 if h in e.causal_errors:
                     sub_errs.extend(e.causal_errors[h].values())
+                if h in e.relative_causal_errors:
+                    sub_rels.extend(e.relative_causal_errors[h].values())
+
         breakdown_by_target[tgt] = {
             "count": len(sub),
             "mean_causal_error": float(np.mean(sub_errs)) if sub_errs else 0.0,
+            "mean_relative_error": float(np.mean(sub_rels)) if sub_rels else 0.0,
             "peak_t_core_mae": float(np.mean([e.peak_t_core_error for e in sub])),
         }
 
@@ -326,7 +413,9 @@ def aggregate_intervention_benchmark(
         total_records=total_records,
         horizons=list(horizons),
         mean_causal_error_by_horizon=mean_causal_error_by_horizon,
+        mean_relative_error_by_horizon=mean_relative_error_by_horizon,
         overall_mean_causal_error=overall_mean_causal_error,
+        overall_mean_relative_error=overall_mean_relative_error,
         directional_accuracy_by_var=directional_accuracy_by_var,
         overall_directional_accuracy=overall_directional_accuracy,
         peak_t_core_mae=peak_t_core_mae,
@@ -336,6 +425,8 @@ def aggregate_intervention_benchmark(
         failure_precision=fail_prec,
         failure_recall=fail_rec,
         failure_f1=fail_f1,
+        failure_time_mae=fail_time_mae,
+        safety_summary=safety_summary,
         breakdown_by_target=breakdown_by_target,
         evaluations=evaluations,
     )

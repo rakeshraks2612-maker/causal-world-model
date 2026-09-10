@@ -80,14 +80,16 @@ def test_state_clamp_vs_action_control_distinction(simulator):
     pre_act = ep.actions[:t_star + 1]
     fut_act = ep.actions[t_star + 1:t_star + 41]
 
-    passed, diff0 = check_state_clamp_vs_action_control(
+    passed, details = check_state_clamp_vs_action_control(
         simulator=simulator,
         pre_obs=pre_obs,
         pre_act=pre_act,
         fut_act=fut_act,
         value=85.0,
     )
-    assert passed, f"do(V_pos=85) and A_valve=85 should differ at step 0 due to dynamics, got diff={diff0}"
+    assert passed, f"do(V_pos=85) and A_valve=85 distinction failed: {details}"
+    assert details["clamp_is_instant"], "do(V_pos=85) must clamp V_pos to 85.0 instantly at t*+1"
+    assert details["action_has_lag"], "A_valve=85 must exhibit actuator lag at t*+1"
 
 
 def test_non_descendant_invariance(simulator):
