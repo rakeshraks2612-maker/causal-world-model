@@ -45,12 +45,16 @@ def simulate_candidate_oracle(
     sim = THCSimulator(seed=base_ep.seed + int(cand_spec.value * 10))
     init_state = StateVector.from_array(base_ep.ground_truth_states[t_star])
 
-    from prism.simulator.interventions import InterventionRegistry
+    from prism.simulator.interventions import InterventionRegistry, Intervention
     from prism.simulator.state import OBSERVABLE_VARIABLES
 
     interventions = None
     if cand_spec.intervention_type == "state_clamp" or cand_spec.target in OBSERVABLE_VARIABLES:
         interventions = InterventionRegistry.create_single(cand_spec.target, cand_spec.value, step=0)
+        if cand_spec.secondary_target is not None and cand_spec.secondary_target in OBSERVABLE_VARIABLES:
+            interventions.add(Intervention(target=cand_spec.secondary_target, value=cand_spec.secondary_value, start_step=0))
+    elif cand_spec.secondary_target is not None and cand_spec.secondary_target in OBSERVABLE_VARIABLES:
+        interventions = InterventionRegistry.create_single(cand_spec.secondary_target, cand_spec.secondary_value, step=0)
 
     # Construct action sequence from t* to t* + horizon_len
     base_act_seq = base_ep.actions[t_star : t_star + horizon_len + 1]
@@ -229,18 +233,15 @@ def generate_scenario_2_valve() -> Tuple[OracleDecisionScenario, OracleEpisode]:
 
 def generate_scenario_3_throttle() -> Tuple[OracleDecisionScenario, OracleEpisode]:
     """Scenario 3: Severe computational heat generation where throttling is the root-cause fix."""
-    base_ep = generate_single_episode(SplitType.TEST, index=103, regime="moderate_load", length=100)
+    base_ep = generate_single_episode(SplitType.TEST, index=103, regime="moderate_ambient", length=100)
     t_star = 40
-    # Simulate high CPU load in baseline
-    base_ep.actions[t_star:, 1] = 100.0
-    base_ep.ground_truth_states[t_star:, 4] = 95.0
 
     candidates = [
-        CandidateActionSpec("cand_do_nothing", "A_throttle", 100.0),
-        CandidateActionSpec("cand_throttle_50", "A_throttle", 50.0),
-        CandidateActionSpec("cand_throttle_20", "A_throttle", 20.0),
-        CandidateActionSpec("cand_valve_100", "A_valve", 100.0),
-        CandidateActionSpec("cand_pump_4", "A_pump", 4.0),
+        CandidateActionSpec("cand_do_nothing", "L_cpu", 95.0, intervention_type="state_clamp"),
+        CandidateActionSpec("cand_throttle_50", "L_cpu", 50.0, intervention_type="state_clamp"),
+        CandidateActionSpec("cand_throttle_20", "L_cpu", 20.0, intervention_type="state_clamp"),
+        CandidateActionSpec("cand_valve_100", "V_pos", 100.0, intervention_type="state_clamp", secondary_target="L_cpu", secondary_value=95.0),
+        CandidateActionSpec("cand_pump_4", "A_pump", 4.0, intervention_type="action_control", secondary_target="L_cpu", secondary_value=95.0),
     ]
 
     outcomes = {c.candidate_id: simulate_candidate_oracle(base_ep, t_star, c) for c in candidates}
