@@ -56,6 +56,9 @@ class UtilityWeights:
     failure_penalty: float = 1000.0    # Massive penalty for critical safety violation
 
 
+from prism.planning.cost_model import DecisionCostConfig, ActionCostModel, CostBreakdown
+
+
 @dataclass
 class CandidateEvaluation:
     """Comprehensive evaluation score and metrics for a candidate intervention."""
@@ -74,6 +77,7 @@ class CandidateEvaluation:
     latent_novelty: float
     causal_delta_t_core: float
     causal_delta_f_cool: float
+    cost_breakdown: Optional[CostBreakdown] = None
     simulation_result: Optional[LearnedInterventionResult] = None
 
     def to_dict(self) -> Dict[str, Any]:
@@ -93,19 +97,51 @@ class CandidateEvaluation:
             "latent_novelty": float(self.latent_novelty),
             "causal_delta_t_core": float(self.causal_delta_t_core),
             "causal_delta_f_cool": float(self.causal_delta_f_cool),
+            "cost_breakdown": self.cost_breakdown.to_dict() if self.cost_breakdown else None,
         }
 
 
 class PlanningObjective:
-    """Evaluates candidates using multi-objective utility scoring."""
+    """Evaluates candidates using the formal ActionCostModel."""
 
     def __init__(
         self,
+        config: Optional[DecisionCostConfig] = None,
         constraints: Optional[SafetyConstraints] = None,
         weights: Optional[UtilityWeights] = None,
     ) -> None:
-        self.constraints = constraints or SafetyConstraints()
-        self.weights = weights or UtilityWeights()
+        if config is not None:
+            self.config = config
+            self.constraints = constraints or SafetyConstraints(
+                t_core_max=self.config.thermal_hard_limit,
+                p_sys_max=self.config.pressure_hard_limit,
+                f_cool_min=self.config.flow_hard_limit,
+                max_latent_novelty=self.config.latent_novelty_hard_limit,
+            )
+        elif constraints is not None:
+            self.constraints = constraints
+            self.config = DecisionCostConfig(
+                thermal_hard_limit=constraints.t_core_max,
+                pressure_hard_limit=constraints.p_sys_max,
+                flow_hard_limit=constraints.f_cool_min,
+                latent_novelty_hard_limit=constraints.max_latent_novelty,
+            )
+        else:
+            self.config = DecisionCostConfig()
+            self.constraints = SafetyConstraints(
+                t_core_max=self.config.thermal_hard_limit,
+                p_sys_max=self.config.pressure_hard_limit,
+                f_cool_min=self.config.flow_hard_limit,
+                max_latent_novelty=self.config.latent_novelty_hard_limit,
+            )
+
+        self.cost_model = ActionCostModel(self.config)
+        self.weights = weights or UtilityWeights(
+            throughput_weight=self.config.performance_weight,
+            thermal_penalty=self.config.thermal_risk_weight,
+            power_cost_weight=0.2,
+            control_effort_weight=self.config.valve_actuation_weight,
+        )
 
     def evaluate_candidate(
         self,
@@ -113,35 +149,41 @@ class PlanningObjective:
         sim_result: LearnedInterventionResult,
         latent_novelty: float = 0.0,
         baseline_actions: Optional[np.ndarray] = None,
+        is_compound_intervention: bool = False,
     ) -> CandidateEvaluation:
-        """Score candidate intervention rollout."""
+        """Score candidate intervention rollout using the formal cost model."""
         obs = sim_result.intervened_observations  # [H, 8]
         peak_t_core = float(np.max(obs[:, 0]))
-        peak_t_cool = float(np.max(obs[:, 1]))
         max_p_sys = float(np.max(obs[:, 2]))
         min_f_cool = float(np.min(obs[:, 3]))
         mean_l_cpu = float(np.mean(obs[:, 4]))
         mean_power = float(np.mean(obs[:, 7]))
 
-        is_safe, violations = self.constraints.is_safe(
+        # Approximate action at t*
+        cand_act = [50.0, 100.0, 2.0, 0.0]
+        if spec.target == "A_valve":
+            cand_act[0] = spec.value
+        elif spec.target == "A_throttle":
+            cand_act[1] = spec.value
+        elif spec.target == "A_pump":
+            cand_act[2] = spec.value
+        elif spec.target == "A_flush":
+            cand_act[3] = spec.value
+
+        base_act = baseline_actions[0] if baseline_actions is not None else [50.0, 100.0, 2.0, 0.0]
+
+        breakdown = self.cost_model.evaluate_cost(
             peak_t_core=peak_t_core,
-            peak_t_cool=peak_t_cool,
             max_pressure=max_p_sys,
             min_flow=min_f_cool,
+            mean_cpu_load=mean_l_cpu,
+            actions_at_t_star=cand_act,
+            baseline_actions_at_t_star=base_act,
             latent_novelty=latent_novelty,
+            is_compound_intervention=is_compound_intervention,
         )
 
-        fail_prob = 1.0 if (peak_t_core >= self.constraints.t_core_critical or max_p_sys >= 6.0) else 0.0
-
-        # Multi-objective utility:
-        # U = w_load * Load - w_therm * max(0, T_core - 70) - w_power * Power - w_fail * fail_prob
-        thermal_excess = max(0.0, peak_t_core - 70.0)
-        utility = (
-            self.weights.throughput_weight * (mean_l_cpu / 100.0)
-            - self.weights.thermal_penalty * (thermal_excess / 10.0)
-            - self.weights.power_cost_weight * (mean_power / 50.0)
-            - (self.weights.failure_penalty * fail_prob if not is_safe else 0.0)
-        )
+        fail_prob = 1.0 if (peak_t_core >= 105.0 or max_p_sys >= 6.0) else 0.0
 
         # Deltas at horizon h=20 or last horizon
         h_target = 20 if 20 in sim_result.effects.horizon_effects else list(sim_result.effects.horizon_effects.keys())[-1]
@@ -152,9 +194,9 @@ class PlanningObjective:
         return CandidateEvaluation(
             candidate_id=cand_id,
             spec=spec,
-            is_safe=is_safe,
-            safety_violations=violations,
-            utility_score=utility,
+            is_safe=breakdown.is_safe,
+            safety_violations=breakdown.safety_violations,
+            utility_score=breakdown.net_utility,
             peak_t_core=peak_t_core,
             max_pressure=max_p_sys,
             min_flow=min_f_cool,
@@ -164,5 +206,6 @@ class PlanningObjective:
             latent_novelty=latent_novelty,
             causal_delta_t_core=eff_h.delta_t_core,
             causal_delta_f_cool=eff_h.delta_f_cool,
+            cost_breakdown=breakdown,
             simulation_result=sim_result,
         )
