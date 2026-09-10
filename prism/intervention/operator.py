@@ -173,10 +173,10 @@ class InterventionOperator:
         decoder: torch.nn.Module,
         normalizer: Any,
         z_init: Tensor,
-        steps: int = 15,
-        lr: float = 0.08,
-        preserve_weight: float = 5.0,
-        reg_weight: float = 0.005,
+        steps: int = 30,
+        lr: float = 0.1,
+        preserve_weight: float = 0.1,
+        reg_weight: float = 0.0001,
     ) -> Tensor:
         """Surgically project latent state Z_t* onto the intervened manifold for state clamps do(X_j = x).
         
