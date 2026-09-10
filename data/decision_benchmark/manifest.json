@@ -1,0 +1,60 @@
+{
+  "benchmark_version": "1.0.0",
+  "total_scenarios": 6,
+  "scenarios": [
+    {
+      "scenario_id": "scenario_01_do_nothing",
+      "scenario_name": "Scenario 1 \u2014 Do Nothing Is Optimal",
+      "description": "Nominal healthy baseline state where intervening incurs unnecessary actuation and energy overhead.",
+      "intervention_time": 40,
+      "candidate_count": 4,
+      "expected_decision_class": "RECOMMEND",
+      "oracle_optimal_candidate_id": "cand_do_nothing"
+    },
+    {
+      "scenario_id": "scenario_02_valve",
+      "scenario_name": "Scenario 2 \u2014 Valve Intervention Is Optimal",
+      "description": "Coolant flow bottleneck where opening valve provides maximum heat dissipation with zero compute loss.",
+      "intervention_time": 40,
+      "candidate_count": 5,
+      "expected_decision_class": "RECOMMEND",
+      "oracle_optimal_candidate_id": "cand_valve_85"
+    },
+    {
+      "scenario_id": "scenario_03_throttle",
+      "scenario_name": "Scenario 3 \u2014 Throttle Intervention Is Optimal",
+      "description": "High compute thermal surge where reducing workload addresses the primary causal driver.",
+      "intervention_time": 40,
+      "candidate_count": 5,
+      "expected_decision_class": "RECOMMEND",
+      "oracle_optimal_candidate_id": "cand_throttle_50"
+    },
+    {
+      "scenario_id": "scenario_04_pump",
+      "scenario_name": "Scenario 4 \u2014 Pump Intervention Is Optimal",
+      "description": "Hydraulic flow limitation where modulating pump speed restores cooling circulation safely.",
+      "intervention_time": 40,
+      "candidate_count": 5,
+      "expected_decision_class": "RECOMMEND",
+      "oracle_optimal_candidate_id": "cand_pump_3"
+    },
+    {
+      "scenario_id": "scenario_05_combined",
+      "scenario_name": "Scenario 5 \u2014 Combined Intervention Is Optimal",
+      "description": "Multi-variable bottleneck where simultaneous valve and pump adjustment yields superior Pareto utility.",
+      "intervention_time": 40,
+      "candidate_count": 5,
+      "expected_decision_class": "RECOMMEND",
+      "oracle_optimal_candidate_id": "cand_combined_valve80_pump3"
+    },
+    {
+      "scenario_id": "scenario_06_all_unsafe",
+      "scenario_name": "Scenario 6 \u2014 All Actions Unsafe (Abstention Gate)",
+      "description": "Compound emergency regime where every action violates safety envelope; system must rigorously ABSTAIN.",
+      "intervention_time": 30,
+      "candidate_count": 6,
+      "expected_decision_class": "ABSTAIN",
+      "oracle_optimal_candidate_id": "none"
+    }
+  ]
+}

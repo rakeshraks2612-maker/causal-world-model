@@ -91,6 +91,8 @@ class OracleCandidateOutcome:
             "mean_power": float(self.mean_power),
             "operational_cost": float(self.operational_cost),
             "true_utility": float(self.true_utility),
+            "ground_truth_states": self.ground_truth_states,
+            "ground_truth_observations": self.ground_truth_observations,
         }
 
 
@@ -241,8 +243,8 @@ class OracleDecisionScenario:
                 mean_power=float(out_dict["mean_power"]),
                 operational_cost=float(out_dict["operational_cost"]),
                 true_utility=float(out_dict["true_utility"]),
-                ground_truth_states=np.empty((0, 12)),
-                ground_truth_observations=np.empty((0, 8)),
+                ground_truth_states=np.asarray(out_dict.get("ground_truth_states", np.empty((0, 12)))),
+                ground_truth_observations=np.asarray(out_dict.get("ground_truth_observations", np.empty((0, 8)))),
             )
         return cls(
             scenario_id=str(data["scenario_id"]),

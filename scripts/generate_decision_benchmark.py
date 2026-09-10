@@ -45,36 +45,56 @@ def simulate_candidate_oracle(
     sim = THCSimulator(seed=base_ep.seed + int(cand_spec.value * 10))
     init_state = StateVector.from_array(base_ep.ground_truth_states[t_star])
 
+    from prism.simulator.interventions import InterventionRegistry
+    from prism.simulator.state import OBSERVABLE_VARIABLES
+
+    interventions = None
+    if cand_spec.intervention_type == "state_clamp" or cand_spec.target in OBSERVABLE_VARIABLES:
+        interventions = InterventionRegistry.create_single(cand_spec.target, cand_spec.value, step=0)
+
     # Construct action sequence from t* to t* + horizon_len
-    actions_list = []
     base_act_seq = base_ep.actions[t_star : t_star + horizon_len + 1]
-    
+    actions_arr = np.copy(base_act_seq)
+
     # Baseline action at t*
     act_t0 = np.copy(base_act_seq[0])
-    
-    # Apply candidate intervention
-    if cand_spec.target == "A_valve":
-        act_t0[0] = cand_spec.value
-    elif cand_spec.target == "A_throttle":
-        act_t0[1] = cand_spec.value
-    elif cand_spec.target == "A_pump":
-        act_t0[2] = cand_spec.value
-    elif cand_spec.target == "A_flush":
-        act_t0[3] = cand_spec.value
 
-    if cand_spec.secondary_target == "A_pump":
-        act_t0[2] = cand_spec.secondary_value
-    elif cand_spec.secondary_target == "A_valve":
-        act_t0[0] = cand_spec.secondary_value
-    elif cand_spec.secondary_target == "A_throttle":
-        act_t0[1] = cand_spec.secondary_value
+    if cand_spec.intervention_type != "state_clamp" and cand_spec.target not in OBSERVABLE_VARIABLES:
+        # Apply candidate action intervention
+        if cand_spec.target == "A_valve":
+            act_t0[0] = cand_spec.value
+        elif cand_spec.target == "A_throttle":
+            act_t0[1] = cand_spec.value
+        elif cand_spec.target == "A_pump":
+            act_t0[2] = cand_spec.value
+        elif cand_spec.target == "A_flush":
+            act_t0[3] = cand_spec.value
 
-    actions_list.append(act_t0)
-    for step in range(1, min(horizon_len + 1, len(base_act_seq))):
-        act_s = np.copy(base_act_seq[step])
-        actions_list.append(act_s)
+        if cand_spec.secondary_target == "A_pump":
+            act_t0[2] = cand_spec.secondary_value
+        elif cand_spec.secondary_target == "A_valve":
+            act_t0[0] = cand_spec.secondary_value
+        elif cand_spec.secondary_target == "A_throttle":
+            act_t0[1] = cand_spec.secondary_value
 
-    actions_arr = np.array(actions_list)
+        actions_arr[0] = act_t0
+    else:
+        # State intervention: map to initial action representation for cost model
+        if cand_spec.target in ["A_valve", "V_pos"]:
+            act_t0[0] = cand_spec.value
+        elif cand_spec.target in ["A_throttle", "L_cpu"]:
+            act_t0[1] = cand_spec.value
+        elif cand_spec.target == "A_pump":
+            act_t0[2] = cand_spec.value
+        elif cand_spec.target == "A_flush":
+            act_t0[3] = cand_spec.value
+
+        if cand_spec.secondary_target in ["A_valve", "V_pos"]:
+            act_t0[0] = cand_spec.secondary_value
+        elif cand_spec.secondary_target in ["A_throttle", "L_cpu"]:
+            act_t0[1] = cand_spec.secondary_value
+        elif cand_spec.secondary_target == "A_pump":
+            act_t0[2] = cand_spec.secondary_value
 
     # Replay under frozen exogenous noise
     noise_slice = base_ep.exogenous_noise[t_star : t_star + len(actions_arr)]
@@ -88,6 +108,7 @@ def simulate_candidate_oracle(
         recorded_noise=noise_slice,
         action_sequence=actions_arr[:-1],
         initial_state=init_state,
+        interventions=interventions,
         episode_id=f"cand_eval_{cand_spec.candidate_id}",
     )
 
@@ -177,11 +198,11 @@ def generate_scenario_2_valve() -> Tuple[OracleDecisionScenario, OracleEpisode]:
     base_ep.actions[t_star:, 0] = 30.0
 
     candidates = [
-        CandidateActionSpec("cand_do_nothing", "A_valve", 30.0),
-        CandidateActionSpec("cand_valve_85", "A_valve", 85.0),
-        CandidateActionSpec("cand_valve_15", "A_valve", 15.0),
-        CandidateActionSpec("cand_pump_4", "A_pump", 4.0),
-        CandidateActionSpec("cand_throttle_30", "A_throttle", 30.0),
+        CandidateActionSpec("cand_do_nothing", "V_pos", 30.0, intervention_type="state_clamp"),
+        CandidateActionSpec("cand_valve_85", "V_pos", 85.0, intervention_type="state_clamp"),
+        CandidateActionSpec("cand_valve_15", "V_pos", 15.0, intervention_type="state_clamp"),
+        CandidateActionSpec("cand_pump_4", "A_pump", 4.0, intervention_type="action_control"),
+        CandidateActionSpec("cand_throttle_30", "A_throttle", 30.0, intervention_type="action_control"),
     ]
 
     outcomes = {c.candidate_id: simulate_candidate_oracle(base_ep, t_star, c) for c in candidates}
