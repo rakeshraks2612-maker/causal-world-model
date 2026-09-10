@@ -220,3 +220,41 @@ class OracleDecisionScenario:
             expected_decision_class=np.array(self.expected_decision_class.value),
             oracle_rationale=np.array(self.oracle_rationale),
         )
+
+    @classmethod
+    def load_npz(cls, file_path: str | Path) -> OracleDecisionScenario:
+        data = np.load(file_path, allow_pickle=True)
+        outcomes_raw = data["candidate_outcomes"].item() if data["candidate_outcomes"].ndim == 0 else dict(data["candidate_outcomes"])
+        outcomes = {}
+        for cid, out_dict in outcomes_raw.items():
+            spec_dict = out_dict["spec"]
+            spec = CandidateActionSpec(**spec_dict)
+            outcomes[cid] = OracleCandidateOutcome(
+                candidate_id=out_dict["candidate_id"],
+                spec=spec,
+                is_safe=bool(out_dict["is_safe"]),
+                safety_violations=list(out_dict["safety_violations"]),
+                peak_t_core=float(out_dict["peak_t_core"]),
+                max_pressure=float(out_dict["max_pressure"]),
+                min_flow=float(out_dict["min_flow"]),
+                mean_cpu_load=float(out_dict["mean_cpu_load"]),
+                mean_power=float(out_dict["mean_power"]),
+                operational_cost=float(out_dict["operational_cost"]),
+                true_utility=float(out_dict["true_utility"]),
+                ground_truth_states=np.empty((0, 12)),
+                ground_truth_observations=np.empty((0, 8)),
+            )
+        return cls(
+            scenario_id=str(data["scenario_id"]),
+            scenario_name=str(data["scenario_name"]),
+            description=str(data["description"]),
+            intervention_time=int(data["intervention_time"]),
+            true_latent_state_t_star=data["true_latent_state_t_star"],
+            true_state_history=data["true_state_history"],
+            exogenous_noise_history=data["exogenous_noise_history"],
+            candidate_outcomes=outcomes,
+            oracle_optimal_candidate_id=str(data["oracle_optimal_candidate_id"]),
+            expected_decision_class=DecisionClass(str(data["expected_decision_class"])),
+            oracle_rationale=str(data["oracle_rationale"]),
+        )
+

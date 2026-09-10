@@ -158,7 +158,8 @@ class PlanningObjective:
         spec: InterventionSpec,
         sim_result: LearnedInterventionResult,
         latent_novelty: float = 0.0,
-        baseline_actions: Optional[np.ndarray] = None,
+        baseline_actions: Optional[np.ndarray | List[float]] = None,
+        candidate_id: Optional[str] = None,
         is_compound_intervention: bool = False,
     ) -> CandidateEvaluation:
         """Score candidate intervention rollout using the formal cost model."""
@@ -169,18 +170,23 @@ class PlanningObjective:
         mean_l_cpu = float(np.mean(obs[:, 4]))
         mean_power = float(np.mean(obs[:, 7]))
 
-        # Approximate action at t*
-        cand_act = [50.0, 100.0, 2.0, 0.0]
-        if spec.target == "A_valve":
-            cand_act[0] = spec.value
-        elif spec.target == "A_throttle":
-            cand_act[1] = spec.value
-        elif spec.target == "A_pump":
-            cand_act[2] = spec.value
-        elif spec.target == "A_flush":
-            cand_act[3] = spec.value
+        # Factual baseline action at t*
+        if baseline_actions is not None:
+            base_act = [float(x) for x in np.asarray(baseline_actions).flatten()[:4]]
+        else:
+            base_act = [50.0, 100.0, 2.0, 0.0]
 
-        base_act = baseline_actions[0] if baseline_actions is not None else [50.0, 100.0, 2.0, 0.0]
+        # Candidate action at t* initialized to baseline action
+        cand_act = list(base_act)
+        if spec is not None:
+            if spec.target == "A_valve":
+                cand_act[0] = float(spec.value)
+            elif spec.target == "A_throttle":
+                cand_act[1] = float(spec.value)
+            elif spec.target == "A_pump":
+                cand_act[2] = float(spec.value)
+            elif spec.target == "A_flush":
+                cand_act[3] = float(spec.value)
 
         breakdown = self.cost_model.evaluate_cost(
             peak_t_core=peak_t_core,
@@ -199,7 +205,8 @@ class PlanningObjective:
         h_target = 20 if 20 in sim_result.effects.horizon_effects else list(sim_result.effects.horizon_effects.keys())[-1]
         eff_h = sim_result.effects.horizon_effects[h_target]
 
-        cand_id = f"cand_{spec.target}_{int(spec.value)}"
+        cand_id = candidate_id or (f"cand_{spec.target}_{int(spec.value)}" if spec is not None else "cand_do_nothing")
+
 
         return CandidateEvaluation(
             candidate_id=cand_id,

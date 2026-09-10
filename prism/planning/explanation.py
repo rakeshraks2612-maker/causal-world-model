@@ -93,6 +93,11 @@ def generate_causal_explanation(
     delta_t = cand_peak_t - base_peak_t
     delta_f = best_candidate.causal_delta_f_cool
 
+    is_do_nothing = (
+        best_candidate.candidate_id == "cand_do_nothing"
+        or (spec is not None and spec.target in ["none", "do_nothing"])
+    )
+
     # 1. Diagnosis
     if base_peak_t >= 95.0:
         diagnosis = (
@@ -102,32 +107,65 @@ def generate_causal_explanation(
     else:
         diagnosis = f"Factual baseline operates within nominal support (Peak T_core = {base_peak_t:.1f}°C)."
 
-    # 2. Mechanism
-    if spec.target in ["A_valve", "V_pos"]:
+    # 2. Mechanism & Action String
+    if is_do_nothing:
+        rec_action_str = "DO_NOTHING"
+        mechanism = (
+            "Current operating state is within a stable thermal, pressure, and cooling regime. "
+            "No candidate intervention provides sufficient risk-adjusted benefit to justify its operational or actuation cost."
+        )
+        contrast = (
+            f"Factual baseline operates safely at peak T_core of {base_peak_t:.1f}°C. "
+            f"Alternative interventions provide negligible thermal benefit while incurring unnecessary operational penalties."
+        )
+        summary = f"Maintain baseline operation (DO NOTHING): system is in stable thermal equilibrium (Peak T_core: {cand_peak_t:.1f}°C, Utility: {best_candidate.utility_score:+.2f})."
+    elif spec.target in ["A_valve", "V_pos"]:
+        rec_action_str = f"{spec.target}={spec.value:.1f}"
         mechanism = (
             f"Setting `{spec.target}={spec.value:.1f}%` expands valve conductance, increasing coolant flow "
             f"by {delta_f:+.2f} L/min. This accelerates convective heat dissipation from the core manifold, "
             f"reducing peak core temperature by {abs(delta_t):.1f}°C."
         )
+        contrast = (
+            f"Without intervention, factual baseline reaches peak T_core of {base_peak_t:.1f}°C. "
+            f"Under recommended `{spec.target}={spec.value:.1f}`, core temperature safely peaks at {cand_peak_t:.1f}°C "
+            f"(Net causal benefit: {delta_t:+.1f}°C)."
+        )
+        summary = f"Recommend `{spec.target}={spec.value:.1f}` to achieve peak core temperature {cand_peak_t:.1f}°C (Utility: {best_candidate.utility_score:.2f})."
     elif spec.target in ["A_throttle", "L_cpu"]:
+        rec_action_str = f"{spec.target}={spec.value:.1f}"
         mechanism = (
             f"Throttling CPU workload to `{spec.target}={spec.value:.1f}%` directly diminishes Joule heating generation "
             f"in the core, stabilizing thermal accumulation and lowering core temperature by {abs(delta_t):.1f}°C."
         )
+        contrast = (
+            f"Without intervention, factual baseline reaches peak T_core of {base_peak_t:.1f}°C. "
+            f"Under recommended `{spec.target}={spec.value:.1f}`, core temperature safely peaks at {cand_peak_t:.1f}°C "
+            f"(Net causal benefit: {delta_t:+.1f}°C)."
+        )
+        summary = f"Recommend `{spec.target}={spec.value:.1f}` to achieve peak core temperature {cand_peak_t:.1f}°C (Utility: {best_candidate.utility_score:.2f})."
     elif spec.target in ["A_pump"]:
+        rec_action_str = f"{spec.target}={int(spec.value)}"
         mechanism = (
             f"Adjusting pump stage to `{spec.target}={int(spec.value)}` modulates hydraulic head and fluid delivery, "
             f"yielding coolant flow change of {delta_f:+.2f} L/min."
         )
+        contrast = (
+            f"Without intervention, factual baseline reaches peak T_core of {base_peak_t:.1f}°C. "
+            f"Under recommended `{spec.target}={int(spec.value)}`, core temperature safely peaks at {cand_peak_t:.1f}°C "
+            f"(Net causal benefit: {delta_t:+.1f}°C)."
+        )
+        summary = f"Recommend `{spec.target}={int(spec.value)}` to achieve peak core temperature {cand_peak_t:.1f}°C (Utility: {best_candidate.utility_score:.2f})."
     else:
-        mechanism = f"Intervening on `{spec.target}={spec.value}` modulates latent dynamics to optimize thermal-fluid equilibrium."
+        rec_action_str = f"{spec.target}={spec.value}" if spec is not None else "DO_NOTHING"
+        mechanism = f"Intervening on `{rec_action_str}` modulates latent dynamics to optimize thermal-fluid equilibrium."
+        contrast = (
+            f"Without intervention, factual baseline reaches peak T_core of {base_peak_t:.1f}°C. "
+            f"Under recommended `{rec_action_str}`, core temperature safely peaks at {cand_peak_t:.1f}°C "
+            f"(Net causal benefit: {delta_t:+.1f}°C)."
+        )
+        summary = f"Recommend `{rec_action_str}` to achieve peak core temperature {cand_peak_t:.1f}°C (Utility: {best_candidate.utility_score:.2f})."
 
-    # 3. Counterfactual Contrast
-    contrast = (
-        f"Without intervention, factual baseline reaches peak T_core of {base_peak_t:.1f}°C. "
-        f"Under recommended `{spec.target}={spec.value:.1f}`, core temperature safely peaks at {cand_peak_t:.1f}°C "
-        f"(Net causal benefit: {delta_t:+.1f}°C)."
-    )
 
     # 4. Rejected alternatives
     rejected = []
@@ -145,19 +183,15 @@ def generate_causal_explanation(
 
     verdict = "🟢 SAFE & OPTIMAL" if best_candidate.is_safe else "🔴 SAFETY BLOCKED / ABSTAIN"
 
-    summary = (
-        f"Recommend `{spec.target}={spec.value:.1f}` to achieve peak core temperature {cand_peak_t:.1f}°C "
-        f"(Utility: {best_candidate.utility_score:.2f})."
-    )
-
     return CausalExplanation(
         summary=summary,
         diagnosis=diagnosis,
-        recommended_action=f"{spec.target}={spec.value:.1f}",
+        recommended_action=rec_action_str,
         physical_mechanism=mechanism,
         counterfactual_contrast=contrast,
         rejected_alternatives=rejected,
         confidence_level="HIGH (Within Latent Manifold Support)",
         safety_verdict=verdict,
     )
+
 

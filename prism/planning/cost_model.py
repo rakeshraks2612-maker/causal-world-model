@@ -188,8 +188,8 @@ class ActionCostModel:
         valve_displacement = abs(float(act[0]) - float(base_act[0]))
         act_cost = self.config.valve_actuation_weight * (valve_displacement / 50.0)
 
-        # 6. Throttling Loss Penalty (cost of deliberately curbing compute)
-        throttle_loss = max(0.0, (100.0 - mean_cpu_load) / 100.0)
+        # 6. Throttling Loss Penalty (cost of deliberately curbing compute capacity)
+        throttle_loss = max(0.0, (100.0 - float(act[1])) / 100.0)
         thr_cost = self.config.throttle_cost_weight * (throttle_loss ** 1.2)
 
         # 7. Flush Activation Cost

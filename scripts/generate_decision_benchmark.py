@@ -143,7 +143,7 @@ def simulate_candidate_oracle(
     )
 
 
-def generate_scenario_1_do_nothing() -> OracleDecisionScenario:
+def generate_scenario_1_do_nothing() -> Tuple[OracleDecisionScenario, OracleEpisode]:
     """Scenario 1: Nominal healthy operating conditions where Inaction is optimal."""
     base_ep = generate_single_episode(SplitType.TEST, index=101, regime="nominal", length=100)
     t_star = 40
@@ -176,10 +176,10 @@ def generate_scenario_1_do_nothing() -> OracleDecisionScenario:
         oracle_optimal_candidate_id=opt_id,
         expected_decision_class=DecisionClass.RECOMMEND,
         oracle_rationale=rationale,
-    )
+    ), base_ep
 
 
-def generate_scenario_2_valve() -> OracleDecisionScenario:
+def generate_scenario_2_valve() -> Tuple[OracleDecisionScenario, OracleEpisode]:
     """Scenario 2: Flow bottleneck caused by partially closed valve."""
     base_ep = generate_single_episode(SplitType.TEST, index=102, regime="moderate_load", length=100)
     t_star = 40
@@ -213,10 +213,10 @@ def generate_scenario_2_valve() -> OracleDecisionScenario:
         oracle_optimal_candidate_id=opt_id,
         expected_decision_class=DecisionClass.RECOMMEND,
         oracle_rationale=rationale,
-    )
+    ), base_ep
 
 
-def generate_scenario_3_throttle() -> OracleDecisionScenario:
+def generate_scenario_3_throttle() -> Tuple[OracleDecisionScenario, OracleEpisode]:
     """Scenario 3: Severe computational heat generation where throttling is the root-cause fix."""
     base_ep = generate_single_episode(SplitType.TEST, index=103, regime="moderate_load", length=100)
     t_star = 40
@@ -251,28 +251,29 @@ def generate_scenario_3_throttle() -> OracleDecisionScenario:
         oracle_optimal_candidate_id=opt_id,
         expected_decision_class=DecisionClass.RECOMMEND,
         oracle_rationale=rationale,
-    )
+    ), base_ep
 
 
-def generate_scenario_4_pump() -> OracleDecisionScenario:
-    """Scenario 4: Hydraulic delivery bottleneck where increasing pump stage is optimal."""
-    base_ep = generate_single_episode(SplitType.TEST, index=104, regime="moderate_wear", length=100)
+def generate_scenario_4_pump() -> Tuple[OracleDecisionScenario, OracleEpisode]:
+    """Scenario 4: Pump failure / low flow head where increasing pump stage is optimal."""
+    base_ep = generate_single_episode(SplitType.TEST, index=104, regime="moderate_load", length=100)
     t_star = 40
-    base_ep.actions[t_star:, 2] = 1.0  # Pump stage 1
+    # Simulate degraded pump stage in baseline
+    base_ep.actions[t_star:, 2] = 1.0
 
     candidates = [
         CandidateActionSpec("cand_do_nothing", "A_pump", 1.0),
         CandidateActionSpec("cand_pump_3", "A_pump", 3.0),
         CandidateActionSpec("cand_pump_4", "A_pump", 4.0),
-        CandidateActionSpec("cand_valve_85", "A_valve", 85.0),
+        CandidateActionSpec("cand_valve_90", "A_valve", 90.0),
         CandidateActionSpec("cand_throttle_40", "A_throttle", 40.0),
     ]
 
     outcomes = {c.candidate_id: simulate_candidate_oracle(base_ep, t_star, c) for c in candidates}
     opt_id = "cand_pump_3"
     rationale = (
-        "Pump stage 1 provides insufficient fluid delivery across the loop. "
-        "Increasing pump to stage 3 quadruples coolant flow to 24 L/min without overpressurizing the manifold (P_sys < 4.2 bar)."
+        "Degraded pump delivery (stage 1) reduces fluid circulation. Increasing pump to stage 3 safely restores convective heat transfer "
+        "without incurring excessive pressure risk or mechanical strain."
     )
 
     return OracleDecisionScenario(
@@ -287,15 +288,16 @@ def generate_scenario_4_pump() -> OracleDecisionScenario:
         oracle_optimal_candidate_id=opt_id,
         expected_decision_class=DecisionClass.RECOMMEND,
         oracle_rationale=rationale,
-    )
+    ), base_ep
 
 
-def generate_scenario_5_combined() -> OracleDecisionScenario:
-    """Scenario 5: Multi-bottleneck regime where a combined valve + pump intervention is Pareto-optimal."""
+def generate_scenario_5_combined() -> Tuple[OracleDecisionScenario, OracleEpisode]:
+    """Scenario 5: Multi-variable constraint where combined valve + pump intervention is optimal."""
     base_ep = generate_single_episode(SplitType.TEST, index=105, regime="moderate_load", length=100)
     t_star = 40
+    # Restrict valve and reduce pump in baseline
     base_ep.actions[t_star:, 0] = 40.0
-    base_ep.actions[t_star:, 2] = 2.0
+    base_ep.actions[t_star:, 2] = 1.0
 
     candidates = [
         CandidateActionSpec("cand_do_nothing", "A_valve", 40.0),
@@ -324,10 +326,10 @@ def generate_scenario_5_combined() -> OracleDecisionScenario:
         oracle_optimal_candidate_id=opt_id,
         expected_decision_class=DecisionClass.RECOMMEND,
         oracle_rationale=rationale,
-    )
+    ), base_ep
 
 
-def generate_scenario_6_all_unsafe() -> OracleDecisionScenario:
+def generate_scenario_6_all_unsafe() -> Tuple[OracleDecisionScenario, OracleEpisode]:
     """Scenario 6: Catastrophic multi-fault regime where all candidates violate safety constraints -> ABSTAIN."""
     base_ep = generate_single_episode(SplitType.TEST, index=106, regime="moderate_ambient", length=100)
     t_star = 30
@@ -370,7 +372,7 @@ def generate_scenario_6_all_unsafe() -> OracleDecisionScenario:
         oracle_optimal_candidate_id=opt_id,
         expected_decision_class=DecisionClass.ABSTAIN,
         oracle_rationale=rationale,
-    )
+    ), base_ep
 
 
 def main() -> None:
@@ -394,19 +396,15 @@ def main() -> None:
     manifest = {"benchmark_version": "1.0.0", "total_scenarios": len(generators), "scenarios": []}
 
     for gen_fn in generators:
-        orc_scen = gen_fn()
+        orc_scen, base_ep = gen_fn()
         scen_subdir = scenarios_dir / orc_scen.scenario_id
         scen_subdir.mkdir(parents=True, exist_ok=True)
 
         # Save Oracle record
         orc_scen.save_npz(scen_subdir / "oracle.npz")
 
-        # Save Learner record (strict firewall)
-        learner_ep = generate_single_episode(SplitType.TEST, index=100, regime="nominal", length=100)
-        # Match observations and actions
-        learner_ep.observations = orc_scen.true_state_history[:, :8]
-        learner_ep.actions = orc_scen.true_state_history[:, :4]
-        learner_scen = orc_scen.to_learner_scenario(learner_ep)
+        # Save Learner record (strict firewall with genuine observations and actions)
+        learner_scen = orc_scen.to_learner_scenario(base_ep)
         learner_scen.save_npz(scen_subdir / "learner.npz")
 
         manifest["scenarios"].append({

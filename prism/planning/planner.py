@@ -89,7 +89,7 @@ class InterventionPlanner:
         historical_observations: np.ndarray | Tensor,
         historical_actions: np.ndarray | Tensor,
         future_actions: np.ndarray | Tensor,
-        custom_candidates: Optional[List[InterventionSpec]] = None,
+        custom_candidates: Optional[List[Any]] = None,
         intervention_time: Optional[int] = None,
         horizons: Tuple[int, ...] = (1, 5, 10, 20, 40),
     ) -> PlanRecommendation:
@@ -99,6 +99,18 @@ class InterventionPlanner:
 
         t_pre = historical_observations.shape[0] if isinstance(historical_observations, np.ndarray) else historical_observations.shape[1]
         t_star = intervention_time if intervention_time is not None else (t_pre - 1)
+
+        # Ensure future_actions covers maximum horizon
+        max_h = max(horizons)
+        if isinstance(future_actions, np.ndarray):
+            if future_actions.shape[0] < max_h:
+                last_act = historical_actions[-1:]
+                pad_len = max_h - future_actions.shape[0]
+                pad_acts = np.repeat(last_act, pad_len, axis=0)
+                future_actions = np.concatenate([future_actions, pad_acts], axis=0) if future_actions.shape[0] > 0 else pad_acts
+
+        # Extract baseline action at t*
+        base_act_t_star = historical_actions[-1] if isinstance(historical_actions, np.ndarray) else historical_actions[0, -1].cpu().numpy()
 
         # 1. Simulate Factual Baseline (No-op intervention)
         baseline_sim = self.simulator.simulate(
@@ -111,33 +123,52 @@ class InterventionPlanner:
             deterministic=True,
         )
 
-        # 2. Build candidate specs
+        # 2. Build candidate specs (supporting InterventionSpec, CandidateActionSpec, or (id, spec) tuples)
+        parsed_candidates: List[Tuple[str, Optional[InterventionSpec], bool]] = []
         if custom_candidates is not None:
-            candidates = custom_candidates
+            for item in custom_candidates:
+                if hasattr(item, "candidate_id") and hasattr(item, "to_specs"):
+                    # CandidateActionSpec
+                    specs = item.to_specs(t_star)
+                    is_compound = len(specs) > 1
+                    spec = specs[0] if len(specs) > 0 else None
+                    parsed_candidates.append((item.candidate_id, spec, is_compound))
+                elif isinstance(item, tuple) and len(item) == 2:
+                    cand_id, spec = item
+                    parsed_candidates.append((cand_id, spec, False))
+                elif isinstance(item, InterventionSpec):
+                    parsed_candidates.append((f"cand_{item.target}_{int(item.value)}", item, False))
+                else:
+                    parsed_candidates.append((str(item), None, False))
         else:
-            candidates = [
-                InterventionSpec(
-                    target=tgt,
-                    value=val,
-                    intervention_time=t_star,
-                    intervention_type=itype,
-                )
-                for tgt, val, itype in self.candidate_grid
-            ]
+            for tgt, val, itype in self.candidate_grid:
+                spec = InterventionSpec(target=tgt, value=val, intervention_time=t_star, intervention_type=itype)
+                parsed_candidates.append((f"cand_{tgt}_{int(val)}", spec, False))
 
         # 3. Simulate and evaluate all candidate interventions
         evaluations: List[CandidateEvaluation] = []
 
-        for cand_spec in candidates:
-            sim_res = self.simulator.simulate(
-                pre_observations=historical_observations,
-                pre_actions=historical_actions,
-                future_actions=future_actions,
-                intervention=cand_spec,
-                intervention_time=t_star,
-                horizons=horizons,
-                deterministic=True,
+        for cand_id, cand_spec, is_compound in parsed_candidates:
+            # Check for do-nothing / no-op candidate
+            is_do_nothing = (
+                cand_spec is None
+                or cand_id == "cand_do_nothing"
+                or (cand_spec.target == "A_valve" and abs(cand_spec.value - float(base_act_t_star[0])) < 1e-3 and abs(float(base_act_t_star[2]) - 2.0) < 1e-3)
+                or (cand_spec.target in ["none", "do_nothing"])
             )
+
+            if is_do_nothing and cand_id == "cand_do_nothing":
+                sim_res = baseline_sim
+            else:
+                sim_res = self.simulator.simulate(
+                    pre_observations=historical_observations,
+                    pre_actions=historical_actions,
+                    future_actions=future_actions,
+                    intervention=cand_spec,
+                    intervention_time=t_star,
+                    horizons=horizons,
+                    deterministic=True,
+                )
 
             # Compute latent novelty of candidate rollout
             novelty = float(np.mean(
@@ -150,8 +181,12 @@ class InterventionPlanner:
                 spec=cand_spec,
                 sim_result=sim_res,
                 latent_novelty=novelty,
+                baseline_actions=base_act_t_star,
+                candidate_id=cand_id,
+                is_compound_intervention=is_compound,
             )
             evaluations.append(cand_eval)
+
 
         # 4. Filter safe candidates and rank by utility score
         safe_candidates = [c for c in evaluations if c.is_safe]
