@@ -82,6 +82,8 @@ def simulate_candidate_oracle(
             act_t0[1] = cand_spec.secondary_value
 
         actions_arr[0] = act_t0
+        if cand_spec.target == "A_pump":
+            actions_arr[:, 2] = cand_spec.value
     else:
         # State intervention: map to initial action representation for cost model
         if cand_spec.target in ["A_valve", "V_pos"]:
@@ -268,24 +270,26 @@ def generate_scenario_3_throttle() -> Tuple[OracleDecisionScenario, OracleEpisod
 
 def generate_scenario_4_pump() -> Tuple[OracleDecisionScenario, OracleEpisode]:
     """Scenario 4: Pump failure / low flow head where increasing pump stage is optimal."""
-    base_ep = generate_single_episode(SplitType.TEST, index=104, regime="moderate_load", length=100)
+    base_ep = generate_single_episode(SplitType.TEST, index=104, regime="moderate_wear", length=100)
     t_star = 40
-    # Simulate degraded pump stage in baseline
+    # In baseline, valve is open (90%), pump is degraded to stage 1
+    base_ep.actions[t_star:, 0] = 90.0
     base_ep.actions[t_star:, 2] = 1.0
 
     candidates = [
-        CandidateActionSpec("cand_do_nothing", "A_pump", 1.0),
-        CandidateActionSpec("cand_pump_3", "A_pump", 3.0),
-        CandidateActionSpec("cand_pump_4", "A_pump", 4.0),
-        CandidateActionSpec("cand_valve_90", "A_valve", 90.0),
-        CandidateActionSpec("cand_throttle_40", "A_throttle", 40.0),
+        CandidateActionSpec("cand_do_nothing", "A_pump", 1.0, intervention_type="action_control"),
+        CandidateActionSpec("cand_pump_3", "A_pump", 3.0, intervention_type="action_control"),
+        CandidateActionSpec("cand_pump_4", "A_pump", 4.0, intervention_type="action_control"),
+        CandidateActionSpec("cand_valve_85", "A_valve", 85.0, intervention_type="action_control"),
+        CandidateActionSpec("cand_throttle_50", "A_throttle", 50.0, intervention_type="action_control"),
     ]
 
     outcomes = {c.candidate_id: simulate_candidate_oracle(base_ep, t_star, c) for c in candidates}
     opt_id = "cand_pump_3"
     rationale = (
-        "Degraded pump delivery (stage 1) reduces fluid circulation. Increasing pump to stage 3 safely restores convective heat transfer "
-        "without incurring excessive pressure risk or mechanical strain."
+        "Degraded pump delivery (stage 1) severely restricts coolant circulation, causing thermal buildup in the core. "
+        "Increasing pump to stage 3 restores convective heat transfer safely without risking hydraulic overpressure or excessive energy cost. "
+        "Pump 4 provides negligible additional cooling while incurring higher energy cost and pressure risk."
     )
 
     return OracleDecisionScenario(

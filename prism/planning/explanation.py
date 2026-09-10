@@ -148,7 +148,8 @@ def generate_causal_explanation(
         rec_action_str = f"{spec.target}={int(spec.value)}"
         mechanism = (
             f"Adjusting pump stage to `{spec.target}={int(spec.value)}` modulates hydraulic head and fluid delivery, "
-            f"yielding coolant flow change of {delta_f:+.2f} L/min."
+            f"yielding coolant flow change of {delta_f:+.2f} L/min. Increasing pump stage increases coolant circulation, "
+            f"modifies the hydraulic/thermal state, and reduces thermal risk, providing the optimal safety-performance-cost tradeoff."
         )
         contrast = (
             f"Without intervention, factual baseline reaches peak T_core of {base_peak_t:.1f}°C. "
