@@ -198,15 +198,28 @@ class LearnedInterventionSimulator:
             # Apply action modifications starting at t*
             intervened_actions = operator.get_modified_actions(full_rollout_actions, t_star=t_star).to(self.device)
 
+            # Apply latent state surgery for state interventions do(X_j = x)
+            z_t_star_intervened = operator.project_latent_state(
+                decoder=self.world_model.decoder,
+                normalizer=self.normalizer,
+                z_init=z_t_star_mean,
+            )
+
             if deterministic:
                 int_traj = self.world_model.rollout_manager.rollout_deterministic(
-                    initial_z=z_t_star_mean,  # IDENTICAL INITIAL LATENT STATE!
+                    initial_z=z_t_star_intervened,
                     actions=intervened_actions,
                 )
                 int_obs_norm = int_traj.observations.mean  # [1, H, 8]
             else:
+                z_int_dist = LatentDistribution(
+                    mean=z_t_star_intervened,
+                    logvar=z_t_star_logvar,
+                    min_std=self.world_model.config.model.min_std,
+                    max_std=self.world_model.config.model.max_std,
+                )
                 int_traj = self.world_model.rollout_manager.rollout_monte_carlo(
-                    initial_z_dist=z_t_star_dist,  # IDENTICAL INITIAL LATENT STATE!
+                    initial_z_dist=z_int_dist,
                     actions=intervened_actions,
                     num_samples=num_particles,
                 )
@@ -217,7 +230,7 @@ class LearnedInterventionSimulator:
             # Apply state clamps in physical observation space
             int_obs_phys_t = operator.apply_observation_clamps(
                 int_obs_phys_t,
-                t_star=t_star + 1,  # Rollout step 0 corresponds to t* + 1
+                t_star=t_star,  # Rollout step 0 corresponds to t*
                 normalizer=None,
                 is_normalized=False,
             )
