@@ -173,8 +173,8 @@ class InterventionOperator:
         decoder: torch.nn.Module,
         normalizer: Any,
         z_init: Tensor,
-        steps: int = 40,
-        lr: float = 0.05,
+        steps: int = 15,
+        lr: float = 0.08,
         preserve_weight: float = 5.0,
         reg_weight: float = 0.005,
     ) -> Tensor:
