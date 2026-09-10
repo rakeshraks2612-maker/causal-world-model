@@ -55,13 +55,40 @@ class CausalExplanation:
 
 
 def generate_causal_explanation(
-    best_candidate: CandidateEvaluation,
+    best_candidate: Optional[CandidateEvaluation],
     all_candidates: List[CandidateEvaluation],
     baseline_result: LearnedInterventionResult,
 ) -> CausalExplanation:
-    """Generate comprehensive causal explanation for the selected candidate."""
-    spec = best_candidate.spec
+    """Generate comprehensive causal explanation for the selected candidate or abstention."""
     base_peak_t = float(np.max(baseline_result.baseline_observations[:, 0]))
+
+    if best_candidate is None:
+        # All candidates rejected / Abstention state
+        if base_peak_t >= 95.0:
+            diagnosis = (
+                f"Under factual baseline trajectory, system core temperature reaches {base_peak_t:.1f}°C, "
+                f"violating safe thermal limits and risking thermal runaway."
+            )
+        else:
+            diagnosis = f"Factual baseline operates at Peak T_core = {base_peak_t:.1f}°C, but all candidate interventions are infeasible."
+
+        rejected = []
+        for cand in all_candidates:
+            reason = f"Rejected: {'; '.join(cand.safety_violations)}" if not cand.is_safe else "Rejected due to system abstention."
+            rejected.append({"candidate": f"{cand.spec.target}={cand.spec.value}", "reason": reason})
+
+        return CausalExplanation(
+            summary="Abstaining from intervention: No candidate satisfied all hard safety constraints.",
+            diagnosis=diagnosis,
+            recommended_action="ABSTAIN",
+            physical_mechanism="All evaluated candidate interventions violate either thermal limits, pressure constraints, flow minimums, or latent support.",
+            counterfactual_contrast="All candidate interventions cross hard safety envelopes. Autonomous intervention withheld to prevent compounding risk.",
+            rejected_alternatives=rejected,
+            confidence_level="HIGH (All candidates verified unsafe / OOD)",
+            safety_verdict="🔴 ALL CANDIDATES UNSAFE / ABSTAIN REQUIRED",
+        )
+
+    spec = best_candidate.spec
     cand_peak_t = best_candidate.peak_t_core
     delta_t = cand_peak_t - base_peak_t
     delta_f = best_candidate.causal_delta_f_cool
@@ -133,3 +160,4 @@ def generate_causal_explanation(
         confidence_level="HIGH (Within Latent Manifold Support)",
         safety_verdict=verdict,
     )
+

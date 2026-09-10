@@ -56,6 +56,13 @@ class UtilityWeights:
     failure_penalty: float = 1000.0    # Massive penalty for critical safety violation
 
 
+from prism.planning.safety_constraints import (
+    SafetySeverity,
+    SafetyViolationReason,
+    DecisionSafetyConfig,
+    SafetyResult,
+    SafetyConstraintEngine,
+)
 from prism.planning.cost_model import DecisionCostConfig, ActionCostModel, CostBreakdown
 
 
@@ -77,6 +84,7 @@ class CandidateEvaluation:
     latent_novelty: float
     causal_delta_t_core: float
     causal_delta_f_cool: float
+    safety_result: Optional[SafetyResult] = None
     cost_breakdown: Optional[CostBreakdown] = None
     simulation_result: Optional[LearnedInterventionResult] = None
 
@@ -87,6 +95,7 @@ class CandidateEvaluation:
             "value": self.spec.value,
             "is_safe": self.is_safe,
             "safety_violations": self.safety_violations,
+            "safety_result": self.safety_result.to_dict() if self.safety_result else None,
             "utility_score": float(self.utility_score),
             "peak_t_core": float(self.peak_t_core),
             "max_pressure": float(self.max_pressure),
@@ -99,6 +108,7 @@ class CandidateEvaluation:
             "causal_delta_f_cool": float(self.causal_delta_f_cool),
             "cost_breakdown": self.cost_breakdown.to_dict() if self.cost_breakdown else None,
         }
+
 
 
 class PlanningObjective:
@@ -206,6 +216,8 @@ class PlanningObjective:
             latent_novelty=latent_novelty,
             causal_delta_t_core=eff_h.delta_t_core,
             causal_delta_f_cool=eff_h.delta_f_cool,
+            safety_result=breakdown.safety_result,
             cost_breakdown=breakdown,
             simulation_result=sim_result,
         )
+

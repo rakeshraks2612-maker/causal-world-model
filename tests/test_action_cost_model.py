@@ -235,7 +235,7 @@ def test_thermal_boundary_semantics(cost_model: ActionCostModel, t_core: float, 
     is_safe, violations = cost_model.check_hard_safety(peak_t_core=t_core, max_pressure=3.0, min_flow=20.0)
     assert is_safe == expected_safe
     if not expected_safe:
-        assert any("T_core peak" in v for v in violations)
+        assert any("temperature" in v.lower() for v in violations)
 
 
 @pytest.mark.parametrize("p_sys,expected_safe", [
@@ -247,7 +247,7 @@ def test_pressure_boundary_semantics(cost_model: ActionCostModel, p_sys: float, 
     is_safe, violations = cost_model.check_hard_safety(peak_t_core=80.0, max_pressure=p_sys, min_flow=20.0)
     assert is_safe == expected_safe
     if not expected_safe:
-        assert any("P_sys max" in v for v in violations)
+        assert any("pressure" in v.lower() for v in violations)
 
 
 @pytest.mark.parametrize("f_cool,expected_safe", [
@@ -259,7 +259,7 @@ def test_flow_boundary_semantics(cost_model: ActionCostModel, f_cool: float, exp
     is_safe, violations = cost_model.check_hard_safety(peak_t_core=80.0, max_pressure=3.0, min_flow=f_cool)
     assert is_safe == expected_safe
     if not expected_safe:
-        assert any("F_cool min" in v for v in violations)
+        assert any("flow" in v.lower() for v in violations)
 
 
 @pytest.mark.parametrize("novelty,expected_safe", [
@@ -273,7 +273,8 @@ def test_latent_novelty_boundary_semantics(cost_model: ActionCostModel, novelty:
     )
     assert is_safe == expected_safe
     if not expected_safe:
-        assert any("Latent novelty" in v for v in violations)
+        assert any("novelty" in v.lower() for v in violations)
+
 
 
 # =========================================================================

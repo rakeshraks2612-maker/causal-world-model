@@ -1,5 +1,12 @@
 """PRISM Decision & Intervention Planning Subsystem (Phase 4)."""
 
+from prism.planning.safety_constraints import (
+    SafetySeverity,
+    SafetyViolationReason,
+    DecisionSafetyConfig,
+    SafetyResult,
+    SafetyConstraintEngine,
+)
 from prism.planning.cost_model import (
     DecisionCostConfig,
     CostBreakdown,
@@ -21,6 +28,11 @@ from prism.planning.planner import (
 )
 
 __all__ = [
+    "SafetySeverity",
+    "SafetyViolationReason",
+    "DecisionSafetyConfig",
+    "SafetyResult",
+    "SafetyConstraintEngine",
     "DecisionCostConfig",
     "CostBreakdown",
     "ActionCostModel",
@@ -33,4 +45,5 @@ __all__ = [
     "InterventionPlanner",
     "PlanRecommendation",
 ]
+
 

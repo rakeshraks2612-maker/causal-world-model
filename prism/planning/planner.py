@@ -159,7 +159,7 @@ class InterventionPlanner:
         elapsed_ms = (time.perf_counter() - start_t) * 1000.0
 
         if safe_candidates:
-            # Sort by utility descending
+            # Sort only safe candidates by utility descending
             safe_candidates.sort(key=lambda c: c.utility_score, reverse=True)
             best_cand = safe_candidates[0]
 
@@ -180,18 +180,17 @@ class InterventionPlanner:
             )
         else:
             # All candidates violated safety or OOD constraints -> Abstain
-            evaluations.sort(key=lambda c: c.utility_score, reverse=True)
-            fallback_cand = evaluations[0]
+            # Authoritative Safety Gate: recommended_candidate MUST be None
             reason = "No candidate intervention satisfied all physical safety and latent support constraints."
 
             explanation = generate_causal_explanation(
-                best_candidate=fallback_cand,
+                best_candidate=None,
                 all_candidates=evaluations,
                 baseline_result=baseline_sim,
             )
 
             return PlanRecommendation(
-                recommended_candidate=fallback_cand,
+                recommended_candidate=None,
                 should_abstain=True,
                 abstention_reason=reason,
                 all_evaluated_candidates=evaluations,
@@ -199,3 +198,4 @@ class InterventionPlanner:
                 baseline_simulation=baseline_sim,
                 planning_time_ms=elapsed_ms,
             )
+

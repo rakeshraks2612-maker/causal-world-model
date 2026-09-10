@@ -51,6 +51,15 @@ class DecisionCostConfig:
         return asdict(self)
 
 
+from prism.planning.safety_constraints import (
+    SafetySeverity,
+    SafetyViolationReason,
+    DecisionSafetyConfig,
+    SafetyResult,
+    SafetyConstraintEngine,
+)
+
+
 @dataclass
 class CostBreakdown:
     """Detailed decomposition of utility and cost components for an intervention."""
@@ -67,6 +76,7 @@ class CostBreakdown:
     net_utility: float
     is_safe: bool
     safety_violations: List[str]
+    safety_result: Optional[SafetyResult] = None
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -82,14 +92,26 @@ class CostBreakdown:
             "net_utility": float(self.net_utility),
             "is_safe": self.is_safe,
             "safety_violations": self.safety_violations,
+            "safety_result": self.safety_result.to_dict() if self.safety_result else None,
         }
 
 
 class ActionCostModel:
     """Evaluates multi-objective utility and verifies hard safety constraints."""
 
-    def __init__(self, config: Optional[DecisionCostConfig] = None) -> None:
+    def __init__(
+        self,
+        config: Optional[DecisionCostConfig] = None,
+        safety_config: Optional[DecisionSafetyConfig] = None,
+    ) -> None:
         self.config = config or DecisionCostConfig()
+        s_cfg = safety_config or DecisionSafetyConfig(
+            thermal_hard_limit=self.config.thermal_hard_limit,
+            pressure_hard_limit=self.config.pressure_hard_limit,
+            flow_hard_limit=self.config.flow_hard_limit,
+            latent_novelty_hard_limit=self.config.latent_novelty_hard_limit,
+        )
+        self.safety_engine = SafetyConstraintEngine(s_cfg)
 
     def check_hard_safety(
         self,
@@ -97,26 +119,23 @@ class ActionCostModel:
         max_pressure: float,
         min_flow: float,
         latent_novelty: float = 0.0,
+        t_core_std: float = 0.0,
+        p_sys_std: float = 0.0,
+        f_cool_std: float = 0.0,
+        use_uncertainty_bounds: bool = False,
     ) -> Tuple[bool, List[str]]:
-        """Strict lexicographical hard constraint gate.
-        
-        Boundary semantics:
-        - T_core >= thermal_hard_limit (95.0°C) -> FAIL
-        - P_sys >= pressure_hard_limit (5.50 bar) -> FAIL
-        - F_cool <= flow_hard_limit (8.00 L/min) -> FAIL
-        - Novelty > latent_novelty_hard_limit (15.0) -> FAIL
-        """
-        violations = []
-        if peak_t_core >= self.config.thermal_hard_limit:
-            violations.append(f"T_core peak ({peak_t_core:.2f}°C) >= hard limit ({self.config.thermal_hard_limit:.2f}°C)")
-        if max_pressure >= self.config.pressure_hard_limit:
-            violations.append(f"P_sys max ({max_pressure:.2f} bar) >= hard limit ({self.config.pressure_hard_limit:.2f} bar)")
-        if min_flow <= self.config.flow_hard_limit:
-            violations.append(f"F_cool min ({min_flow:.2f} L/min) <= hard minimum ({self.config.flow_hard_limit:.2f} L/min)")
-        if latent_novelty > self.config.latent_novelty_hard_limit:
-            violations.append(f"Latent novelty ({latent_novelty:.2f}) > support limit ({self.config.latent_novelty_hard_limit:.2f})")
-
-        return len(violations) == 0, violations
+        """Strict lexicographical hard constraint gate via canonical safety engine."""
+        res = self.safety_engine.evaluate(
+            peak_t_core=peak_t_core,
+            max_pressure=max_pressure,
+            min_flow=min_flow,
+            latent_novelty=latent_novelty,
+            t_core_std=t_core_std,
+            p_sys_std=p_sys_std,
+            f_cool_std=f_cool_std,
+            use_uncertainty_bounds=use_uncertainty_bounds,
+        )
+        return res.is_safe, res.violations
 
     def evaluate_cost(
         self,
@@ -127,15 +146,25 @@ class ActionCostModel:
         actions_at_t_star: np.ndarray | List[float],
         baseline_actions_at_t_star: np.ndarray | List[float],
         latent_novelty: float = 0.0,
+        t_core_std: float = 0.0,
+        p_sys_std: float = 0.0,
+        f_cool_std: float = 0.0,
+        use_uncertainty_bounds: bool = False,
         is_compound_intervention: bool = False,
     ) -> CostBreakdown:
         """Compute full cost decomposition and net utility score."""
-        is_safe, violations = self.check_hard_safety(
+        safety_res = self.safety_engine.evaluate(
             peak_t_core=peak_t_core,
             max_pressure=max_pressure,
             min_flow=min_flow,
             latent_novelty=latent_novelty,
+            t_core_std=t_core_std,
+            p_sys_std=p_sys_std,
+            f_cool_std=f_cool_std,
+            use_uncertainty_bounds=use_uncertainty_bounds,
         )
+        is_safe = safety_res.is_safe
+        violations = safety_res.violations
 
         act = np.asarray(actions_at_t_star)
         base_act = np.asarray(baseline_actions_at_t_star)
@@ -181,7 +210,7 @@ class ActionCostModel:
         )
 
         # Net Utility = Performance Benefit - Total Operational Costs
-        # Lexicographical Dominance: Unsafe actions receive prohibitive -1000.0 offset
+        # Unsafe candidates receive penalty offset defensively, but safety filtering rejects them prior to ranking
         raw_utility = perf_benefit - total_cost
         net_utility = raw_utility if is_safe else (raw_utility - 1000.0)
 
@@ -198,4 +227,6 @@ class ActionCostModel:
             net_utility=net_utility,
             is_safe=is_safe,
             safety_violations=violations,
+            safety_result=safety_res,
         )
+
