@@ -87,15 +87,59 @@ class CausalWorldModel(nn.Module):
 
         return posterior_latents, prior_transitions, reconstructed_obs
 
+    def forward_multistep(
+        self,
+        inputs: ModelInputs,
+        rollout_horizon: int = 1,
+    ) -> Tuple[
+        LatentDistribution,
+        LatentDistribution,
+        ObservationDistribution,
+        Optional[List[ObservationDistribution]],
+        Optional[List[Tuple[Tensor, Tensor]]],
+    ]:
+        """Forward pass computing both single-step posterior reconstructions and K-step autoregressive rollouts."""
+        posterior_latents, _ = self.encoder(inputs)
+        z_samples = posterior_latents.sample(deterministic=not self.training)
+
+        z_curr = z_samples[:, :-1]
+        act_curr = inputs.actions[:, :-1]
+        prior_transitions = self.transition(z_curr, act_curr)
+        reconstructed_obs = self.decoder(z_samples)
+
+        rollout_obs: Optional[List[ObservationDistribution]] = None
+        rollout_targets: Optional[List[Tuple[Tensor, Tensor]]] = None
+
+        T = inputs.observations.shape[1]
+        if rollout_horizon > 1 and T > rollout_horizon:
+            K = min(rollout_horizon, T - 1)
+            rollout_obs = []
+            rollout_targets = []
+            curr_z = z_samples[:, : T - K]  # [B, T - K, d_z]
+            for k in range(1, K + 1):
+                curr_act = inputs.actions[:, k - 1 : T - K + k - 1]
+                next_z_dist = self.transition(curr_z, curr_act)
+                curr_z = next_z_dist.sample(deterministic=not self.training)
+                obs_pred = self.decoder(curr_z)
+                target_k = inputs.observations[:, k : T - K + k]
+                mask_k = inputs.observation_mask[:, k : T - K + k]
+                rollout_obs.append(obs_pred)
+                rollout_targets.append((target_k, mask_k))
+
+        return posterior_latents, prior_transitions, reconstructed_obs, rollout_obs, rollout_targets
+
     def compute_loss(self, inputs: ModelInputs) -> LossOutput:
-        """Execute forward pass and compute complete variational loss."""
-        post_latents, prior_trans, recon_obs = self.forward(inputs)
+        """Execute forward pass and compute complete variational loss including multi-step rollout loss."""
+        k_rollout = self.config.loss_weights.rollout_horizon if self.config.loss_weights.lambda_rollout > 0.0 else 1
+        post_latents, prior_trans, recon_obs, r_obs, r_targets = self.forward_multistep(inputs, rollout_horizon=k_rollout)
         return self.loss_calculator.compute_loss(
             posterior_latents=post_latents,
             prior_transitions=prior_trans,
             reconstructed_obs=recon_obs,
             target_obs=inputs.observations,
             observation_mask=inputs.observation_mask,
+            rollout_obs=r_obs,
+            rollout_targets=r_targets,
         )
 
     def forecast(

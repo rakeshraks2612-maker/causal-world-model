@@ -20,12 +20,13 @@ class LossOutput:
     trans_loss: Tensor
     kl_loss: Tensor
     metrics: Dict[str, float]
+    rollout_loss: Optional[Tensor] = None
 
 
 class WorldModelLossCalculator:
     """Computes the complete variational world model loss objective.
     
-    L = lambda_obs * L_obs + lambda_trans * L_trans + beta_kl * L_kl
+    L = lambda_obs * L_obs + lambda_trans * L_trans + beta_kl * L_kl + lambda_rollout * L_rollout
     """
 
     def __init__(self, weights: Optional[LossWeightsConfig] = None) -> None:
@@ -38,6 +39,8 @@ class WorldModelLossCalculator:
         reconstructed_obs: ObservationDistribution,  # p_theta(O_t | Z_t) [B, T, 8]
         target_obs: Tensor,                          # Ground truth observations [B, T, 8]
         observation_mask: Tensor,                    # Binary mask [B, T, 8]
+        rollout_obs: Optional[List[ObservationDistribution]] = None,
+        rollout_targets: Optional[List[Tuple[Tensor, Tensor]]] = None,
     ) -> LossOutput:
         """Compute the full variational ELBO loss across a sequence batch.
         
@@ -47,6 +50,8 @@ class WorldModelLossCalculator:
             reconstructed_obs: Decoder predictions p(O_t | Z_t) [B, T, 8]
             target_obs: True observation targets [B, T, 8]
             observation_mask: Sensor availability mask [B, T, 8]
+            rollout_obs: Optional list of predicted ObservationDistributions at rollout horizons [1..K]
+            rollout_targets: Optional list of (target_obs, observation_mask) tuples at rollout horizons [1..K]
             
         Returns:
             LossOutput containing scalar total_loss and decomposed terms
@@ -73,11 +78,22 @@ class WorldModelLossCalculator:
         prior_kl = posterior_latents.kl_divergence(prior=None)  # [B, T]
         kl_loss = torch.mean(prior_kl)
 
+        # 4. Multi-step Autoregressive Rollout Loss
+        rollout_nll = torch.tensor(0.0, device=obs_nll.device)
+        if rollout_obs is not None and rollout_targets is not None and len(rollout_obs) > 0:
+            step_nlls = []
+            for r_obs, (r_target, r_mask) in zip(rollout_obs, rollout_targets):
+                r_log_p = r_obs.masked_log_prob(r_target, r_mask)
+                step_nlls.append(-torch.mean(r_log_p))
+            if step_nlls:
+                rollout_nll = torch.stack(step_nlls).mean()
+
         # Total Weighted Loss
         total_loss = (
             self.weights.lambda_obs * obs_nll
             + self.weights.lambda_trans * trans_loss
             + self.weights.beta_kl * kl_loss
+            + self.weights.lambda_rollout * rollout_nll
         )
 
         metrics = {
@@ -85,6 +101,7 @@ class WorldModelLossCalculator:
             "loss/obs_nll": float(obs_nll.detach().item()),
             "loss/trans_kl": float(trans_loss.detach().item()),
             "loss/prior_kl": float(kl_loss.detach().item()),
+            "loss/rollout_nll": float(rollout_nll.detach().item()),
         }
 
         return LossOutput(
@@ -93,4 +110,5 @@ class WorldModelLossCalculator:
             trans_loss=trans_loss,
             kl_loss=kl_loss,
             metrics=metrics,
+            rollout_loss=rollout_nll,
         )

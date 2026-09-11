@@ -46,6 +46,8 @@ class LossWeightsConfig:
     lambda_obs: float = 1.0
     lambda_trans: float = 1.0
     beta_kl: float = 0.01
+    lambda_rollout: float = 0.0
+    rollout_horizon: int = 1
 
 
 @dataclass

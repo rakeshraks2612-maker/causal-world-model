@@ -155,3 +155,33 @@ def test_world_model_loss_backward_pass() -> None:
         assert p.grad is not None
     for p in model.decoder.parameters():
         assert p.grad is not None
+
+
+def test_multistep_rollout_loss_backward_pass() -> None:
+    """Test multi-step autoregressive rollout loss computation and gradient backpropagation."""
+    config = WorldModelConfig()
+    config.loss_weights.lambda_rollout = 1.0
+    config.loss_weights.rollout_horizon = 5
+
+    model = CausalWorldModel(config)
+    model.train()
+
+    obs = torch.randn(2, 20, 8, requires_grad=False)
+    mask = torch.ones(2, 20, 8, requires_grad=False)
+    act = torch.randn(2, 20, 4, requires_grad=False)
+    inputs = ModelInputs(observations=obs, observation_mask=mask, actions=act)
+
+    loss_output = model.compute_loss(inputs)
+    assert torch.isfinite(loss_output.total_loss)
+    assert loss_output.rollout_loss is not None
+    assert torch.isfinite(loss_output.rollout_loss)
+    assert "loss/rollout_nll" in loss_output.metrics
+
+    loss_output.total_loss.backward()
+
+    for p in model.encoder.parameters():
+        assert p.grad is not None
+    for p in model.transition.parameters():
+        assert p.grad is not None
+    for p in model.decoder.parameters():
+        assert p.grad is not None
