@@ -124,14 +124,14 @@ class InterventionPlanner:
         )
 
         # 2. Build candidate specs (supporting InterventionSpec, CandidateActionSpec, or (id, spec) tuples)
-        parsed_candidates: List[Tuple[str, Optional[InterventionSpec], bool]] = []
+        parsed_candidates: List[Tuple[str, Optional[Union[InterventionSpec, List[InterventionSpec]]], bool]] = []
         if custom_candidates is not None:
             for item in custom_candidates:
                 if hasattr(item, "candidate_id") and hasattr(item, "to_specs"):
                     # CandidateActionSpec
                     specs = item.to_specs(t_star)
                     is_compound = len(specs) > 1
-                    spec = specs[0] if len(specs) > 0 else None
+                    spec = specs if is_compound else (specs[0] if len(specs) == 1 else None)
                     parsed_candidates.append((item.candidate_id, spec, is_compound))
                 elif isinstance(item, tuple) and len(item) == 2:
                     cand_id, spec = item
@@ -153,8 +153,7 @@ class InterventionPlanner:
             is_do_nothing = (
                 cand_spec is None
                 or cand_id == "cand_do_nothing"
-                or (cand_spec.target == "A_valve" and abs(cand_spec.value - float(base_act_t_star[0])) < 1e-3 and abs(float(base_act_t_star[2]) - 2.0) < 1e-3)
-                or (cand_spec.target in ["none", "do_nothing"])
+                or (isinstance(cand_spec, InterventionSpec) and cand_spec.target in ["none", "do_nothing"])
             )
 
             if is_do_nothing and cand_id == "cand_do_nothing":

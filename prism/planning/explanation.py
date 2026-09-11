@@ -74,8 +74,17 @@ def generate_causal_explanation(
 
         rejected = []
         for cand in all_candidates:
+            if cand.spec is None:
+                target_str = cand.candidate_id
+            elif isinstance(cand.spec, list):
+                target_str = " + ".join([f"{s.target}={s.value:.1f}" for s in cand.spec])
+            elif cand.spec.target in ["none", "do_nothing"]:
+                target_str = cand.candidate_id
+            else:
+                target_str = f"{cand.spec.target}={cand.spec.value:.1f}"
+
             reason = f"Rejected: {'; '.join(cand.safety_violations)}" if not cand.is_safe else "Rejected due to system abstention."
-            rejected.append({"candidate": f"{cand.spec.target}={cand.spec.value}", "reason": reason})
+            rejected.append({"candidate": target_str, "reason": reason})
 
         return CausalExplanation(
             summary="Abstaining from intervention: No candidate satisfied all hard safety constraints.",
@@ -119,6 +128,18 @@ def generate_causal_explanation(
             f"Alternative interventions provide negligible thermal benefit while incurring unnecessary operational penalties."
         )
         summary = f"Maintain baseline operation (DO NOTHING): system is in stable thermal equilibrium (Peak T_core: {cand_peak_t:.1f}°C, Utility: {best_candidate.utility_score:+.2f})."
+    elif isinstance(spec, list):
+        rec_action_str = " + ".join([f"{s.target}={s.value:.1f}" for s in spec])
+        mechanism = (
+            f"Compound intervention on `{rec_action_str}` simultaneously modulates multiple physical channels, "
+            f"yielding combined coolant flow change of {delta_f:+.2f} L/min and achieving optimal multi-objective trade-off."
+        )
+        contrast = (
+            f"Without intervention, factual baseline reaches peak T_core of {base_peak_t:.1f}°C. "
+            f"Under recommended compound action `{rec_action_str}`, core temperature safely peaks at {cand_peak_t:.1f}°C "
+            f"(Net causal benefit: {delta_t:+.1f}°C)."
+        )
+        summary = f"Recommend compound intervention `{rec_action_str}` to achieve peak core temperature {cand_peak_t:.1f}°C (Utility: {best_candidate.utility_score:.2f})."
     elif spec.target in ["A_valve", "V_pos"]:
         rec_action_str = f"{spec.target}={spec.value:.1f}"
         mechanism = (
@@ -173,7 +194,15 @@ def generate_causal_explanation(
     for cand in all_candidates:
         if cand.candidate_id == best_candidate.candidate_id:
             continue
-        target_str = cand.candidate_id if (cand.spec is None or cand.spec.target in ["none", "do_nothing"]) else f"{cand.spec.target}={cand.spec.value:.1f}"
+        if cand.spec is None:
+            target_str = cand.candidate_id
+        elif isinstance(cand.spec, list):
+            target_str = " + ".join([f"{s.target}={s.value:.1f}" for s in cand.spec])
+        elif cand.spec.target in ["none", "do_nothing"]:
+            target_str = cand.candidate_id
+        else:
+            target_str = f"{cand.spec.target}={cand.spec.value:.1f}"
+
         if not cand.is_safe:
             reason = f"Rejected due to safety violations: {'; '.join(cand.safety_violations)}"
         else:

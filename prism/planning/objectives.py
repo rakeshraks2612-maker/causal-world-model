@@ -89,10 +89,12 @@ class CandidateEvaluation:
     simulation_result: Optional[LearnedInterventionResult] = None
 
     def to_dict(self) -> Dict[str, Any]:
+        primary_target = self.spec.target if isinstance(self.spec, InterventionSpec) else (self.spec[0].target if isinstance(self.spec, list) and len(self.spec) > 0 else "none")
+        primary_val = self.spec.value if isinstance(self.spec, InterventionSpec) else (self.spec[0].value if isinstance(self.spec, list) and len(self.spec) > 0 else 0.0)
         return {
             "candidate_id": self.candidate_id,
-            "target": self.spec.target,
-            "value": self.spec.value,
+            "target": primary_target,
+            "value": primary_val,
             "is_safe": self.is_safe,
             "safety_violations": self.safety_violations,
             "safety_result": self.safety_result.to_dict() if self.safety_result else None,
@@ -179,14 +181,16 @@ class PlanningObjective:
         # Candidate action at t* initialized to baseline action
         cand_act = list(base_act)
         if spec is not None:
-            if spec.target == "A_valve":
-                cand_act[0] = float(spec.value)
-            elif spec.target == "A_throttle":
-                cand_act[1] = float(spec.value)
-            elif spec.target == "A_pump":
-                cand_act[2] = float(spec.value)
-            elif spec.target == "A_flush":
-                cand_act[3] = float(spec.value)
+            spec_list = spec if isinstance(spec, list) else [spec]
+            for s in spec_list:
+                if s.target == "A_valve":
+                    cand_act[0] = float(s.value)
+                elif s.target == "A_throttle":
+                    cand_act[1] = float(s.value)
+                elif s.target == "A_pump":
+                    cand_act[2] = float(s.value)
+                elif s.target == "A_flush":
+                    cand_act[3] = float(s.value)
 
         breakdown = self.cost_model.evaluate_cost(
             peak_t_core=peak_t_core,
@@ -205,7 +209,8 @@ class PlanningObjective:
         h_target = 20 if 20 in sim_result.effects.horizon_effects else list(sim_result.effects.horizon_effects.keys())[-1]
         eff_h = sim_result.effects.horizon_effects[h_target]
 
-        cand_id = candidate_id or (f"cand_{spec.target}_{int(spec.value)}" if spec is not None else "cand_do_nothing")
+        primary_spec = spec[0] if isinstance(spec, list) else spec
+        cand_id = candidate_id or (f"cand_{primary_spec.target}_{int(primary_spec.value)}" if primary_spec is not None else "cand_do_nothing")
 
 
         return CandidateEvaluation(
