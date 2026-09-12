@@ -1,0 +1,39 @@
+# Render Blueprint Specification (render.yaml)
+# Deploy PRISM on Render with 1-click Blueprints
+# Reference: https://render.com/docs/blueprint-spec
+
+services:
+  # 1. PRISM Web Dashboard (Static Site)
+  # Free tier, ultra-fast global CDN, instant compilation, 100% uptime
+  - type: web
+    name: prism-web-dashboard
+    runtime: static
+    buildCommand: echo "Deploying PRISM Web Dashboard"
+    staticPublishPath: ./prism/dashboard/web
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=3600
+
+  # 2. PRISM Operator Console (Python Streamlit Web Service)
+  # Interactive multi-scenario causal simulator, counterfactual twin-world rollouts, and trust auditing
+  - type: web
+    name: prism-operator-console
+    runtime: python
+    plan: free
+    buildCommand: ./render-build.sh
+    startCommand: streamlit run scripts/run_dashboard.py --server.port $PORT --server.address 0.0.0.0 --server.headless true
+    healthCheckPath: /_stcore/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: STREAMLIT_SERVER_HEADLESS
+        value: "true"
+      - key: STREAMLIT_SERVER_ENABLE_CORS
+        value: "false"
+      - key: STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION
+        value: "false"

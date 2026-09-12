@@ -47,9 +47,9 @@
 
 ---
 ## 7. Cryptographic Provenance Chain
-- **Unified Record Hash (SHA-256):** `478264c7abd343aaaa1d6955388fa75bf98f5432f2d62dcdb66f2d8c08b558b5`
-- **Decision Evidence Hash:** `2c161f510fab2f3a78955929fa580cbff705b0372efef55e7c6f06d5cf8ae4c0`
-- **Safety Evidence Hash:** `f06e5d6f5503168190c573b78232a5703294f6ebc787b35443356d6b5484f9f7`
-- **Abstention Evidence Hash:** `37cc144abd6b57239b7851c29621e8b4fd7bd9f66befb3529aa0d88cf58180bc`
+- **Unified Record Hash (SHA-256):** `fcd96e34fe67b88c3949f9a6cc75edebb6db44e5f58f67efbf5d2738b2815d6d`
+- **Decision Evidence Hash:** `7632e5f9b0434462d44fcfa372a93c655dfaaea756a8a066f8bbe945e65dc2b2`
+- **Safety Evidence Hash:** `ea9047f3c6352d1c0c6985db0155fe0d2d7a1b469f1bed857a05f81cd08c6174`
+- **Abstention Evidence Hash:** `dfd9b076916bfadcddb23683ae2c54f40220262035beb3cd544011caf77a0438`
 - **Counterfactual Hash:** `N/A`
-- **Model / Planner:** `baseline_005` / `v1.2` | **Timestamp (UTC):** `2026-09-12T13:38:08.451073+00:00`
+- **Model / Planner:** `baseline_005` / `v1.2` | **Timestamp (UTC):** `2026-09-12T13:42:39.938827+00:00`

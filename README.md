@@ -8,11 +8,12 @@
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](#quick-start)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.1%2B-ee4c2c.svg)](#quick-start)
 [![Docker](https://img.shields.io/badge/docker-ready-blue.svg)](#docker--container-deployment)
+[![Render](https://img.shields.io/badge/Render-deploy%20ready-46e3b7.svg)](docs/DEPLOYMENT_RENDER.md)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Streamlit](https://img.shields.io/badge/dashboard-Streamlit-ff4b4b.svg)](#run-the-dashboard)
 [![Provenance](https://img.shields.io/badge/audit-SHA--256%20deterministic-blueviolet.svg)](#evidence--auditability)
 
-[[Demo Walkthrough](demo/walkthrough.md)] &nbsp;|&nbsp; [[Architecture Documentation](docs/architecture/README.md)] &nbsp;|&nbsp; [[Final Benchmark Report](reports/PRISM_Final_Benchmark_Report.md)] &nbsp;|&nbsp; [[Quickstart Notebook](notebooks/01_quickstart_tutorial.ipynb)] &nbsp;|&nbsp; [[Reproducibility Guide](reproducibility/README.md)]
+[[Demo Walkthrough](demo/walkthrough.md)] &nbsp;|&nbsp; [[Architecture Documentation](docs/architecture/README.md)] &nbsp;|&nbsp; [[Final Benchmark Report](reports/PRISM_Final_Benchmark_Report.md)] &nbsp;|&nbsp; [[Render Deployment](docs/DEPLOYMENT_RENDER.md)] &nbsp;|&nbsp; [[Quickstart Notebook](notebooks/01_quickstart_tutorial.ipynb)] &nbsp;|&nbsp; [[Reproducibility Guide](reproducibility/README.md)]
 
 ---
 
@@ -184,6 +185,20 @@ docker-compose logs -f
 # Teardown
 docker-compose down
 ```
+
+---
+
+## ☁️ Live Cloud Deployment on Render
+
+PRISM is configured for immediate deployment to [Render](https://render.com) via native Blueprints ([`render.yaml`](render.yaml)):
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/rakeshraks2612-maker/causal-world-model)
+
+Render automatically spins up both:
+* **`prism-web-dashboard` (Static Site):** Lightweight interactive Web SPA, hosted on Render's global CDN with 100% free uptime.
+* **`prism-operator-console` (Python Web Service):** Fully interactive Streamlit dashboard executing real-time counterfactual rollouts.
+
+For detailed step-by-step instructions, see the [Render Deployment Guide](docs/DEPLOYMENT_RENDER.md).
 
 ---
 

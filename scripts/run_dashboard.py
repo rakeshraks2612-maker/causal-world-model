@@ -6,6 +6,7 @@ Usage:
     python3 scripts/run_dashboard.py [--port 8501]
 """
 
+import os
 import sys
 import subprocess
 from pathlib import Path
@@ -15,7 +16,7 @@ APP_PATH = REPO_ROOT / "prism" / "dashboard" / "app.py"
 
 
 def main():
-    port = "8501"
+    port = os.environ.get("PORT", "8501")
     if "--port" in sys.argv:
         idx = sys.argv.index("--port")
         if idx + 1 < len(sys.argv):
@@ -28,7 +29,9 @@ def main():
         "run",
         str(APP_PATH),
         "--server.port",
-        port,
+        str(port),
+        "--server.address",
+        "0.0.0.0",
         "--server.headless",
         "true",
         "--theme.base",
