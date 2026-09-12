@@ -81,6 +81,12 @@ def parse_scenario_alias(scen_arg: str) -> str:
         "4": "scenario_04_pump",
         "5": "scenario_05_combined",
         "6": "scenario_06_all_unsafe",
+        "scenario_1": "scenario_01_do_nothing",
+        "scenario_2": "scenario_02_valve",
+        "scenario_3": "scenario_03_throttle",
+        "scenario_4": "scenario_04_pump",
+        "scenario_5": "scenario_05_combined",
+        "scenario_6": "scenario_06_all_unsafe",
     }
     return alias_map.get(scen_arg.lower(), scen_arg)
 

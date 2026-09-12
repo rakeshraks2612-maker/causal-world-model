@@ -60,13 +60,13 @@
     },
     "trust_qualification": "MODEL_ABSTAIN (Untrusted: Telemetry contradicts internal model dynamics; action search blocked)",
     "provenance": {
-      "source_evidence_hash": "7a91a0f2b373f6ee58412ee141c9a52660172355fdf9d5c74e62ef868366f80b",
+      "source_evidence_hash": "2c161f510fab2f3a78955929fa580cbff705b0372efef55e7c6f06d5cf8ae4c0",
       "model_version": "baseline_005",
       "dataset_version": "unified_v1_40_40_20",
       "planner_version": "v1.2_trust_gated",
       "benchmark_version": "v1.0",
       "scenario_id": "scenario_06_all_unsafe",
-      "timestamp_utc": "2026-09-12T13:27:58.937312+00:00"
+      "timestamp_utc": "2026-09-12T13:38:08.451073+00:00"
     }
   },
   "counterfactual": null,
@@ -161,13 +161,13 @@
     ],
     "uncertainty_adjusted": true,
     "provenance": {
-      "source_evidence_hash": "7a91a0f2b373f6ee58412ee141c9a52660172355fdf9d5c74e62ef868366f80b",
+      "source_evidence_hash": "2c161f510fab2f3a78955929fa580cbff705b0372efef55e7c6f06d5cf8ae4c0",
       "safety_engine_version": "v1.2_authoritative_gate",
       "model_version": "baseline_005",
       "scenario_id": "scenario_06_all_unsafe",
       "candidate_id": null,
-      "timestamp_utc": "2026-09-12T13:27:58.937312+00:00",
-      "safety_hash": "7eac9bc661dc65e6ebd8ff09d3cb9046fc8cbf6d573703233c7a2746a34df4a2"
+      "timestamp_utc": "2026-09-12T13:38:08.451073+00:00",
+      "safety_hash": "f06e5d6f5503168190c573b78232a5703294f6ebc787b35443356d6b5484f9f7"
     }
   },
   "abstention": {
@@ -212,12 +212,12 @@
     "safety_implication": "World model forecasts are untrusted due to high reconstruction residual. Autonomous control is withheld to prevent ungrounded actuation.",
     "recommended_next_step": "Hold current actuator states, flag telemetry anomaly to operator, and perform human-in-the-loop diagnostic.",
     "provenance": {
-      "source_evidence_hash": "7a91a0f2b373f6ee58412ee141c9a52660172355fdf9d5c74e62ef868366f80b",
+      "source_evidence_hash": "2c161f510fab2f3a78955929fa580cbff705b0372efef55e7c6f06d5cf8ae4c0",
       "engine_version": "v1.0_authoritative_abstention",
       "model_version": "baseline_005",
       "scenario_id": "scenario_06_all_unsafe",
-      "timestamp_utc": "2026-09-12T13:27:58.937312+00:00",
-      "abstention_hash": "4e7d8962faec0cfa1155635c174846c483c17087801f24379ac1aabca6561263"
+      "timestamp_utc": "2026-09-12T13:38:08.451073+00:00",
+      "abstention_hash": "37cc144abd6b57239b7851c29621e8b4fd7bd9f66befb3529aa0d88cf58180bc"
     }
   },
   "decision_quality": {
@@ -234,11 +234,11 @@
     "benchmark_version": "v1.0",
     "unified_engine_version": "v1.0_unified_assembly",
     "scenario_id": "scenario_06_all_unsafe",
-    "timestamp_utc": "2026-09-12T13:27:58.937312+00:00",
-    "decision_evidence_hash": "7a91a0f2b373f6ee58412ee141c9a52660172355fdf9d5c74e62ef868366f80b",
-    "safety_hash": "7eac9bc661dc65e6ebd8ff09d3cb9046fc8cbf6d573703233c7a2746a34df4a2",
-    "abstention_hash": "4e7d8962faec0cfa1155635c174846c483c17087801f24379ac1aabca6561263",
+    "timestamp_utc": "2026-09-12T13:38:08.451073+00:00",
+    "decision_evidence_hash": "2c161f510fab2f3a78955929fa580cbff705b0372efef55e7c6f06d5cf8ae4c0",
+    "safety_hash": "f06e5d6f5503168190c573b78232a5703294f6ebc787b35443356d6b5484f9f7",
+    "abstention_hash": "37cc144abd6b57239b7851c29621e8b4fd7bd9f66befb3529aa0d88cf58180bc",
     "counterfactual_hash": null,
-    "unified_record_hash": "7ba8957f8fdcf7ad3e50f5e70d0629e67ad6362f322c9660441c0de843a45530"
+    "unified_record_hash": "478264c7abd343aaaa1d6955388fa75bf98f5432f2d62dcdb66f2d8c08b558b5"
   }
 }

@@ -3,13 +3,16 @@
 
 > **An uncertainty-aware causal world model that evaluates interventions, simulates counterfactual outcomes, applies hard safety constraints, and abstains when model trust is insufficient.**
 
-[![Regression](https://img.shields.io/badge/tests-414%20passed-brightgreen.svg)](#reproducibility)
+[![CI](https://github.com/rakeshraks2612-maker/causal-world-model/actions/workflows/ci.yml/badge.svg)](https://github.com/rakeshraks2612-maker/causal-world-model/actions)
+[![Tests](https://img.shields.io/badge/tests-421%20passed-brightgreen.svg)](#reproducibility)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](#quick-start)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.1%2B-ee4c2c.svg)](#quick-start)
+[![Docker](https://img.shields.io/badge/docker-ready-blue.svg)](#docker--container-deployment)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Streamlit](https://img.shields.io/badge/dashboard-Streamlit-ff4b4b.svg)](#run-the-dashboard)
 [![Provenance](https://img.shields.io/badge/audit-SHA--256%20deterministic-blueviolet.svg)](#evidence--auditability)
 
-[[Demo Walkthrough](demo/walkthrough.md)] &nbsp;|&nbsp; [[Architecture Documentation](docs/architecture/README.md)] &nbsp;|&nbsp; [[Final Benchmark Report](reports/PRISM_Final_Benchmark_Report.md)] &nbsp;|&nbsp; [[Reproducibility Guide](reproducibility/README.md)]
+[[Demo Walkthrough](demo/walkthrough.md)] &nbsp;|&nbsp; [[Architecture Documentation](docs/architecture/README.md)] &nbsp;|&nbsp; [[Final Benchmark Report](reports/PRISM_Final_Benchmark_Report.md)] &nbsp;|&nbsp; [[Quickstart Notebook](notebooks/01_quickstart_tutorial.ipynb)] &nbsp;|&nbsp; [[Reproducibility Guide](reproducibility/README.md)]
 
 ---
 
@@ -132,21 +135,63 @@ PRISM's core value proposition is demonstrated across three canonical scenarios:
 
 ### 1. Clone & Setup Virtual Environment
 ```bash
-git clone https://github.com/your-org/causal-world-model.git
+git clone https://github.com/rakeshraks2612-maker/causal-world-model.git
 cd causal-world-model
 
 python3 -m venv .venv
 source .venv/bin/activate
 
-pip install --upgrade pip
-pip install -r requirements.txt
+# Install package & dependencies in editable mode
+make install-dev
+# or: pip install -e ".[dev]"
 ```
 
-### 2. Run Test Suite
+### 2. Run Test Suite (421 Invariant Proofs)
 ```bash
-pytest
+make test
+# or: pytest -v tests/
 ```
-*Expected: 414 tests passing.*
+*Expected: 421/421 tests passing (100% invariant & physics satisfaction).*
+
+---
+
+## Developer Ergonomics (`Makefile`)
+
+A single unified `Makefile` streamlines all developer workflows:
+
+```bash
+make help          # View all available targets and descriptions
+make test          # Run full 421-test suite with execution profiling
+make cli           # Execute PRISM decision pipeline across all 6 benchmark scenarios
+make dashboard     # Launch the interactive Streamlit Operator Console (port 8501)
+make web           # Serve the lightweight PRISM Web SPA (port 8000)
+make clean         # Purge build artifacts, pytest cache, and temporary files
+```
+
+---
+
+## Docker & Container Deployment
+
+Deploy PRISM instantly with a single command via Docker and Docker Compose:
+
+```bash
+# Build and run both Operator Console (:8501) and Web SPA (:8000)
+docker-compose up -d
+
+# Check service logs
+docker-compose logs -f
+
+# Teardown
+docker-compose down
+```
+
+---
+
+## Interactive Tutorial Notebook
+
+Explore PRISM step-by-step in an interactive Jupyter environment:
+* Notebook location: [`notebooks/01_quickstart_tutorial.ipynb`](notebooks/01_quickstart_tutorial.ipynb)
+* Demonstrates: World model loading, telemetry trust audit ($R_T$, $R_{8D}$, $D_{\text{lat}}$), Pearl Level-3 twin-world counterfactual simulation, $k=2$ uncertainty bounds, and SHA-256 cryptographic provenance hashing.
 
 ---
 
@@ -155,26 +200,40 @@ pytest
 Launch the interactive Streamlit Decision Intelligence Dashboard:
 
 ```bash
-python3 scripts/run_dashboard.py
+make dashboard
+# or: streamlit run scripts/run_dashboard.py --server.port 8501
 ```
 
 Then open `http://localhost:8501` in your browser to inspect live scenario selectors, structural causal DAG projections, counterfactual twin-world overlays, thermal uncertainty bands, and cryptographic audit panels.
+
+For the lightweight standalone Web SPA dashboard:
+```bash
+make web
+# Then navigate to http://localhost:8000
+```
 
 ---
 
 ## Run the CLI
 
-Execute deterministic inference directly from your terminal:
+Execute deterministic inference directly from your terminal using the installed `prism` CLI:
 
 ```bash
-# S4: Autonomous Decision (Pump 3 Recommended)
-python3 scripts/run_prism.py -s s4
+# Evaluate all 6 benchmark scenarios with formatted executive banners
+prism --all
+
+# S4: Autonomous Decision (Pump Modulation Recommended)
+prism -s s4
 
 # S2: Uncertainty-Aware Safety Catch (Unsafe Gated)
-python3 scripts/run_prism.py -s s2
+prism -s s2
 
 # S6: Model Abstention (Distrust Blocked)
-python3 scripts/run_prism.py -s s6
+prism -s s6
+
+# Output raw JSON or full Markdown audit dossier:
+prism -s s4 --json
+prism -s s4 --markdown
 ```
 
 ---

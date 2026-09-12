@@ -1,0 +1,48 @@
+name: PRISM CI & Invariant Verification
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-verify:
+    name: Test & Invariant Verification (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install -r requirements.txt
+          pip install -e ".[dev]"
+
+      - name: Run Pytest & 421 Invariant Proofs
+        run: |
+          pytest -v tests/ --durations=10
+
+      - name: Verify PRISM CLI Single Scenario
+        run: |
+          prism --scenario s1 --quiet
+
+      - name: Verify PRISM CLI All 6 Benchmark Scenarios
+        run: |
+          prism --all --quiet

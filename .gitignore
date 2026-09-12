@@ -23,6 +23,11 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Packaging and build artifacts
+build/
+dist/
+*.egg-info/
+
 # Large temporary caches (keep canonical artifacts/ and data/ tracked)
 *.log
 *.tmp
