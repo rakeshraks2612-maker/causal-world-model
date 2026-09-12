@@ -64,6 +64,7 @@ prism = "prism.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/rakeshraks2612-maker/causal-world-model"
+"Live Demo" = "https://causal-world-model.onrender.com"
 Repository = "https://github.com/rakeshraks2612-maker/causal-world-model.git"
 Documentation = "https://github.com/rakeshraks2612-maker/causal-world-model/blob/main/README.md"
 

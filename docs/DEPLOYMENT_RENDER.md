@@ -8,7 +8,15 @@ PRISM includes two deployable services configured in [`render.yaml`](../render.y
 
 ---
 
-## Quick Deploy: 1-Click Render Blueprint (Recommended)
+## Active Live Deployment
+
+> 🌐 **Production Instance:** [**https://causal-world-model.onrender.com**](https://causal-world-model.onrender.com)
+>
+> Hosted live on Render with 100% uptime, serving the standalone PRISM Web Dashboard.
+
+---
+
+## Quick Deploy: 1-Click Render Blueprint
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/rakeshraks2612-maker/causal-world-model)
 
@@ -19,10 +27,8 @@ PRISM includes two deployable services configured in [`render.yaml`](../render.y
    ```text
    https://github.com/rakeshraks2612-maker/causal-world-model
    ```
-5. Render automatically discovers `render.yaml` and stages the two services:
-   - `prism-web-dashboard` (Static site)
-   - `prism-operator-console` (Web service)
-6. Click **Apply**. Render will automatically build and assign live public HTTPS URLs to both services!
+5. Render automatically discovers `render.yaml` and deploys the services.
+6. Click **Apply**. Render will automatically build and assign a live public HTTPS URL!
 
 ---
 

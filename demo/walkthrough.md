@@ -43,14 +43,18 @@ The PRISM demo runs deterministically from a single launcher without external ne
                       └────────────────────────────────────┘
 ```
 
+### 🌐 Live Production Instance (Zero Installation):
+Access the live interactive PRISM Web Dashboard directly in your browser:
+👉 **[https://causal-world-model.onrender.com](https://causal-world-model.onrender.com)**
+
 ### Launching the Dashboard Locally:
 ```bash
 # Clean cold-start launch
 cd causal-world-model
 source .venv/bin/activate
-python3 scripts/run_dashboard.py
+make web          # Standalone Web SPA at http://localhost:8000
+make dashboard    # Streamlit Operator Console at http://localhost:8501
 ```
-*(Access UI at `http://localhost:8501`)*
 
 ---
 
