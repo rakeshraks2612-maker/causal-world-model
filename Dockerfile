@@ -8,7 +8,11 @@ LABEL description="PRISM: Causal World Models with Counterfactual Verification a
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
-    PYTHONPATH=/app
+    PYTHONPATH=/app \
+    STREAMLIT_SERVER_ENABLE_CORS=false \
+    STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION=false \
+    STREAMLIT_SERVER_HEADLESS=true \
+    STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
 
 WORKDIR /app
 
@@ -26,6 +30,7 @@ RUN pip install --upgrade pip setuptools wheel && \
 # Copy project files
 COPY pyproject.toml .
 COPY README.md .
+COPY .streamlit/ .streamlit/
 COPY prism/ prism/
 COPY configs/ configs/
 COPY artifacts/ artifacts/
@@ -39,5 +44,5 @@ RUN pip install -e .
 # Expose Streamlit (8501) and Web SPA (8000)
 EXPOSE 8501 8000
 
-# Default command launches the Streamlit operator console
-CMD ["streamlit", "run", "scripts/run_dashboard.py", "--server.port=8501", "--server.address=0.0.0.0", "--server.headless=true"]
+# Default command launches the Streamlit operator console via scripts/run_dashboard.py
+CMD ["python", "scripts/run_dashboard.py"]

@@ -34,6 +34,12 @@ def main():
         "0.0.0.0",
         "--server.headless",
         "true",
+        "--server.enableCORS",
+        "false",
+        "--server.enableXsrfProtection",
+        "false",
+        "--browser.gatherUsageStats",
+        "false",
         "--theme.base",
         "dark",
     ]
