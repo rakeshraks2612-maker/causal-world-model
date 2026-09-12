@@ -1,5 +1,5 @@
 # Multi-stage production container for PRISM Causal World Model
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 LABEL maintainer="PRISM Team"
 LABEL description="PRISM: Causal World Models with Counterfactual Verification and Provable Safety Invariants"

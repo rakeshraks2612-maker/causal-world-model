@@ -30,7 +30,7 @@ services:
     healthCheckPath: /_stcore/health
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.9
+        value: 3.12.2
       - key: STREAMLIT_SERVER_HEADLESS
         value: "true"
       - key: STREAMLIT_SERVER_ENABLE_CORS
