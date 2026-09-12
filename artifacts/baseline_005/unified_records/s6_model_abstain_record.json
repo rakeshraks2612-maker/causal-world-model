@@ -1,0 +1,244 @@
+{
+  "decision": {
+    "recommendation": null,
+    "decision_status": "BLOCKED",
+    "abstention_reason": "Thermal reconstruction residual R_T = 33.88\u00b0C exceeded threshold 6.00\u00b0C"
+  },
+  "trust": {
+    "trust_state": "MODEL_ABSTAIN",
+    "reconstruction_residual_t_core": 33.88,
+    "reconstruction_residual_8d": 1.82,
+    "latent_novelty_d": 2.45,
+    "epistemic_uncertainty_sigma": 0.0,
+    "tau_residual_t": 6.0,
+    "tau_novelty": 15.0,
+    "trust_reason": "Severe observation/latent inconsistency detected."
+  },
+  "causal_reasoning": {
+    "summary": {
+      "headline": "Abstain from intervention: Observation inconsistency violates model trust",
+      "mechanism": "The observed telemetry contradicts the learned world model state representation (reconstruction residual R_T = 33.88\u00b0C exceeded calibrated threshold of 6.00\u00b0C by +27.88\u00b0C). Autonomous simulation and intervention planning are blocked to prevent unsafe hallucinations.",
+      "effect_direction": "NO_EFFECT_UNTRUSTED"
+    },
+    "intervention": {
+      "target": "none",
+      "value": null,
+      "intervention_type": "NONE",
+      "baseline_value": null
+    },
+    "causal_chain": {
+      "root_actuator": "none",
+      "target_outcome": "none",
+      "nodes": [],
+      "all_affected_descendants": []
+    },
+    "predicted_effects": {
+      "baseline_peak_t_core": null,
+      "intervened_peak_t_core": null,
+      "delta_t_core": null,
+      "baseline_min_flow": null,
+      "intervened_min_flow": null,
+      "delta_flow": null,
+      "counterfactual_statement": "Counterfactual simulation withheld: Model trust failure (PLANNING_BLOCKED)."
+    },
+    "rejected_alternatives": [],
+    "decision_margin": {
+      "best_candidate": null,
+      "second_best_candidate": null,
+      "decision_strength": "N/A_ABSTAIN",
+      "decision_margin": null,
+      "best_utility": null,
+      "second_best_utility": null
+    },
+    "abstention_details": {
+      "trigger": "RECONSTRUCTION_INCONSISTENCY",
+      "observed_value": 33.88,
+      "threshold": 6.0,
+      "violation_delta": 27.880000000000003,
+      "consequence": "WORLD_MODEL_NOT_TRUSTED",
+      "action_taken": "PLANNING_BLOCKED"
+    },
+    "trust_qualification": "MODEL_ABSTAIN (Untrusted: Telemetry contradicts internal model dynamics; action search blocked)",
+    "provenance": {
+      "source_evidence_hash": "dec_hash_s6_abstain",
+      "model_version": "baseline_005",
+      "dataset_version": "v2.1",
+      "planner_version": "v1.2",
+      "benchmark_version": "v1.0",
+      "scenario_id": "scenario_06",
+      "timestamp_utc": "2026-09-11T12:00:00Z"
+    }
+  },
+  "counterfactual": null,
+  "safety": {
+    "overall_state": "ABSTAIN_REQUIRED",
+    "is_safe": false,
+    "constraints": {
+      "thermal": {
+        "name": "thermal",
+        "variable_symbol": "T_core",
+        "unit": "\u00b0C",
+        "raw_prediction": null,
+        "uncertainty_sigma": null,
+        "k_multiplier": 2.0,
+        "effective_value": null,
+        "threshold": 95.0,
+        "comparison_operator": "<",
+        "margin": null,
+        "normalized_headroom_pct": null,
+        "is_passed": false,
+        "is_marginal": false,
+        "violation_message": "Evaluation withheld: Model trust gateway triggered MODEL_ABSTAIN"
+      },
+      "pressure": {
+        "name": "pressure",
+        "variable_symbol": "P_sys",
+        "unit": "bar",
+        "raw_prediction": null,
+        "uncertainty_sigma": null,
+        "k_multiplier": 2.0,
+        "effective_value": null,
+        "threshold": 5.5,
+        "comparison_operator": "<",
+        "margin": null,
+        "normalized_headroom_pct": null,
+        "is_passed": false,
+        "is_marginal": false,
+        "violation_message": "Evaluation withheld: Model trust gateway triggered MODEL_ABSTAIN"
+      },
+      "flow": {
+        "name": "flow",
+        "variable_symbol": "F_cool",
+        "unit": "L/min",
+        "raw_prediction": null,
+        "uncertainty_sigma": null,
+        "k_multiplier": 2.0,
+        "effective_value": null,
+        "threshold": 8.0,
+        "comparison_operator": ">",
+        "margin": null,
+        "normalized_headroom_pct": null,
+        "is_passed": false,
+        "is_marginal": false,
+        "violation_message": "Evaluation withheld: Model trust gateway triggered MODEL_ABSTAIN"
+      },
+      "latent_support": {
+        "name": "latent_support",
+        "variable_symbol": "D_latent",
+        "unit": "d_M",
+        "raw_prediction": 2.45,
+        "uncertainty_sigma": null,
+        "k_multiplier": 0.0,
+        "effective_value": 2.45,
+        "threshold": 15.0,
+        "comparison_operator": "<=",
+        "margin": 12.55,
+        "normalized_headroom_pct": 83.66666666666667,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      }
+    },
+    "limiting_constraint": {
+      "constraint_name": "model_trust_gateway",
+      "variable_symbol": "R_T",
+      "raw_margin": null,
+      "unit": "N/A",
+      "normalized_headroom_pct": null,
+      "rationale": "Planning aborted due to model abstention: Thermal reconstruction residual R_T = 33.88\u00b0C exceeded threshold 6.00\u00b0C.",
+      "normalized_violation_score": null
+    },
+    "violations": [
+      {
+        "constraint_code": "ABSTAIN_REQUIRED",
+        "variable_symbol": "R_T",
+        "observed_effective_value": 0.0,
+        "threshold": 0.0,
+        "margin_violated_by": 0.0,
+        "severity": "ABSTAIN_REQUIRED",
+        "message": "Model Trust Gateway Aborted: Thermal reconstruction residual R_T = 33.88\u00b0C exceeded threshold 6.00\u00b0C"
+      }
+    ],
+    "uncertainty_adjusted": true,
+    "provenance": {
+      "source_evidence_hash": "dec_hash_s6_abstain",
+      "safety_engine_version": "v1.2_authoritative_gate",
+      "model_version": "baseline_005",
+      "scenario_id": "scenario_06",
+      "candidate_id": null,
+      "timestamp_utc": "2026-09-11T12:00:00Z",
+      "safety_hash": "42ce4636d0d4cc79e93e31c9e3980de45c609cdbb1069a7037304866f85f6d1b"
+    }
+  },
+  "abstention": {
+    "abstained": true,
+    "abstention_type": "MODEL_ABSTAIN",
+    "headline": "Autonomous Planning Aborted: Model Trust Boundary Exceeded",
+    "primary_reason": "Model Trust Gateway Triggered: Thermal reconstruction residual R_T = 33.88\u00b0C exceeds trust threshold 6.00\u00b0C by 27.88\u00b0C.",
+    "evidence": [
+      {
+        "metric_name": "Thermal Reconstruction Residual (R_T)",
+        "observed_value": 33.88,
+        "threshold": 6.0,
+        "excess": 27.880000000000003,
+        "direction": "GREATER_THAN_THRESHOLD",
+        "unit": "\u00b0C",
+        "is_trigger": true
+      },
+      {
+        "metric_name": "Multivariate 8D Reconstruction Residual (R_8D)",
+        "observed_value": 1.82,
+        "threshold": 1.9,
+        "excess": -0.07999999999999985,
+        "direction": "WITHIN_LIMITS",
+        "unit": "z-norm",
+        "is_trigger": false
+      },
+      {
+        "metric_name": "Latent Manifold Novelty Distance (D_latent)",
+        "observed_value": 2.45,
+        "threshold": 15.0,
+        "excess": -12.55,
+        "direction": "WITHIN_LIMITS",
+        "unit": "d_M",
+        "is_trigger": false
+      }
+    ],
+    "affected_decision": "RECOMMENDATION_BLOCKED",
+    "blocked_actions": [
+      "candidate_intervention_selection",
+      "counterfactual_recommendation_emission"
+    ],
+    "safety_implication": "World model forecasts are untrusted due to high reconstruction residual. Autonomous control is withheld to prevent ungrounded actuation.",
+    "recommended_next_step": "Hold current actuator states, flag telemetry anomaly to operator, and perform human-in-the-loop diagnostic.",
+    "provenance": {
+      "source_evidence_hash": "dec_hash_s6_abstain",
+      "engine_version": "v1.0_authoritative_abstention",
+      "model_version": "baseline_005",
+      "scenario_id": "scenario_06",
+      "timestamp_utc": "2026-09-11T12:00:00Z",
+      "abstention_hash": "2e8f38bef98c07229fba51d14758bb19e4e94a1616f0780ef27207f0f87abfdd"
+    }
+  },
+  "decision_quality": {
+    "utility_score": null,
+    "second_best_candidate": null,
+    "second_best_utility": null,
+    "decision_margin": null,
+    "alternatives_rejected": []
+  },
+  "provenance": {
+    "model_version": "baseline_005",
+    "dataset_version": "v2.1",
+    "planner_version": "v1.2",
+    "benchmark_version": "v1.0",
+    "unified_engine_version": "v1.0_unified_assembly",
+    "scenario_id": "scenario_06",
+    "timestamp_utc": "2026-09-11T12:00:00Z",
+    "decision_evidence_hash": "dec_hash_s6_abstain",
+    "safety_hash": "42ce4636d0d4cc79e93e31c9e3980de45c609cdbb1069a7037304866f85f6d1b",
+    "abstention_hash": "2e8f38bef98c07229fba51d14758bb19e4e94a1616f0780ef27207f0f87abfdd",
+    "counterfactual_hash": null,
+    "unified_record_hash": "a2c10ca544eeff45c3a36b14c1ea2ce40290a7223622b949d816a01a36bf3c46"
+  }
+}

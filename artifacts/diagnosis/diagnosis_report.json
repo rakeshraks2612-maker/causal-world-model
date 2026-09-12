@@ -1,0 +1,2616 @@
+{
+  "timestamp": "2026-09-10 16:25:26",
+  "seed": 42,
+  "baselines": {
+    "persistence": {
+      "model_name": "Persistence",
+      "train_normalized_aggregate_mae": 0.16897927224636078,
+      "raw_overall_mae": 0.4308592677116394,
+      "overall_rmse": 0.7213653326034546,
+      "overall_nll": null,
+      "domains": {
+        "thermal": {
+          "domain_name": "thermal",
+          "variables": [
+            "T_core",
+            "T_cool"
+          ],
+          "mae": 0.6967446058988571,
+          "rmse": 0.94871786236763,
+          "normalized_mae": 0.12531903386116028
+        },
+        "hydraulic": {
+          "domain_name": "hydraulic",
+          "variables": [
+            "P_sys",
+            "F_cool"
+          ],
+          "mae": 0.27501864917576313,
+          "rmse": 0.38532691076397896,
+          "normalized_mae": 0.12441631965339184
+        },
+        "compute": {
+          "domain_name": "compute",
+          "variables": [
+            "L_cpu",
+            "P_elec"
+          ],
+          "mae": 0.30749175883829594,
+          "rmse": 0.3876695279031992,
+          "normalized_mae": 0.29186348617076874
+        },
+        "actuation": {
+          "domain_name": "actuation",
+          "variables": [
+            "V_pos"
+          ],
+          "mae": 0.6601450443267822,
+          "rmse": 0.9675251245498657,
+          "normalized_mae": 0.042508937418460846
+        },
+        "vibration": {
+          "domain_name": "vibration",
+          "variables": [
+            "Vib_pump"
+          ],
+          "mae": 0.22821883857250214,
+          "rmse": 0.29118070006370544,
+          "normalized_mae": 0.22612757980823517
+        }
+      },
+      "per_channel": {
+        "T_core": {
+          "channel_name": "T_core",
+          "mae": 0.9775187969207764,
+          "rmse": 1.345428705215454,
+          "nll": null
+        },
+        "T_cool": {
+          "channel_name": "T_cool",
+          "mae": 0.41597041487693787,
+          "rmse": 0.5520070195198059,
+          "nll": null
+        },
+        "P_sys": {
+          "channel_name": "P_sys",
+          "mae": 0.06141281500458717,
+          "rmse": 0.07706037908792496,
+          "nll": null
+        },
+        "F_cool": {
+          "channel_name": "F_cool",
+          "mae": 0.4886244833469391,
+          "rmse": 0.693593442440033,
+          "nll": null
+        },
+        "L_cpu": {
+          "channel_name": "L_cpu",
+          "mae": 0.5818449258804321,
+          "rmse": 0.7337743043899536,
+          "nll": null
+        },
+        "V_pos": {
+          "channel_name": "V_pos",
+          "mae": 0.6601450443267822,
+          "rmse": 0.9675251245498657,
+          "nll": null
+        },
+        "Vib_pump": {
+          "channel_name": "Vib_pump",
+          "mae": 0.22821883857250214,
+          "rmse": 0.29118070006370544,
+          "nll": null
+        },
+        "P_elec": {
+          "channel_name": "P_elec",
+          "mae": 0.033138591796159744,
+          "rmse": 0.04156475141644478,
+          "nll": null
+        }
+      }
+    },
+    "mlp_dynamics": {
+      "model_name": "MLP_Dynamics",
+      "train_normalized_aggregate_mae": 0.15862376987934113,
+      "raw_overall_mae": 0.4278538227081299,
+      "overall_rmse": 0.6564530730247498,
+      "overall_nll": null,
+      "domains": {
+        "thermal": {
+          "domain_name": "thermal",
+          "variables": [
+            "T_core",
+            "T_cool"
+          ],
+          "mae": 0.653066873550415,
+          "rmse": 0.8623961210250854,
+          "normalized_mae": 0.11761444807052612
+        },
+        "hydraulic": {
+          "domain_name": "hydraulic",
+          "variables": [
+            "P_sys",
+            "F_cool"
+          ],
+          "mae": 0.31789024733006954,
+          "rmse": 0.39095960184931755,
+          "normalized_mae": 0.12362083047628403
+        },
+        "compute": {
+          "domain_name": "compute",
+          "variables": [
+            "L_cpu",
+            "P_elec"
+          ],
+          "mae": 0.29844914749264717,
+          "rmse": 0.36752105318009853,
+          "normalized_mae": 0.2689160257577896
+        },
+        "actuation": {
+          "domain_name": "actuation",
+          "variables": [
+            "V_pos"
+          ],
+          "mae": 0.6770296692848206,
+          "rmse": 0.8188029527664185,
+          "normalized_mae": 0.043596185743808746
+        },
+        "vibration": {
+          "domain_name": "vibration",
+          "variables": [
+            "Vib_pump"
+          ],
+          "mae": 0.20698803663253784,
+          "rmse": 0.25731390714645386,
+          "normalized_mae": 0.20509129762649536
+        }
+      },
+      "per_channel": {
+        "T_core": {
+          "channel_name": "T_core",
+          "mae": 0.8857307434082031,
+          "rmse": 1.1967673301696777,
+          "nll": null
+        },
+        "T_cool": {
+          "channel_name": "T_cool",
+          "mae": 0.42040300369262695,
+          "rmse": 0.5280249118804932,
+          "nll": null
+        },
+        "P_sys": {
+          "channel_name": "P_sys",
+          "mae": 0.05784163996577263,
+          "rmse": 0.07193800061941147,
+          "nll": null
+        },
+        "F_cool": {
+          "channel_name": "F_cool",
+          "mae": 0.5779388546943665,
+          "rmse": 0.7099812030792236,
+          "nll": null
+        },
+        "L_cpu": {
+          "channel_name": "L_cpu",
+          "mae": 0.5678173899650574,
+          "rmse": 0.6994413137435913,
+          "nll": null
+        },
+        "V_pos": {
+          "channel_name": "V_pos",
+          "mae": 0.6770296692848206,
+          "rmse": 0.8188029527664185,
+          "nll": null
+        },
+        "Vib_pump": {
+          "channel_name": "Vib_pump",
+          "mae": 0.20698803663253784,
+          "rmse": 0.25731390714645386,
+          "nll": null
+        },
+        "P_elec": {
+          "channel_name": "P_elec",
+          "mae": 0.02908090502023697,
+          "rmse": 0.03560079261660576,
+          "nll": null
+        }
+      }
+    }
+  },
+  "baseline_001": {
+    "reconstruction_deterministic": {
+      "model_name": "PRISM_Reconstruction_Deterministic",
+      "train_normalized_aggregate_mae": 0.19621893763542175,
+      "raw_overall_mae": 0.6451159715652466,
+      "overall_rmse": 1.318493366241455,
+      "overall_nll": 0.6891929507255554,
+      "domains": {
+        "thermal": {
+          "domain_name": "thermal",
+          "variables": [
+            "T_core",
+            "T_cool"
+          ],
+          "mae": 1.1642615795135498,
+          "rmse": 1.972501814365387,
+          "normalized_mae": 0.2107921913266182
+        },
+        "hydraulic": {
+          "domain_name": "hydraulic",
+          "variables": [
+            "P_sys",
+            "F_cool"
+          ],
+          "mae": 0.4613964669406414,
+          "rmse": 0.7346570156514645,
+          "normalized_mae": 0.13747067376971245
+        },
+        "compute": {
+          "domain_name": "compute",
+          "variables": [
+            "L_cpu",
+            "P_elec"
+          ],
+          "mae": 0.36956528201699257,
+          "rmse": 0.5518060177564621,
+          "normalized_mae": 0.31708014011383057
+        },
+        "actuation": {
+          "domain_name": "actuation",
+          "variables": [
+            "V_pos"
+          ],
+          "mae": 0.9937894940376282,
+          "rmse": 1.686888337135315,
+          "normalized_mae": 0.06399340182542801
+        },
+        "vibration": {
+          "domain_name": "vibration",
+          "variables": [
+            "Vib_pump"
+          ],
+          "mae": 0.1766914427280426,
+          "rmse": 0.23056422173976898,
+          "normalized_mae": 0.1750723272562027
+        }
+      },
+      "per_channel": {
+        "T_core": {
+          "channel_name": "T_core",
+          "mae": 1.3546735048294067,
+          "rmse": 2.250771999359131,
+          "nll": 1.8880107402801514
+        },
+        "T_cool": {
+          "channel_name": "T_cool",
+          "mae": 0.9738496541976929,
+          "rmse": 1.694231629371643,
+          "nll": 1.4890949726104736
+        },
+        "P_sys": {
+          "channel_name": "P_sys",
+          "mae": 0.0566379651427269,
+          "rmse": 0.0729563757777214,
+          "nll": -1.1545584201812744
+        },
+        "F_cool": {
+          "channel_name": "F_cool",
+          "mae": 0.8661549687385559,
+          "rmse": 1.3963576555252075,
+          "nll": 1.682382345199585
+        },
+        "L_cpu": {
+          "channel_name": "L_cpu",
+          "mae": 0.7065359950065613,
+          "rmse": 1.0558558702468872,
+          "nll": 1.3565725088119507
+        },
+        "V_pos": {
+          "channel_name": "V_pos",
+          "mae": 0.9937894940376282,
+          "rmse": 1.686888337135315,
+          "nll": 2.0147414207458496
+        },
+        "Vib_pump": {
+          "channel_name": "Vib_pump",
+          "mae": 0.1766914427280426,
+          "rmse": 0.23056422173976898,
+          "nll": -0.04763747751712799
+        },
+        "P_elec": {
+          "channel_name": "P_elec",
+          "mae": 0.03259456902742386,
+          "rmse": 0.04775616526603699,
+          "nll": -1.7150628566741943
+        }
+      }
+    },
+    "reconstruction_stochastic": {
+      "model_name": "PRISM_Reconstruction_Stochastic",
+      "train_normalized_aggregate_mae": 0.21511049568653107,
+      "raw_overall_mae": 0.7692672610282898,
+      "overall_rmse": 1.477350115776062,
+      "overall_nll": 0.7678048014640808,
+      "domains": {
+        "thermal": {
+          "domain_name": "thermal",
+          "variables": [
+            "T_core",
+            "T_cool"
+          ],
+          "mae": 1.2485347986221313,
+          "rmse": 2.0302236676216125,
+          "normalized_mae": 0.22607989609241486
+        },
+        "hydraulic": {
+          "domain_name": "hydraulic",
+          "variables": [
+            "P_sys",
+            "F_cool"
+          ],
+          "mae": 0.5735066495835781,
+          "rmse": 0.8429673351347446,
+          "normalized_mae": 0.16097476333379745
+        },
+        "compute": {
+          "domain_name": "compute",
+          "variables": [
+            "L_cpu",
+            "P_elec"
+          ],
+          "mae": 0.37912619672715664,
+          "rmse": 0.5613340195268393,
+          "normalized_mae": 0.32534176111221313
+        },
+        "actuation": {
+          "domain_name": "actuation",
+          "variables": [
+            "V_pos"
+          ],
+          "mae": 1.5539637804031372,
+          "rmse": 2.296708583831787,
+          "normalized_mae": 0.10006488859653473
+        },
+        "vibration": {
+          "domain_name": "vibration",
+          "variables": [
+            "Vib_pump"
+          ],
+          "mae": 0.19783905148506165,
+          "rmse": 0.25921928882598877,
+          "normalized_mae": 0.19602617621421814
+        }
+      },
+      "per_channel": {
+        "T_core": {
+          "channel_name": "T_core",
+          "mae": 1.446707844734192,
+          "rmse": 2.2953133583068848,
+          "nll": 1.9561400413513184
+        },
+        "T_cool": {
+          "channel_name": "T_cool",
+          "mae": 1.0503617525100708,
+          "rmse": 1.7651339769363403,
+          "nll": 1.5995562076568604
+        },
+        "P_sys": {
+          "channel_name": "P_sys",
+          "mae": 0.06395553797483444,
+          "rmse": 0.08238459378480911,
+          "nll": -1.0807989835739136
+        },
+        "F_cool": {
+          "channel_name": "F_cool",
+          "mae": 1.0830577611923218,
+          "rmse": 1.6035500764846802,
+          "nll": 1.7773362398147583
+        },
+        "L_cpu": {
+          "channel_name": "L_cpu",
+          "mae": 0.7248020172119141,
+          "rmse": 1.0741349458694458,
+          "nll": 1.3918771743774414
+        },
+        "V_pos": {
+          "channel_name": "V_pos",
+          "mae": 1.5539637804031372,
+          "rmse": 2.296708583831787,
+          "nll": 2.1515731811523438
+        },
+        "Vib_pump": {
+          "channel_name": "Vib_pump",
+          "mae": 0.19783905148506165,
+          "rmse": 0.25921928882598877,
+          "nll": 0.03641524165868759
+        },
+        "P_elec": {
+          "channel_name": "P_elec",
+          "mae": 0.033450376242399216,
+          "rmse": 0.04853309318423271,
+          "nll": -1.6896605491638184
+        }
+      }
+    },
+    "prediction_deterministic": {
+      "model_name": "PRISM_1StepPrediction_Deterministic",
+      "train_normalized_aggregate_mae": 0.19122101366519928,
+      "raw_overall_mae": 0.6098543405532837,
+      "overall_rmse": 1.1525909900665283,
+      "overall_nll": 0.6898738145828247,
+      "domains": {
+        "thermal": {
+          "domain_name": "thermal",
+          "variables": [
+            "T_core",
+            "T_cool"
+          ],
+          "mae": 1.1834751963615417,
+          "rmse": 1.8785866498947144,
+          "normalized_mae": 0.2141897827386856
+        },
+        "hydraulic": {
+          "domain_name": "hydraulic",
+          "variables": [
+            "P_sys",
+            "F_cool"
+          ],
+          "mae": 0.39219633489847183,
+          "rmse": 0.5329236425459385,
+          "normalized_mae": 0.1253054440021515
+        },
+        "compute": {
+          "domain_name": "compute",
+          "variables": [
+            "L_cpu",
+            "P_elec"
+          ],
+          "mae": 0.36801627092063427,
+          "rmse": 0.5135179031640291,
+          "normalized_mae": 0.3154730796813965
+        },
+        "actuation": {
+          "domain_name": "actuation",
+          "variables": [
+            "V_pos"
+          ],
+          "mae": 0.8230857253074646,
+          "rmse": 1.168738842010498,
+          "normalized_mae": 0.053001224994659424
+        },
+        "vibration": {
+          "domain_name": "vibration",
+          "variables": [
+            "Vib_pump"
+          ],
+          "mae": 0.16837318241596222,
+          "rmse": 0.21130545437335968,
+          "normalized_mae": 0.16683030128479004
+        }
+      },
+      "per_channel": {
+        "T_core": {
+          "channel_name": "T_core",
+          "mae": 1.393357276916504,
+          "rmse": 2.1861298084259033,
+          "nll": 1.938116192817688
+        },
+        "T_cool": {
+          "channel_name": "T_cool",
+          "mae": 0.9735931158065796,
+          "rmse": 1.5710434913635254,
+          "nll": 1.5194319486618042
+        },
+        "P_sys": {
+          "channel_name": "P_sys",
+          "mae": 0.05364634096622467,
+          "rmse": 0.06700778752565384,
+          "nll": -1.1677969694137573
+        },
+        "F_cool": {
+          "channel_name": "F_cool",
+          "mae": 0.730746328830719,
+          "rmse": 0.9988394975662231,
+          "nll": 1.6644519567489624
+        },
+        "L_cpu": {
+          "channel_name": "L_cpu",
+          "mae": 0.7036342620849609,
+          "rmse": 0.9826736450195312,
+          "nll": 1.3588740825653076
+        },
+        "V_pos": {
+          "channel_name": "V_pos",
+          "mae": 0.8230857253074646,
+          "rmse": 1.168738842010498,
+          "nll": 1.99180269241333
+        },
+        "Vib_pump": {
+          "channel_name": "Vib_pump",
+          "mae": 0.16837318241596222,
+          "rmse": 0.21130545437335968,
+          "nll": -0.06411658972501755
+        },
+        "P_elec": {
+          "channel_name": "P_elec",
+          "mae": 0.0323982797563076,
+          "rmse": 0.04436216130852699,
+          "nll": -1.7217727899551392
+        }
+      }
+    },
+    "prediction_stochastic": {
+      "model_name": "PRISM_1StepPrediction_Stochastic",
+      "train_normalized_aggregate_mae": 0.23354506492614746,
+      "raw_overall_mae": 0.8848931789398193,
+      "overall_rmse": 1.5987956523895264,
+      "overall_nll": 0.8572148680686951,
+      "domains": {
+        "thermal": {
+          "domain_name": "thermal",
+          "variables": [
+            "T_core",
+            "T_cool"
+          ],
+          "mae": 1.343949317932129,
+          "rmse": 2.0132115483283997,
+          "normalized_mae": 0.24338090419769287
+        },
+        "hydraulic": {
+          "domain_name": "hydraulic",
+          "variables": [
+            "P_sys",
+            "F_cool"
+          ],
+          "mae": 0.6806507147848606,
+          "rmse": 0.938225869089365,
+          "normalized_mae": 0.1846013143658638
+        },
+        "compute": {
+          "domain_name": "compute",
+          "variables": [
+            "L_cpu",
+            "P_elec"
+          ],
+          "mae": 0.38806548714637756,
+          "rmse": 0.5359792839735746,
+          "normalized_mae": 0.33191993832588196
+        },
+        "actuation": {
+          "domain_name": "actuation",
+          "variables": [
+            "V_pos"
+          ],
+          "mae": 2.034238338470459,
+          "rmse": 2.801309585571289,
+          "normalized_mae": 0.13099133968353271
+        },
+        "vibration": {
+          "domain_name": "vibration",
+          "variables": [
+            "Vib_pump"
+          ],
+          "mae": 0.21957701444625854,
+          "rmse": 0.27720311284065247,
+          "normalized_mae": 0.2175649106502533
+        }
+      },
+      "per_channel": {
+        "T_core": {
+          "channel_name": "T_core",
+          "mae": 1.552497148513794,
+          "rmse": 2.303673267364502,
+          "nll": 2.062960147857666
+        },
+        "T_cool": {
+          "channel_name": "T_cool",
+          "mae": 1.1354014873504639,
+          "rmse": 1.7227498292922974,
+          "nll": 1.7428449392318726
+        },
+        "P_sys": {
+          "channel_name": "P_sys",
+          "mae": 0.07170654088258743,
+          "rmse": 0.09111536294221878,
+          "nll": -0.9964229464530945
+        },
+        "F_cool": {
+          "channel_name": "F_cool",
+          "mae": 1.2895948886871338,
+          "rmse": 1.7853363752365112,
+          "nll": 1.8798468112945557
+        },
+        "L_cpu": {
+          "channel_name": "L_cpu",
+          "mae": 0.74212646484375,
+          "rmse": 1.0258519649505615,
+          "nll": 1.4149795770645142
+        },
+        "V_pos": {
+          "channel_name": "V_pos",
+          "mae": 2.034238338470459,
+          "rmse": 2.801309585571289,
+          "nll": 2.3029162883758545
+        },
+        "Vib_pump": {
+          "channel_name": "Vib_pump",
+          "mae": 0.21957701444625854,
+          "rmse": 0.27720311284065247,
+          "nll": 0.12343304604291916
+        },
+        "P_elec": {
+          "channel_name": "P_elec",
+          "mae": 0.03400450944900513,
+          "rmse": 0.04610660299658775,
+          "nll": -1.672838807106018
+        }
+      }
+    },
+    "latent_probes": {
+      "model_name": "PRISM_LatentProbes",
+      "latent_dim": 32,
+      "probes": {
+        "T_amb": {
+          "variable_name": "T_amb",
+          "r2_score": 0.4000842503244909,
+          "mae": 0.47329103127216615,
+          "rmse": 0.7160470049036505,
+          "target_mean": 26.477244656759886,
+          "target_std": 0.9244776169168986
+        },
+        "W_wear": {
+          "variable_name": "W_wear",
+          "r2_score": 0.2598490735686966,
+          "mae": 0.02811981478710365,
+          "rmse": 0.03192549398243096,
+          "target_mean": 0.09527413220871857,
+          "target_std": 0.03710884862120633
+        },
+        "Q_internal": {
+          "variable_name": "Q_internal",
+          "r2_score": 0.22467654148843075,
+          "mae": 0.03864443966246056,
+          "rmse": 0.047606956632246754,
+          "target_mean": 0.19317260057972918,
+          "target_std": 0.054066587074907115
+        },
+        "xi_leak": {
+          "variable_name": "xi_leak",
+          "r2_score": -0.0901623419287998,
+          "mae": 0.010513436951037196,
+          "rmse": 0.013742152584575461,
+          "target_mean": 0.014264112546037499,
+          "target_std": 0.013161614240264272
+        }
+      }
+    },
+    "action_sensitivity": {
+      "model_name": "PRISM_ActionSensitivity",
+      "valve_sweep": {
+        "action_name": "A_valve",
+        "sweep_values": [
+          50.0,
+          85.0,
+          100.0
+        ],
+        "predicted_means": {
+          "T_core": [
+            81.76911163330078,
+            81.81733703613281,
+            81.85690307617188
+          ],
+          "T_cool": [
+            57.41469955444336,
+            57.084041595458984,
+            57.02999496459961
+          ],
+          "P_sys": [
+            2.670210838317871,
+            2.620835781097412,
+            2.6136460304260254
+          ],
+          "F_cool": [
+            23.9899959564209,
+            22.476293563842773,
+            22.252779006958008
+          ],
+          "L_cpu": [
+            65.39972686767578,
+            65.35697937011719,
+            65.3565444946289
+          ],
+          "V_pos": [
+            58.93952178955078,
+            56.082847595214844,
+            55.60554504394531
+          ],
+          "Vib_pump": [
+            7.590802192687988,
+            7.461341857910156,
+            7.43956995010376
+          ],
+          "P_elec": [
+            2.589252471923828,
+            2.5864369869232178,
+            2.5857315063476562
+          ]
+        },
+        "directional_checks": {
+          "F_cool_increases_with_valve": false,
+          "T_core_controlled_by_valve": true
+        }
+      },
+      "throttle_sweep": {
+        "action_name": "A_throttle",
+        "sweep_values": [
+          20.0,
+          80.0,
+          100.0
+        ],
+        "predicted_means": {
+          "T_core": [
+            81.96053314208984,
+            81.55996704101562,
+            81.55113220214844
+          ],
+          "T_cool": [
+            56.92951202392578,
+            57.635040283203125,
+            57.41789245605469
+          ],
+          "P_sys": [
+            2.6010074615478516,
+            2.719151496887207,
+            2.6973893642425537
+          ],
+          "F_cool": [
+            21.81380271911621,
+            25.74085807800293,
+            24.7536563873291
+          ],
+          "L_cpu": [
+            65.35858154296875,
+            65.45024108886719,
+            65.49373626708984
+          ],
+          "V_pos": [
+            54.65281677246094,
+            61.458927154541016,
+            60.48878479003906
+          ],
+          "Vib_pump": [
+            7.391341209411621,
+            7.742687225341797,
+            7.645341396331787
+          ],
+          "P_elec": [
+            2.5845229625701904,
+            2.5880706310272217,
+            2.58770489692688
+          ]
+        },
+        "directional_checks": {
+          "L_cpu_increases_with_throttle": true,
+          "P_elec_increases_with_throttle": false,
+          "T_core_heats_with_workload": true
+        }
+      },
+      "all_directional_checks_passed": false
+    }
+  },
+  "ablations": {
+    "diag_001_beta_kl_0": {
+      "params": {
+        "beta_kl": 0.0,
+        "latent_dim": 32,
+        "context_length": 40
+      },
+      "reconstruction": {
+        "model_name": "PRISM_Reconstruction_Deterministic",
+        "train_normalized_aggregate_mae": 0.19180907309055328,
+        "raw_overall_mae": 0.6133586764335632,
+        "overall_rmse": 1.2342568635940552,
+        "overall_nll": 0.6679737567901611,
+        "domains": {
+          "thermal": {
+            "domain_name": "thermal",
+            "variables": [
+              "T_core",
+              "T_cool"
+            ],
+            "mae": 1.168258249759674,
+            "rmse": 1.95322847366333,
+            "normalized_mae": 0.21152208000421524
+          },
+          "hydraulic": {
+            "domain_name": "hydraulic",
+            "variables": [
+              "P_sys",
+              "F_cool"
+            ],
+            "mae": 0.3807768542319536,
+            "rmse": 0.561033483594656,
+            "normalized_mae": 0.12320786342024803
+          },
+          "compute": {
+            "domain_name": "compute",
+            "variables": [
+              "L_cpu",
+              "P_elec"
+            ],
+            "mae": 0.37693162076175213,
+            "rmse": 0.5537964850664139,
+            "normalized_mae": 0.32158200442790985
+          },
+          "actuation": {
+            "domain_name": "actuation",
+            "variables": [
+              "V_pos"
+            ],
+            "mae": 0.8887977004051208,
+            "rmse": 1.4687482118606567,
+            "normalized_mae": 0.05723263695836067
+          },
+          "vibration": {
+            "domain_name": "vibration",
+            "variables": [
+              "Vib_pump"
+            ],
+            "mae": 0.1661384254693985,
+            "rmse": 0.21859999001026154,
+            "normalized_mae": 0.16461598873138428
+          }
+        },
+        "per_channel": {
+          "T_core": {
+            "channel_name": "T_core",
+            "mae": 1.3580554723739624,
+            "rmse": 2.1908349990844727,
+            "nll": 1.903899073600769
+          },
+          "T_cool": {
+            "channel_name": "T_cool",
+            "mae": 0.9784610271453857,
+            "rmse": 1.7156219482421875,
+            "nll": 1.5255732536315918
+          },
+          "P_sys": {
+            "channel_name": "P_sys",
+            "mae": 0.053094033151865005,
+            "rmse": 0.06863640993833542,
+            "nll": -1.191907525062561
+          },
+          "F_cool": {
+            "channel_name": "F_cool",
+            "mae": 0.7084596753120422,
+            "rmse": 1.0534305572509766,
+            "nll": 1.6079944372177124
+          },
+          "L_cpu": {
+            "channel_name": "L_cpu",
+            "mae": 0.7210092544555664,
+            "rmse": 1.0593605041503906,
+            "nll": 1.3632711172103882
+          },
+          "V_pos": {
+            "channel_name": "V_pos",
+            "mae": 0.8887977004051208,
+            "rmse": 1.4687482118606567,
+            "nll": 1.926068902015686
+          },
+          "Vib_pump": {
+            "channel_name": "Vib_pump",
+            "mae": 0.1661384254693985,
+            "rmse": 0.21859999001026154,
+            "nll": -0.08445189893245697
+          },
+          "P_elec": {
+            "channel_name": "P_elec",
+            "mae": 0.03285398706793785,
+            "rmse": 0.048232465982437134,
+            "nll": -1.7066574096679688
+          }
+        }
+      },
+      "prediction": {
+        "model_name": "PRISM_1StepPrediction_Deterministic",
+        "train_normalized_aggregate_mae": 0.1896173059940338,
+        "raw_overall_mae": 0.6082344651222229,
+        "overall_rmse": 1.153019905090332,
+        "overall_nll": 0.6631302237510681,
+        "domains": {
+          "thermal": {
+            "domain_name": "thermal",
+            "variables": [
+              "T_core",
+              "T_cool"
+            ],
+            "mae": 1.1594520509243011,
+            "rmse": 1.8406730890274048,
+            "normalized_mae": 0.20979274064302444
+          },
+          "hydraulic": {
+            "domain_name": "hydraulic",
+            "variables": [
+              "P_sys",
+              "F_cool"
+            ],
+            "mae": 0.3818017691373825,
+            "rmse": 0.5106894448399544,
+            "normalized_mae": 0.12151725590229034
+          },
+          "compute": {
+            "domain_name": "compute",
+            "variables": [
+              "L_cpu",
+              "P_elec"
+            ],
+            "mae": 0.37219114042818546,
+            "rmse": 0.5156295225024223,
+            "normalized_mae": 0.31818467378616333
+          },
+          "actuation": {
+            "domain_name": "actuation",
+            "variables": [
+              "V_pos"
+            ],
+            "mae": 0.8759478330612183,
+            "rmse": 1.3261401653289795,
+            "normalized_mae": 0.056405194103717804
+          },
+          "vibration": {
+            "domain_name": "vibration",
+            "variables": [
+              "Vib_pump"
+            ],
+            "mae": 0.1630380004644394,
+            "rmse": 0.20363937318325043,
+            "normalized_mae": 0.16154399514198303
+          }
+        },
+        "per_channel": {
+          "T_core": {
+            "channel_name": "T_core",
+            "mae": 1.374999761581421,
+            "rmse": 2.128952980041504,
+            "nll": 1.940327525138855
+          },
+          "T_cool": {
+            "channel_name": "T_cool",
+            "mae": 0.9439043402671814,
+            "rmse": 1.5523931980133057,
+            "nll": 1.520538330078125
+          },
+          "P_sys": {
+            "channel_name": "P_sys",
+            "mae": 0.05192038416862488,
+            "rmse": 0.06561954319477081,
+            "nll": -1.204716682434082
+          },
+          "F_cool": {
+            "channel_name": "F_cool",
+            "mae": 0.7116831541061401,
+            "rmse": 0.9557593464851379,
+            "nll": 1.6007746458053589
+          },
+          "L_cpu": {
+            "channel_name": "L_cpu",
+            "mae": 0.71180260181427,
+            "rmse": 0.9866006374359131,
+            "nll": 1.3512085676193237
+          },
+          "V_pos": {
+            "channel_name": "V_pos",
+            "mae": 0.8759478330612183,
+            "rmse": 1.3261401653289795,
+            "nll": 1.91253662109375
+          },
+          "Vib_pump": {
+            "channel_name": "Vib_pump",
+            "mae": 0.1630380004644394,
+            "rmse": 0.20363937318325043,
+            "nll": -0.09736531972885132
+          },
+          "P_elec": {
+            "channel_name": "P_elec",
+            "mae": 0.032579679042100906,
+            "rmse": 0.04465840756893158,
+            "nll": -1.7182621955871582
+          }
+        }
+      },
+      "probes": {
+        "model_name": "PRISM_LatentProbes",
+        "latent_dim": 32,
+        "probes": {
+          "T_amb": {
+            "variable_name": "T_amb",
+            "r2_score": 0.4071877845986054,
+            "mae": 0.4691414025414632,
+            "rmse": 0.7117950650973848,
+            "target_mean": 26.477244656759886,
+            "target_std": 0.9244776169168986
+          },
+          "W_wear": {
+            "variable_name": "W_wear",
+            "r2_score": 0.2756596078832755,
+            "mae": 0.02793632279005494,
+            "rmse": 0.031582669397962414,
+            "target_mean": 0.09527413220871857,
+            "target_std": 0.03710884862120633
+          },
+          "Q_internal": {
+            "variable_name": "Q_internal",
+            "r2_score": 0.2640442559606009,
+            "mae": 0.037531920755508194,
+            "rmse": 0.046382569786937326,
+            "target_mean": 0.19317260057972918,
+            "target_std": 0.054066587074907115
+          },
+          "xi_leak": {
+            "variable_name": "xi_leak",
+            "r2_score": -0.11020507503305299,
+            "mae": 0.010571855545715554,
+            "rmse": 0.01386790259380393,
+            "target_mean": 0.014264112546037499,
+            "target_std": 0.013161614240264272
+          }
+        }
+      }
+    },
+    "diag_002_beta_kl_0001": {
+      "params": {
+        "beta_kl": 0.001,
+        "latent_dim": 32,
+        "context_length": 40
+      },
+      "reconstruction": {
+        "model_name": "PRISM_Reconstruction_Deterministic",
+        "train_normalized_aggregate_mae": 0.18846270442008972,
+        "raw_overall_mae": 0.6014552712440491,
+        "overall_rmse": 1.205911636352539,
+        "overall_nll": 0.634966254234314,
+        "domains": {
+          "thermal": {
+            "domain_name": "thermal",
+            "variables": [
+              "T_core",
+              "T_cool"
+            ],
+            "mae": 1.1534195840358734,
+            "rmse": 1.925085425376892,
+            "normalized_mae": 0.20885376632213593
+          },
+          "hydraulic": {
+            "domain_name": "hydraulic",
+            "variables": [
+              "P_sys",
+              "F_cool"
+            ],
+            "mae": 0.3866728935390711,
+            "rmse": 0.561092421412468,
+            "normalized_mae": 0.1210474967956543
+          },
+          "compute": {
+            "domain_name": "compute",
+            "variables": [
+              "L_cpu",
+              "P_elec"
+            ],
+            "mae": 0.3681008815765381,
+            "rmse": 0.5438896734267473,
+            "normalized_mae": 0.31594330072402954
+          },
+          "actuation": {
+            "domain_name": "actuation",
+            "variables": [
+              "V_pos"
+            ],
+            "mae": 0.8312686085700989,
+            "rmse": 1.369654655456543,
+            "normalized_mae": 0.05352814495563507
+          },
+          "vibration": {
+            "domain_name": "vibration",
+            "variables": [
+              "Vib_pump"
+            ],
+            "mae": 0.16398712992668152,
+            "rmse": 0.2169358730316162,
+            "normalized_mae": 0.16248445212841034
+          }
+        },
+        "per_channel": {
+          "T_core": {
+            "channel_name": "T_core",
+            "mae": 1.3371140956878662,
+            "rmse": 2.1445276737213135,
+            "nll": 1.8749090433120728
+          },
+          "T_cool": {
+            "channel_name": "T_cool",
+            "mae": 0.9697250723838806,
+            "rmse": 1.7056431770324707,
+            "nll": 1.5043647289276123
+          },
+          "P_sys": {
+            "channel_name": "P_sys",
+            "mae": 0.05126764252781868,
+            "rmse": 0.0666484534740448,
+            "nll": -1.2246938943862915
+          },
+          "F_cool": {
+            "channel_name": "F_cool",
+            "mae": 0.7220781445503235,
+            "rmse": 1.0555363893508911,
+            "nll": 1.5743879079818726
+          },
+          "L_cpu": {
+            "channel_name": "L_cpu",
+            "mae": 0.703710675239563,
+            "rmse": 1.0400338172912598,
+            "nll": 1.33607017993927
+          },
+          "V_pos": {
+            "channel_name": "V_pos",
+            "mae": 0.8312686085700989,
+            "rmse": 1.369654655456543,
+            "nll": 1.8370740413665771
+          },
+          "Vib_pump": {
+            "channel_name": "Vib_pump",
+            "mae": 0.16398712992668152,
+            "rmse": 0.2169358730316162,
+            "nll": -0.1003076434135437
+          },
+          "P_elec": {
+            "channel_name": "P_elec",
+            "mae": 0.032491087913513184,
+            "rmse": 0.04774552956223488,
+            "nll": -1.7220743894577026
+          }
+        }
+      },
+      "prediction": {
+        "model_name": "PRISM_1StepPrediction_Deterministic",
+        "train_normalized_aggregate_mae": 0.18713989853858948,
+        "raw_overall_mae": 0.5982509851455688,
+        "overall_rmse": 1.1265482902526855,
+        "overall_nll": 0.6369757056236267,
+        "domains": {
+          "thermal": {
+            "domain_name": "thermal",
+            "variables": [
+              "T_core",
+              "T_cool"
+            ],
+            "mae": 1.1511648893356323,
+            "rmse": 1.8209851384162903,
+            "normalized_mae": 0.2083335518836975
+          },
+          "hydraulic": {
+            "domain_name": "hydraulic",
+            "variables": [
+              "P_sys",
+              "F_cool"
+            ],
+            "mae": 0.3741400670260191,
+            "rmse": 0.5029538758099079,
+            "normalized_mae": 0.11861648038029671
+          },
+          "compute": {
+            "domain_name": "compute",
+            "variables": [
+              "L_cpu",
+              "P_elec"
+            ],
+            "mae": 0.36617255955934525,
+            "rmse": 0.5079924818128347,
+            "normalized_mae": 0.3144606351852417
+          },
+          "actuation": {
+            "domain_name": "actuation",
+            "variables": [
+              "V_pos"
+            ],
+            "mae": 0.841458797454834,
+            "rmse": 1.2233989238739014,
+            "normalized_mae": 0.05418432503938675
+          },
+          "vibration": {
+            "domain_name": "vibration",
+            "variables": [
+              "Vib_pump"
+            ],
+            "mae": 0.16159437596797943,
+            "rmse": 0.20247429609298706,
+            "normalized_mae": 0.16011358797550201
+          }
+        },
+        "per_channel": {
+          "T_core": {
+            "channel_name": "T_core",
+            "mae": 1.3570514917373657,
+            "rmse": 2.091189384460449,
+            "nll": 1.9215893745422363
+          },
+          "T_cool": {
+            "channel_name": "T_cool",
+            "mae": 0.9452782869338989,
+            "rmse": 1.5507808923721313,
+            "nll": 1.5121510028839111
+          },
+          "P_sys": {
+            "channel_name": "P_sys",
+            "mae": 0.050577547401189804,
+            "rmse": 0.06407485157251358,
+            "nll": -1.2308108806610107
+          },
+          "F_cool": {
+            "channel_name": "F_cool",
+            "mae": 0.6977025866508484,
+            "rmse": 0.9418329000473022,
+            "nll": 1.5653107166290283
+          },
+          "L_cpu": {
+            "channel_name": "L_cpu",
+            "mae": 0.6999872326850891,
+            "rmse": 0.9716333150863647,
+            "nll": 1.3358756303787231
+          },
+          "V_pos": {
+            "channel_name": "V_pos",
+            "mae": 0.841458797454834,
+            "rmse": 1.2233989238739014,
+            "nll": 1.828285813331604
+          },
+          "Vib_pump": {
+            "channel_name": "Vib_pump",
+            "mae": 0.16159437596797943,
+            "rmse": 0.20247429609298706,
+            "nll": -0.11251786351203918
+          },
+          "P_elec": {
+            "channel_name": "P_elec",
+            "mae": 0.03235788643360138,
+            "rmse": 0.04435164853930473,
+            "nll": -1.7240787744522095
+          }
+        }
+      },
+      "probes": {
+        "model_name": "PRISM_LatentProbes",
+        "latent_dim": 32,
+        "probes": {
+          "T_amb": {
+            "variable_name": "T_amb",
+            "r2_score": 0.41217294718649666,
+            "mae": 0.46702382223746547,
+            "rmse": 0.7087958812675101,
+            "target_mean": 26.477244656759886,
+            "target_std": 0.9244776169168986
+          },
+          "W_wear": {
+            "variable_name": "W_wear",
+            "r2_score": 0.3057462295706437,
+            "mae": 0.02700919218811522,
+            "rmse": 0.0309197949958833,
+            "target_mean": 0.09527413220871857,
+            "target_std": 0.03710884862120633
+          },
+          "Q_internal": {
+            "variable_name": "Q_internal",
+            "r2_score": 0.25085903093118944,
+            "mae": 0.037967411770504285,
+            "rmse": 0.04679621539383474,
+            "target_mean": 0.19317260057972918,
+            "target_std": 0.054066587074907115
+          },
+          "xi_leak": {
+            "variable_name": "xi_leak",
+            "r2_score": -0.10233895155688666,
+            "mae": 0.010539855565432289,
+            "rmse": 0.013818686213977777,
+            "target_mean": 0.014264112546037499,
+            "target_std": 0.013161614240264272
+          }
+        }
+      }
+    },
+    "diag_003_latent_64": {
+      "params": {
+        "beta_kl": 0.01,
+        "latent_dim": 64,
+        "context_length": 40
+      },
+      "reconstruction": {
+        "model_name": "PRISM_Reconstruction_Deterministic",
+        "train_normalized_aggregate_mae": 0.19038300216197968,
+        "raw_overall_mae": 0.6196348667144775,
+        "overall_rmse": 1.2691025733947754,
+        "overall_nll": 0.676944375038147,
+        "domains": {
+          "thermal": {
+            "domain_name": "thermal",
+            "variables": [
+              "T_core",
+              "T_cool"
+            ],
+            "mae": 1.1523566246032715,
+            "rmse": 1.943960189819336,
+            "normalized_mae": 0.20855706930160522
+          },
+          "hydraulic": {
+            "domain_name": "hydraulic",
+            "variables": [
+              "P_sys",
+              "F_cool"
+            ],
+            "mae": 0.40120846405625343,
+            "rmse": 0.6643940284848213,
+            "normalized_mae": 0.12184544280171394
+          },
+          "compute": {
+            "domain_name": "compute",
+            "variables": [
+              "L_cpu",
+              "P_elec"
+            ],
+            "mae": 0.3689952064305544,
+            "rmse": 0.555291598662734,
+            "normalized_mae": 0.31502142548561096
+          },
+          "actuation": {
+            "domain_name": "actuation",
+            "variables": [
+              "V_pos"
+            ],
+            "mae": 0.9385926127433777,
+            "rmse": 1.5537631511688232,
+            "normalized_mae": 0.0604391023516655
+          },
+          "vibration": {
+            "domain_name": "vibration",
+            "variables": [
+              "Vib_pump"
+            ],
+            "mae": 0.17336563766002655,
+            "rmse": 0.2258332520723343,
+            "normalized_mae": 0.17177699506282806
+          }
+        },
+        "per_channel": {
+          "T_core": {
+            "channel_name": "T_core",
+            "mae": 1.3568776845932007,
+            "rmse": 2.199597120285034,
+            "nll": 1.8656114339828491
+          },
+          "T_cool": {
+            "channel_name": "T_cool",
+            "mae": 0.9478355646133423,
+            "rmse": 1.6883232593536377,
+            "nll": 1.4800688028335571
+          },
+          "P_sys": {
+            "channel_name": "P_sys",
+            "mae": 0.050751931965351105,
+            "rmse": 0.0662611871957779,
+            "nll": -1.2099666595458984
+          },
+          "F_cool": {
+            "channel_name": "F_cool",
+            "mae": 0.7516649961471558,
+            "rmse": 1.2625268697738647,
+            "nll": 1.6599996089935303
+          },
+          "L_cpu": {
+            "channel_name": "L_cpu",
+            "mae": 0.7057830095291138,
+            "rmse": 1.0632615089416504,
+            "nll": 1.3398733139038086
+          },
+          "V_pos": {
+            "channel_name": "V_pos",
+            "mae": 0.9385926127433777,
+            "rmse": 1.5537631511688232,
+            "nll": 2.075566053390503
+          },
+          "Vib_pump": {
+            "channel_name": "Vib_pump",
+            "mae": 0.17336563766002655,
+            "rmse": 0.2258332520723343,
+            "nll": -0.05016414076089859
+          },
+          "P_elec": {
+            "channel_name": "P_elec",
+            "mae": 0.03220740333199501,
+            "rmse": 0.04732168838381767,
+            "nll": -1.7454335689544678
+          }
+        }
+      },
+      "prediction": {
+        "model_name": "PRISM_1StepPrediction_Deterministic",
+        "train_normalized_aggregate_mae": 0.18649408221244812,
+        "raw_overall_mae": 0.5956282019615173,
+        "overall_rmse": 1.1644045114517212,
+        "overall_nll": 0.6715918183326721,
+        "domains": {
+          "thermal": {
+            "domain_name": "thermal",
+            "variables": [
+              "T_core",
+              "T_cool"
+            ],
+            "mae": 1.1417765319347382,
+            "rmse": 1.8264216184616089,
+            "normalized_mae": 0.2065330594778061
+          },
+          "hydraulic": {
+            "domain_name": "hydraulic",
+            "variables": [
+              "P_sys",
+              "F_cool"
+            ],
+            "mae": 0.37697835080325603,
+            "rmse": 0.5868839621543884,
+            "normalized_mae": 0.1171734556555748
+          },
+          "compute": {
+            "domain_name": "compute",
+            "variables": [
+              "L_cpu",
+              "P_elec"
+            ],
+            "mae": 0.36584141850471497,
+            "rmse": 0.5134895071387291,
+            "normalized_mae": 0.31291984021663666
+          },
+          "actuation": {
+            "domain_name": "actuation",
+            "variables": [
+              "V_pos"
+            ],
+            "mae": 0.8289855122566223,
+            "rmse": 1.3186856508255005,
+            "normalized_mae": 0.05338112637400627
+          },
+          "vibration": {
+            "domain_name": "vibration",
+            "variables": [
+              "Vib_pump"
+            ],
+            "mae": 0.16684772074222565,
+            "rmse": 0.20794737339019775,
+            "normalized_mae": 0.16531884670257568
+          }
+        },
+        "per_channel": {
+          "T_core": {
+            "channel_name": "T_core",
+            "mae": 1.3664155006408691,
+            "rmse": 2.131448268890381,
+            "nll": 1.9034255743026733
+          },
+          "T_cool": {
+            "channel_name": "T_cool",
+            "mae": 0.9171375632286072,
+            "rmse": 1.521394968032837,
+            "nll": 1.4830080270767212
+          },
+          "P_sys": {
+            "channel_name": "P_sys",
+            "mae": 0.04943593963980675,
+            "rmse": 0.06277811527252197,
+            "nll": -1.2241249084472656
+          },
+          "F_cool": {
+            "channel_name": "F_cool",
+            "mae": 0.7045207619667053,
+            "rmse": 1.1109898090362549,
+            "nll": 1.6423295736312866
+          },
+          "L_cpu": {
+            "channel_name": "L_cpu",
+            "mae": 0.6996238827705383,
+            "rmse": 0.9831864833831787,
+            "nll": 1.3364908695220947
+          },
+          "V_pos": {
+            "channel_name": "V_pos",
+            "mae": 0.8289855122566223,
+            "rmse": 1.3186856508255005,
+            "nll": 2.0502407550811768
+          },
+          "Vib_pump": {
+            "channel_name": "Vib_pump",
+            "mae": 0.16684772074222565,
+            "rmse": 0.20794737339019775,
+            "nll": -0.07289472222328186
+          },
+          "P_elec": {
+            "channel_name": "P_elec",
+            "mae": 0.0320589542388916,
+            "rmse": 0.04379253089427948,
+            "nll": -1.7457412481307983
+          }
+        }
+      },
+      "probes": {
+        "model_name": "PRISM_LatentProbes",
+        "latent_dim": 64,
+        "probes": {
+          "T_amb": {
+            "variable_name": "T_amb",
+            "r2_score": 0.5383484518369096,
+            "mae": 0.42457021642499254,
+            "rmse": 0.628135803634689,
+            "target_mean": 26.477244656759886,
+            "target_std": 0.9244776169168986
+          },
+          "W_wear": {
+            "variable_name": "W_wear",
+            "r2_score": 0.33968834983708496,
+            "mae": 0.0258572515622523,
+            "rmse": 0.03015448822834291,
+            "target_mean": 0.09527413220871857,
+            "target_std": 0.03710884862120633
+          },
+          "Q_internal": {
+            "variable_name": "Q_internal",
+            "r2_score": 0.22259145032022598,
+            "mae": 0.03830549610580036,
+            "rmse": 0.04767092876841908,
+            "target_mean": 0.19317260057972918,
+            "target_std": 0.054066587074907115
+          },
+          "xi_leak": {
+            "variable_name": "xi_leak",
+            "r2_score": -0.08153689255402252,
+            "mae": 0.010447271360737575,
+            "rmse": 0.013687680132136832,
+            "target_mean": 0.014264112546037499,
+            "target_std": 0.013161614240264272
+          }
+        }
+      }
+    },
+    "diag_004_latent_128": {
+      "params": {
+        "beta_kl": 0.01,
+        "latent_dim": 128,
+        "context_length": 40
+      },
+      "reconstruction": {
+        "model_name": "PRISM_Reconstruction_Deterministic",
+        "train_normalized_aggregate_mae": 0.18677257001399994,
+        "raw_overall_mae": 0.609153687953949,
+        "overall_rmse": 1.2201875448226929,
+        "overall_nll": 0.6246232390403748,
+        "domains": {
+          "thermal": {
+            "domain_name": "thermal",
+            "variables": [
+              "T_core",
+              "T_cool"
+            ],
+            "mae": 1.1248301565647125,
+            "rmse": 1.905384361743927,
+            "normalized_mae": 0.2035704180598259
+          },
+          "hydraulic": {
+            "domain_name": "hydraulic",
+            "variables": [
+              "P_sys",
+              "F_cool"
+            ],
+            "mae": 0.37688918225467205,
+            "rmse": 0.5801460780203342,
+            "normalized_mae": 0.11780329048633575
+          },
+          "compute": {
+            "domain_name": "compute",
+            "variables": [
+              "L_cpu",
+              "P_elec"
+            ],
+            "mae": 0.3658147733658552,
+            "rmse": 0.546660304069519,
+            "normalized_mae": 0.31409843266010284
+          },
+          "actuation": {
+            "domain_name": "actuation",
+            "variables": [
+              "V_pos"
+            ],
+            "mae": 0.9763092994689941,
+            "rmse": 1.4882168769836426,
+            "normalized_mae": 0.06286780536174774
+          },
+          "vibration": {
+            "domain_name": "vibration",
+            "variables": [
+              "Vib_pump"
+            ],
+            "mae": 0.1618516445159912,
+            "rmse": 0.21519824862480164,
+            "normalized_mae": 0.16036851704120636
+          }
+        },
+        "per_channel": {
+          "T_core": {
+            "channel_name": "T_core",
+            "mae": 1.325437307357788,
+            "rmse": 2.11665940284729,
+            "nll": 1.8090953826904297
+          },
+          "T_cool": {
+            "channel_name": "T_cool",
+            "mae": 0.924223005771637,
+            "rmse": 1.694109320640564,
+            "nll": 1.4593006372451782
+          },
+          "P_sys": {
+            "channel_name": "P_sys",
+            "mae": 0.049852337688207626,
+            "rmse": 0.06515277177095413,
+            "nll": -1.2415850162506104
+          },
+          "F_cool": {
+            "channel_name": "F_cool",
+            "mae": 0.7039260268211365,
+            "rmse": 1.0951393842697144,
+            "nll": 1.5291452407836914
+          },
+          "L_cpu": {
+            "channel_name": "L_cpu",
+            "mae": 0.699315071105957,
+            "rmse": 1.0457886457443237,
+            "nll": 1.3260315656661987
+          },
+          "V_pos": {
+            "channel_name": "V_pos",
+            "mae": 0.9763092994689941,
+            "rmse": 1.4882168769836426,
+            "nll": 1.9632807970046997
+          },
+          "Vib_pump": {
+            "channel_name": "Vib_pump",
+            "mae": 0.1618516445159912,
+            "rmse": 0.21519824862480164,
+            "nll": -0.10347399860620499
+          },
+          "P_elec": {
+            "channel_name": "P_elec",
+            "mae": 0.0323144756257534,
+            "rmse": 0.047531962394714355,
+            "nll": -1.7448089122772217
+          }
+        }
+      },
+      "prediction": {
+        "model_name": "PRISM_1StepPrediction_Deterministic",
+        "train_normalized_aggregate_mae": 0.18514618277549744,
+        "raw_overall_mae": 0.5993990302085876,
+        "overall_rmse": 1.1278883218765259,
+        "overall_nll": 0.6244033575057983,
+        "domains": {
+          "thermal": {
+            "domain_name": "thermal",
+            "variables": [
+              "T_core",
+              "T_cool"
+            ],
+            "mae": 1.1247024536132812,
+            "rmse": 1.7909022569656372,
+            "normalized_mae": 0.2034471482038498
+          },
+          "hydraulic": {
+            "domain_name": "hydraulic",
+            "variables": [
+              "P_sys",
+              "F_cool"
+            ],
+            "mae": 0.3598958197981119,
+            "rmse": 0.5116485860198736,
+            "normalized_mae": 0.11520020291209221
+          },
+          "compute": {
+            "domain_name": "compute",
+            "variables": [
+              "L_cpu",
+              "P_elec"
+            ],
+            "mae": 0.36444370821118355,
+            "rmse": 0.5086833108216524,
+            "normalized_mae": 0.3126492500305176
+          },
+          "actuation": {
+            "domain_name": "actuation",
+            "variables": [
+              "V_pos"
+            ],
+            "mae": 0.9374331831932068,
+            "rmse": 1.306217908859253,
+            "normalized_mae": 0.06036444008350372
+          },
+          "vibration": {
+            "domain_name": "vibration",
+            "variables": [
+              "Vib_pump"
+            ],
+            "mae": 0.1596750020980835,
+            "rmse": 0.20027272403240204,
+            "normalized_mae": 0.158211812376976
+          }
+        },
+        "per_channel": {
+          "T_core": {
+            "channel_name": "T_core",
+            "mae": 1.3454627990722656,
+            "rmse": 2.0551342964172363,
+            "nll": 1.856542944908142
+          },
+          "T_cool": {
+            "channel_name": "T_cool",
+            "mae": 0.9039421081542969,
+            "rmse": 1.526670217514038,
+            "nll": 1.4666963815689087
+          },
+          "P_sys": {
+            "channel_name": "P_sys",
+            "mae": 0.04936789348721504,
+            "rmse": 0.062441807240247726,
+            "nll": -1.2508282661437988
+          },
+          "F_cool": {
+            "channel_name": "F_cool",
+            "mae": 0.6704237461090088,
+            "rmse": 0.9608553647994995,
+            "nll": 1.5176752805709839
+          },
+          "L_cpu": {
+            "channel_name": "L_cpu",
+            "mae": 0.6967524290084839,
+            "rmse": 0.9733240008354187,
+            "nll": 1.3245601654052734
+          },
+          "V_pos": {
+            "channel_name": "V_pos",
+            "mae": 0.9374331831932068,
+            "rmse": 1.306217908859253,
+            "nll": 1.94615638256073
+          },
+          "Vib_pump": {
+            "channel_name": "Vib_pump",
+            "mae": 0.1596750020980835,
+            "rmse": 0.20027272403240204,
+            "nll": -0.11886138468980789
+          },
+          "P_elec": {
+            "channel_name": "P_elec",
+            "mae": 0.03213498741388321,
+            "rmse": 0.044042620807886124,
+            "nll": -1.7467150688171387
+          }
+        }
+      },
+      "probes": {
+        "model_name": "PRISM_LatentProbes",
+        "latent_dim": 128,
+        "probes": {
+          "T_amb": {
+            "variable_name": "T_amb",
+            "r2_score": 0.5656799235640209,
+            "mae": 0.40710452051712986,
+            "rmse": 0.6092581581108903,
+            "target_mean": 26.477244656759886,
+            "target_std": 0.9244776169168986
+          },
+          "W_wear": {
+            "variable_name": "W_wear",
+            "r2_score": 0.30017401383456876,
+            "mae": 0.026583809477714663,
+            "rmse": 0.031043631152202072,
+            "target_mean": 0.09527413220871857,
+            "target_std": 0.03710884862120633
+          },
+          "Q_internal": {
+            "variable_name": "Q_internal",
+            "r2_score": 0.22765320361376196,
+            "mae": 0.038188499276601874,
+            "rmse": 0.047515481197181776,
+            "target_mean": 0.19317260057972918,
+            "target_std": 0.054066587074907115
+          },
+          "xi_leak": {
+            "variable_name": "xi_leak",
+            "r2_score": -0.18399214698894117,
+            "mae": 0.011185443732956199,
+            "rmse": 0.014321337823991745,
+            "target_mean": 0.014264112546037499,
+            "target_std": 0.013161614240264272
+          }
+        }
+      }
+    },
+    "diag_005_context_10": {
+      "params": {
+        "beta_kl": 0.01,
+        "latent_dim": 32,
+        "context_length": 10
+      },
+      "reconstruction": {
+        "model_name": "PRISM_Reconstruction_Deterministic",
+        "train_normalized_aggregate_mae": 0.20154157280921936,
+        "raw_overall_mae": 0.6668079495429993,
+        "overall_rmse": 1.3755950927734375,
+        "overall_nll": 0.6590319871902466,
+        "domains": {
+          "thermal": {
+            "domain_name": "thermal",
+            "variables": [
+              "T_core",
+              "T_cool"
+            ],
+            "mae": 1.2118653655052185,
+            "rmse": 2.106869161128998,
+            "normalized_mae": 0.2194821909070015
+          },
+          "hydraulic": {
+            "domain_name": "hydraulic",
+            "variables": [
+              "P_sys",
+              "F_cool"
+            ],
+            "mae": 0.4328750856220722,
+            "rmse": 0.654763251543045,
+            "normalized_mae": 0.1261373721063137
+          },
+          "compute": {
+            "domain_name": "compute",
+            "variables": [
+              "L_cpu",
+              "P_elec"
+            ],
+            "mae": 0.39881934970617294,
+            "rmse": 0.6506759226322174,
+            "normalized_mae": 0.34203915297985077
+          },
+          "actuation": {
+            "domain_name": "actuation",
+            "variables": [
+              "V_pos"
+            ],
+            "mae": 1.0782089233398438,
+            "rmse": 1.7389938831329346,
+            "normalized_mae": 0.06942944973707199
+          },
+          "vibration": {
+            "domain_name": "vibration",
+            "variables": [
+              "Vib_pump"
+            ],
+            "mae": 0.1691354364156723,
+            "rmse": 0.239693284034729,
+            "normalized_mae": 0.1675855815410614
+          }
+        },
+        "per_channel": {
+          "T_core": {
+            "channel_name": "T_core",
+            "mae": 1.3957091569900513,
+            "rmse": 2.3099896907806396,
+            "nll": 1.880873441696167
+          },
+          "T_cool": {
+            "channel_name": "T_cool",
+            "mae": 1.0280215740203857,
+            "rmse": 1.903748631477356,
+            "nll": 1.5330569744110107
+          },
+          "P_sys": {
+            "channel_name": "P_sys",
+            "mae": 0.0512908473610878,
+            "rmse": 0.06940203905105591,
+            "nll": -1.2289996147155762
+          },
+          "F_cool": {
+            "channel_name": "F_cool",
+            "mae": 0.8144593238830566,
+            "rmse": 1.2401244640350342,
+            "nll": 1.5732816457748413
+          },
+          "L_cpu": {
+            "channel_name": "L_cpu",
+            "mae": 0.7624941468238831,
+            "rmse": 1.2451281547546387,
+            "nll": 1.4047515392303467
+          },
+          "V_pos": {
+            "channel_name": "V_pos",
+            "mae": 1.0782089233398438,
+            "rmse": 1.7389938831329346,
+            "nll": 1.830740213394165
+          },
+          "Vib_pump": {
+            "channel_name": "Vib_pump",
+            "mae": 0.1691354364156723,
+            "rmse": 0.239693284034729,
+            "nll": -0.05933328717947006
+          },
+          "P_elec": {
+            "channel_name": "P_elec",
+            "mae": 0.03514455258846283,
+            "rmse": 0.05622369050979614,
+            "nll": -1.6621150970458984
+          }
+        }
+      },
+      "prediction": {
+        "model_name": "PRISM_1StepPrediction_Deterministic",
+        "train_normalized_aggregate_mae": 0.19623522460460663,
+        "raw_overall_mae": 0.6292437314987183,
+        "overall_rmse": 1.225376844406128,
+        "overall_nll": 0.6560426950454712,
+        "domains": {
+          "thermal": {
+            "domain_name": "thermal",
+            "variables": [
+              "T_core",
+              "T_cool"
+            ],
+            "mae": 1.2200949490070343,
+            "rmse": 2.003573954105377,
+            "normalized_mae": 0.2207607999444008
+          },
+          "hydraulic": {
+            "domain_name": "hydraulic",
+            "variables": [
+              "P_sys",
+              "F_cool"
+            ],
+            "mae": 0.37450329028069973,
+            "rmse": 0.49942491948604584,
+            "normalized_mae": 0.11763903126120567
+          },
+          "compute": {
+            "domain_name": "compute",
+            "variables": [
+              "L_cpu",
+              "P_elec"
+            ],
+            "mae": 0.39289368875324726,
+            "rmse": 0.5755609795451164,
+            "normalized_mae": 0.3363271653652191
+          },
+          "actuation": {
+            "domain_name": "actuation",
+            "variables": [
+              "V_pos"
+            ],
+            "mae": 0.8946412801742554,
+            "rmse": 1.2841928005218506,
+            "normalized_mae": 0.05760893225669861
+          },
+          "vibration": {
+            "domain_name": "vibration",
+            "variables": [
+              "Vib_pump"
+            ],
+            "mae": 0.16432467103004456,
+            "rmse": 0.20752063393592834,
+            "normalized_mae": 0.16281886398792267
+          }
+        },
+        "per_channel": {
+          "T_core": {
+            "channel_name": "T_core",
+            "mae": 1.4478707313537598,
+            "rmse": 2.3151135444641113,
+            "nll": 1.9521379470825195
+          },
+          "T_cool": {
+            "channel_name": "T_cool",
+            "mae": 0.9923191666603088,
+            "rmse": 1.692034363746643,
+            "nll": 1.5392106771469116
+          },
+          "P_sys": {
+            "channel_name": "P_sys",
+            "mae": 0.04991532489657402,
+            "rmse": 0.06295105814933777,
+            "nll": -1.246140480041504
+          },
+          "F_cool": {
+            "channel_name": "F_cool",
+            "mae": 0.6990912556648254,
+            "rmse": 0.9358987808227539,
+            "nll": 1.5460126399993896
+          },
+          "L_cpu": {
+            "channel_name": "L_cpu",
+            "mae": 0.7513002157211304,
+            "rmse": 1.102358102798462,
+            "nll": 1.4142837524414062
+          },
+          "V_pos": {
+            "channel_name": "V_pos",
+            "mae": 0.8946412801742554,
+            "rmse": 1.2841928005218506,
+            "nll": 1.796891212463379
+          },
+          "Vib_pump": {
+            "channel_name": "Vib_pump",
+            "mae": 0.16432467103004456,
+            "rmse": 0.20752063393592834,
+            "nll": -0.09028034657239914
+          },
+          "P_elec": {
+            "channel_name": "P_elec",
+            "mae": 0.03448716178536415,
+            "rmse": 0.048763856291770935,
+            "nll": -1.6637738943099976
+          }
+        }
+      },
+      "probes": {
+        "model_name": "PRISM_LatentProbes",
+        "latent_dim": 32,
+        "probes": {
+          "T_amb": {
+            "variable_name": "T_amb",
+            "r2_score": 0.3873888692567252,
+            "mae": 0.47861201328315417,
+            "rmse": 0.7235838121430105,
+            "target_mean": 26.477244656759886,
+            "target_std": 0.9244776169168986
+          },
+          "W_wear": {
+            "variable_name": "W_wear",
+            "r2_score": 0.3565138124169295,
+            "mae": 0.025882544949868004,
+            "rmse": 0.02976782452100053,
+            "target_mean": 0.09527413220871857,
+            "target_std": 0.03710884862120633
+          },
+          "Q_internal": {
+            "variable_name": "Q_internal",
+            "r2_score": 0.22021600192430923,
+            "mae": 0.03906064462001488,
+            "rmse": 0.047743704826365405,
+            "target_mean": 0.19317260057972918,
+            "target_std": 0.054066587074907115
+          },
+          "xi_leak": {
+            "variable_name": "xi_leak",
+            "r2_score": -0.11246688815001349,
+            "mae": 0.010633880374482922,
+            "rmse": 0.01388202189716871,
+            "target_mean": 0.014264112546037499,
+            "target_std": 0.013161614240264272
+          }
+        }
+      }
+    },
+    "diag_006_context_20": {
+      "params": {
+        "beta_kl": 0.01,
+        "latent_dim": 32,
+        "context_length": 20
+      },
+      "reconstruction": {
+        "model_name": "PRISM_Reconstruction_Deterministic",
+        "train_normalized_aggregate_mae": 0.20149235427379608,
+        "raw_overall_mae": 0.6825934648513794,
+        "overall_rmse": 1.4348413944244385,
+        "overall_nll": 0.6858066320419312,
+        "domains": {
+          "thermal": {
+            "domain_name": "thermal",
+            "variables": [
+              "T_core",
+              "T_cool"
+            ],
+            "mae": 1.1961327195167542,
+            "rmse": 2.082967162132263,
+            "normalized_mae": 0.2165699228644371
+          },
+          "hydraulic": {
+            "domain_name": "hydraulic",
+            "variables": [
+              "P_sys",
+              "F_cool"
+            ],
+            "mae": 0.4438643455505371,
+            "rmse": 0.7077698521316051,
+            "normalized_mae": 0.13092781975865364
+          },
+          "compute": {
+            "domain_name": "compute",
+            "variables": [
+              "L_cpu",
+              "P_elec"
+            ],
+            "mae": 0.3901294656097889,
+            "rmse": 0.6004939246922731,
+            "normalized_mae": 0.3338620066642761
+          },
+          "actuation": {
+            "domain_name": "actuation",
+            "variables": [
+              "V_pos"
+            ],
+            "mae": 1.228831171989441,
+            "rmse": 2.124296188354492,
+            "normalized_mae": 0.07912851870059967
+          },
+          "vibration": {
+            "domain_name": "vibration",
+            "variables": [
+              "Vib_pump"
+            ],
+            "mae": 0.17166395485401154,
+            "rmse": 0.23421414196491241,
+            "normalized_mae": 0.170090913772583
+          }
+        },
+        "per_channel": {
+          "T_core": {
+            "channel_name": "T_core",
+            "mae": 1.3902682065963745,
+            "rmse": 2.2942569255828857,
+            "nll": 1.8938466310501099
+          },
+          "T_cool": {
+            "channel_name": "T_cool",
+            "mae": 1.0019972324371338,
+            "rmse": 1.8716773986816406,
+            "nll": 1.5107558965682983
+          },
+          "P_sys": {
+            "channel_name": "P_sys",
+            "mae": 0.053626954555511475,
+            "rmse": 0.07108970731496811,
+            "nll": -1.2045449018478394
+          },
+          "F_cool": {
+            "channel_name": "F_cool",
+            "mae": 0.8341017365455627,
+            "rmse": 1.3444499969482422,
+            "nll": 1.6450179815292358
+          },
+          "L_cpu": {
+            "channel_name": "L_cpu",
+            "mae": 0.746035635471344,
+            "rmse": 1.1491698026657104,
+            "nll": 1.4063048362731934
+          },
+          "V_pos": {
+            "channel_name": "V_pos",
+            "mae": 1.228831171989441,
+            "rmse": 2.124296188354492,
+            "nll": 1.9486074447631836
+          },
+          "Vib_pump": {
+            "channel_name": "Vib_pump",
+            "mae": 0.17166395485401154,
+            "rmse": 0.23421414196491241,
+            "nll": -0.04711257293820381
+          },
+          "P_elec": {
+            "channel_name": "P_elec",
+            "mae": 0.034223295748233795,
+            "rmse": 0.05181804671883583,
+            "nll": -1.666421890258789
+          }
+        }
+      },
+      "prediction": {
+        "model_name": "PRISM_1StepPrediction_Deterministic",
+        "train_normalized_aggregate_mae": 0.1982574164867401,
+        "raw_overall_mae": 0.6661825180053711,
+        "overall_rmse": 1.3139190673828125,
+        "overall_nll": 0.6843094229698181,
+        "domains": {
+          "thermal": {
+            "domain_name": "thermal",
+            "variables": [
+              "T_core",
+              "T_cool"
+            ],
+            "mae": 1.1930549144744873,
+            "rmse": 1.9622609615325928,
+            "normalized_mae": 0.21587755531072617
+          },
+          "hydraulic": {
+            "domain_name": "hydraulic",
+            "variables": [
+              "P_sys",
+              "F_cool"
+            ],
+            "mae": 0.415845924988389,
+            "rmse": 0.6063165217638016,
+            "normalized_mae": 0.12597694247961044
+          },
+          "compute": {
+            "domain_name": "compute",
+            "variables": [
+              "L_cpu",
+              "P_elec"
+            ],
+            "mae": 0.3878939524292946,
+            "rmse": 0.5509875603020191,
+            "normalized_mae": 0.3313484787940979
+          },
+          "actuation": {
+            "domain_name": "actuation",
+            "variables": [
+              "V_pos"
+            ],
+            "mae": 1.1700401306152344,
+            "rmse": 1.8644602298736572,
+            "normalized_mae": 0.07534278184175491
+          },
+          "vibration": {
+            "domain_name": "vibration",
+            "variables": [
+              "Vib_pump"
+            ],
+            "mae": 0.1658303290605545,
+            "rmse": 0.21005086600780487,
+            "normalized_mae": 0.1643107533454895
+          }
+        },
+        "per_channel": {
+          "T_core": {
+            "channel_name": "T_core",
+            "mae": 1.4139074087142944,
+            "rmse": 2.2418808937072754,
+            "nll": 1.938490390777588
+          },
+          "T_cool": {
+            "channel_name": "T_cool",
+            "mae": 0.9722024202346802,
+            "rmse": 1.6826410293579102,
+            "nll": 1.51924729347229
+          },
+          "P_sys": {
+            "channel_name": "P_sys",
+            "mae": 0.05239920690655708,
+            "rmse": 0.06640544533729553,
+            "nll": -1.2145835161209106
+          },
+          "F_cool": {
+            "channel_name": "F_cool",
+            "mae": 0.779292643070221,
+            "rmse": 1.1462275981903076,
+            "nll": 1.629090428352356
+          },
+          "L_cpu": {
+            "channel_name": "L_cpu",
+            "mae": 0.7418895959854126,
+            "rmse": 1.0549726486206055,
+            "nll": 1.4102888107299805
+          },
+          "V_pos": {
+            "channel_name": "V_pos",
+            "mae": 1.1700401306152344,
+            "rmse": 1.8644602298736572,
+            "nll": 1.9306223392486572
+          },
+          "Vib_pump": {
+            "channel_name": "Vib_pump",
+            "mae": 0.1658303290605545,
+            "rmse": 0.21005086600780487,
+            "nll": -0.07335437089204788
+          },
+          "P_elec": {
+            "channel_name": "P_elec",
+            "mae": 0.033898308873176575,
+            "rmse": 0.04700247198343277,
+            "nll": -1.6653252840042114
+          }
+        }
+      },
+      "probes": {
+        "model_name": "PRISM_LatentProbes",
+        "latent_dim": 32,
+        "probes": {
+          "T_amb": {
+            "variable_name": "T_amb",
+            "r2_score": 0.3810142028046203,
+            "mae": 0.4784888299788946,
+            "rmse": 0.7273387782766718,
+            "target_mean": 26.477244656759886,
+            "target_std": 0.9244776169168986
+          },
+          "W_wear": {
+            "variable_name": "W_wear",
+            "r2_score": 0.26469224496238153,
+            "mae": 0.02808159888912414,
+            "rmse": 0.03182087044936261,
+            "target_mean": 0.09527413220871857,
+            "target_std": 0.03710884862120633
+          },
+          "Q_internal": {
+            "variable_name": "Q_internal",
+            "r2_score": 0.2681957831415608,
+            "mae": 0.03764705043979847,
+            "rmse": 0.046251562708681124,
+            "target_mean": 0.19317260057972918,
+            "target_std": 0.054066587074907115
+          },
+          "xi_leak": {
+            "variable_name": "xi_leak",
+            "r2_score": -0.08600676495917536,
+            "mae": 0.010445845982387295,
+            "rmse": 0.01371593580220557,
+            "target_mean": 0.014264112546037499,
+            "target_std": 0.013161614240264272
+          }
+        }
+      }
+    },
+    "diag_007_context_80": {
+      "params": {
+        "beta_kl": 0.01,
+        "latent_dim": 32,
+        "context_length": 80
+      },
+      "reconstruction": {
+        "model_name": "PRISM_Reconstruction_Deterministic",
+        "train_normalized_aggregate_mae": 0.1876535713672638,
+        "raw_overall_mae": 0.6326294541358948,
+        "overall_rmse": 1.2772859334945679,
+        "overall_nll": 0.6138944625854492,
+        "domains": {
+          "thermal": {
+            "domain_name": "thermal",
+            "variables": [
+              "T_core",
+              "T_cool"
+            ],
+            "mae": 1.1160000562667847,
+            "rmse": 1.9483620524406433,
+            "normalized_mae": 0.20187879353761673
+          },
+          "hydraulic": {
+            "domain_name": "hydraulic",
+            "variables": [
+              "P_sys",
+              "F_cool"
+            ],
+            "mae": 0.3887878842651844,
+            "rmse": 0.5655583068728447,
+            "normalized_mae": 0.11939022690057755
+          },
+          "compute": {
+            "domain_name": "compute",
+            "variables": [
+              "L_cpu",
+              "P_elec"
+            ],
+            "mae": 0.35576367750763893,
+            "rmse": 0.5379914473742247,
+            "normalized_mae": 0.30856412649154663
+          },
+          "actuation": {
+            "domain_name": "actuation",
+            "variables": [
+              "V_pos"
+            ],
+            "mae": 1.1723240613937378,
+            "rmse": 1.7421849966049194,
+            "normalized_mae": 0.07548984885215759
+          },
+          "vibration": {
+            "domain_name": "vibration",
+            "variables": [
+              "Vib_pump"
+            ],
+            "mae": 0.16760851442813873,
+            "rmse": 0.22226814925670624,
+            "normalized_mae": 0.16607262194156647
+          }
+        },
+        "per_channel": {
+          "T_core": {
+            "channel_name": "T_core",
+            "mae": 1.3338818550109863,
+            "rmse": 2.243330478668213,
+            "nll": 1.8597899675369263
+          },
+          "T_cool": {
+            "channel_name": "T_cool",
+            "mae": 0.898118257522583,
+            "rmse": 1.6533936262130737,
+            "nll": 1.4519073963165283
+          },
+          "P_sys": {
+            "channel_name": "P_sys",
+            "mae": 0.05003807693719864,
+            "rmse": 0.06543909013271332,
+            "nll": -1.2495979070663452
+          },
+          "F_cool": {
+            "channel_name": "F_cool",
+            "mae": 0.7275376915931702,
+            "rmse": 1.065677523612976,
+            "nll": 1.5261791944503784
+          },
+          "L_cpu": {
+            "channel_name": "L_cpu",
+            "mae": 0.6794362664222717,
+            "rmse": 1.028908610343933,
+            "nll": 1.2979320287704468
+          },
+          "V_pos": {
+            "channel_name": "V_pos",
+            "mae": 1.1723240613937378,
+            "rmse": 1.7421849966049194,
+            "nll": 1.8661869764328003
+          },
+          "Vib_pump": {
+            "channel_name": "Vib_pump",
+            "mae": 0.16760851442813873,
+            "rmse": 0.22226814925670624,
+            "nll": -0.08968853205442429
+          },
+          "P_elec": {
+            "channel_name": "P_elec",
+            "mae": 0.032091088593006134,
+            "rmse": 0.04707428440451622,
+            "nll": -1.751552939414978
+          }
+        }
+      },
+      "prediction": {
+        "model_name": "PRISM_1StepPrediction_Deterministic",
+        "train_normalized_aggregate_mae": 0.18793106079101562,
+        "raw_overall_mae": 0.6413546204566956,
+        "overall_rmse": 1.1846476793289185,
+        "overall_nll": 0.6265541315078735,
+        "domains": {
+          "thermal": {
+            "domain_name": "thermal",
+            "variables": [
+              "T_core",
+              "T_cool"
+            ],
+            "mae": 1.1274912059307098,
+            "rmse": 1.8313809037208557,
+            "normalized_mae": 0.20390871912240982
+          },
+          "hydraulic": {
+            "domain_name": "hydraulic",
+            "variables": [
+              "P_sys",
+              "F_cool"
+            ],
+            "mae": 0.38373848982155323,
+            "rmse": 0.49615032598376274,
+            "normalized_mae": 0.11827125772833824
+          },
+          "compute": {
+            "domain_name": "compute",
+            "variables": [
+              "L_cpu",
+              "P_elec"
+            ],
+            "mae": 0.35250940546393394,
+            "rmse": 0.4957070145756006,
+            "normalized_mae": 0.3060172498226166
+          },
+          "actuation": {
+            "domain_name": "actuation",
+            "variables": [
+              "V_pos"
+            ],
+            "mae": 1.2342312335968018,
+            "rmse": 1.582843542098999,
+            "normalized_mae": 0.0794762447476387
+          },
+          "vibration": {
+            "domain_name": "vibration",
+            "variables": [
+              "Vib_pump"
+            ],
+            "mae": 0.16912759840488434,
+            "rmse": 0.21333658695220947,
+            "normalized_mae": 0.1675778031349182
+          }
+        },
+        "per_channel": {
+          "T_core": {
+            "channel_name": "T_core",
+            "mae": 1.3574355840682983,
+            "rmse": 2.1479053497314453,
+            "nll": 1.9171037673950195
+          },
+          "T_cool": {
+            "channel_name": "T_cool",
+            "mae": 0.8975468277931213,
+            "rmse": 1.5148564577102661,
+            "nll": 1.4876936674118042
+          },
+          "P_sys": {
+            "channel_name": "P_sys",
+            "mae": 0.049669209867715836,
+            "rmse": 0.06322874873876572,
+            "nll": -1.2503077983856201
+          },
+          "F_cool": {
+            "channel_name": "F_cool",
+            "mae": 0.7178077697753906,
+            "rmse": 0.9290719032287598,
+            "nll": 1.5247573852539062
+          },
+          "L_cpu": {
+            "channel_name": "L_cpu",
+            "mae": 0.6731621026992798,
+            "rmse": 0.9480913877487183,
+            "nll": 1.295859694480896
+          },
+          "V_pos": {
+            "channel_name": "V_pos",
+            "mae": 1.2342312335968018,
+            "rmse": 1.582843542098999,
+            "nll": 1.8813501596450806
+          },
+          "Vib_pump": {
+            "channel_name": "Vib_pump",
+            "mae": 0.16912759840488434,
+            "rmse": 0.21333658695220947,
+            "nll": -0.08790422976016998
+          },
+          "P_elec": {
+            "channel_name": "P_elec",
+            "mae": 0.031856708228588104,
+            "rmse": 0.043322641402482986,
+            "nll": -1.7561198472976685
+          }
+        }
+      },
+      "probes": {
+        "model_name": "PRISM_LatentProbes",
+        "latent_dim": 32,
+        "probes": {
+          "T_amb": {
+            "variable_name": "T_amb",
+            "r2_score": 0.4519562885111943,
+            "mae": 0.4464941908981233,
+            "rmse": 0.6843905434700742,
+            "target_mean": 26.477244656759886,
+            "target_std": 0.9244776169168986
+          },
+          "W_wear": {
+            "variable_name": "W_wear",
+            "r2_score": 0.3490580042364734,
+            "mae": 0.026398526402938736,
+            "rmse": 0.029939781589058634,
+            "target_mean": 0.09527413220871857,
+            "target_std": 0.03710884862120633
+          },
+          "Q_internal": {
+            "variable_name": "Q_internal",
+            "r2_score": 0.2339542991948369,
+            "mae": 0.0385352754203587,
+            "rmse": 0.047321259671722564,
+            "target_mean": 0.19317260057972918,
+            "target_std": 0.054066587074907115
+          },
+          "xi_leak": {
+            "variable_name": "xi_leak",
+            "r2_score": -0.11958492612476812,
+            "mae": 0.010626128772947968,
+            "rmse": 0.013926362633144245,
+            "target_mean": 0.014264112546037499,
+            "target_std": 0.013161614240264272
+          }
+        }
+      }
+    }
+  }
+}

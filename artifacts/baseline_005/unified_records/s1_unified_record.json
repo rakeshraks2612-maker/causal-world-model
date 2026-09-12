@@ -1,0 +1,336 @@
+{
+  "decision": {
+    "recommendation": "cand_valve_open_1.0",
+    "decision_status": "RECOMMENDED",
+    "abstention_reason": null
+  },
+  "trust": {
+    "trust_state": "MODEL_TRUSTED",
+    "reconstruction_residual_t_core": 0.45,
+    "reconstruction_residual_8d": 0.82,
+    "latent_novelty_d": 2.1,
+    "epistemic_uncertainty_sigma": 1.2,
+    "tau_residual_t": 6.0,
+    "tau_novelty": 15.0,
+    "trust_reason": "Observations match representation space."
+  },
+  "causal_reasoning": {
+    "summary": {
+      "headline": "Adjust valve position to 1.0%",
+      "mechanism": "Opening the coolant valve expands hydraulic conductance, elevating flow rate and convective cooling to dissipate heat from the core.",
+      "effect_direction": "REDUCE_CORE_TEMPERATURE"
+    },
+    "intervention": {
+      "target": "valve",
+      "value": 1.0,
+      "intervention_type": "ACTION",
+      "baseline_value": null
+    },
+    "causal_chain": {
+      "root_actuator": "valve",
+      "target_outcome": "T_core",
+      "nodes": [
+        {
+          "variable": "A_valve",
+          "relationship": "ACTUATOR_INPUT",
+          "predicted_direction": "INCREASE",
+          "predicted_delta": null,
+          "evidence_available": true
+        },
+        {
+          "variable": "V_pos",
+          "relationship": "DIRECT_DESCENDANT",
+          "predicted_direction": "INCREASE",
+          "predicted_delta": null,
+          "evidence_available": false
+        },
+        {
+          "variable": "F_cool",
+          "relationship": "MEDIATED_DESCENDANT",
+          "predicted_direction": "STABLE",
+          "predicted_delta": null,
+          "evidence_available": false
+        },
+        {
+          "variable": "P_sys",
+          "relationship": "MEDIATED_DESCENDANT",
+          "predicted_direction": "INCREASE",
+          "predicted_delta": null,
+          "evidence_available": false
+        },
+        {
+          "variable": "T_core",
+          "relationship": "FINAL_OUTCOME",
+          "predicted_direction": "STABLE",
+          "predicted_delta": null,
+          "evidence_available": false
+        }
+      ],
+      "all_affected_descendants": [
+        "coolant_flow",
+        "core_temperature"
+      ]
+    },
+    "predicted_effects": {
+      "baseline_peak_t_core": null,
+      "intervened_peak_t_core": null,
+      "delta_t_core": null,
+      "baseline_min_flow": null,
+      "intervened_min_flow": null,
+      "delta_flow": null,
+      "counterfactual_statement": "Under the modeled intervention, `cand_valve_open_1.0` optimizes thermal-fluid equilibrium."
+    },
+    "rejected_alternatives": [],
+    "decision_margin": {
+      "best_candidate": "cand_valve_open_1.0",
+      "second_best_candidate": "cand_throttle_close_0.5",
+      "decision_strength": "POSITIVE_MARGIN",
+      "decision_margin": 0.075,
+      "best_utility": 0.925,
+      "second_best_utility": 0.85
+    },
+    "abstention_details": null,
+    "trust_qualification": "MODEL_TRUSTED (Validated: Operating within calibrated in-distribution latent support)",
+    "provenance": {
+      "source_evidence_hash": "dec_hash_s1_safe",
+      "model_version": "baseline_005",
+      "dataset_version": "v2.1",
+      "planner_version": "v1.2",
+      "benchmark_version": "v1.0",
+      "scenario_id": "scenario_01",
+      "timestamp_utc": "2026-09-11T12:00:00Z"
+    }
+  },
+  "counterfactual": {
+    "factual_world": {
+      "episode_id": "scenario_01",
+      "intervention_time": 10,
+      "planning_horizon": 40,
+      "historical_t_core_at_t_star": 85.0,
+      "historical_f_cool_at_t_star": 18.0,
+      "historical_p_sys_at_t_star": 3.5,
+      "abduced_latent_norm": 1.2,
+      "abduced_latent_std_mean": 0.1
+    },
+    "intervention": {
+      "intervention_target": "A_valve",
+      "original_value": 0.5,
+      "counterfactual_value": 1.0,
+      "intervention_type": "ACTION",
+      "formal_notation": "do(A_valve = 1.0)"
+    },
+    "counterfactual_world": {
+      "peak_t_core": 78.5,
+      "max_p_sys": 3.8,
+      "min_f_cool": 24.0,
+      "mean_l_cpu": 45.0,
+      "mean_p_elec": 250.0,
+      "failure_state": false,
+      "time_to_failure": null
+    },
+    "causal_effect": {
+      "delta_t_core_peak": -13.5,
+      "delta_p_sys_max": -0.2,
+      "delta_f_cool_min": 8.0,
+      "delta_l_cpu_mean": 0.0,
+      "delta_p_elec_mean": 0.0,
+      "primary_effect_direction": "REDUCES_CORE_TEMPERATURE",
+      "causal_interpretation": "Increased coolant flow dissipates core heat",
+      "horizon_effects": {}
+    },
+    "twin_world_integrity": {
+      "replay_mode": "TWIN_WORLD_FROZEN_EXOGENOUS",
+      "shared_exogenous_conditions": true,
+      "identical_pre_intervention_history": true,
+      "abduction_method": "POSTERIOR_LATENT_INFERENCE_Q_PHI"
+    },
+    "safety_comparison": {
+      "factual_thermal_margin_c": 10.0,
+      "factual_pressure_margin_bar": 1.5,
+      "factual_flow_margin_l_min": 8.0,
+      "counterfactual_thermal_margin_c": 14.1,
+      "counterfactual_pressure_margin_bar": 1.4,
+      "counterfactual_flow_margin_l_min": 13.6,
+      "factual_safety_state": "MARGINAL",
+      "counterfactual_safety_state": "SAFE",
+      "safety_transition": "MARGINAL -> SAFE",
+      "outcome_classification": "INTERVENTION_MITIGATES_FAILURE"
+    },
+    "uncertainty": {
+      "aleatoric_sigma": 0.5,
+      "epistemic_sigma": 1.2,
+      "latent_novelty_d": 2.1,
+      "support_threshold": 15.0,
+      "within_support": true
+    },
+    "provenance": {
+      "source_evidence_hash": "dec_hash_s1_safe",
+      "counterfactual_engine_version": "v1.0",
+      "model_version": "baseline_005",
+      "dataset_version": "v2.1",
+      "episode_id": "scenario_01",
+      "counterfactual_id": "cand_valve_open_1.0",
+      "intervention_time": 10,
+      "timestamp_utc": "2026-09-11T12:00:00Z",
+      "counterfactual_hash": "cf_hash_s1_001"
+    }
+  },
+  "safety": {
+    "overall_state": "SAFE",
+    "is_safe": true,
+    "constraints": {
+      "thermal": {
+        "name": "thermal",
+        "variable_symbol": "T_core",
+        "unit": "\u00b0C",
+        "raw_prediction": 78.5,
+        "uncertainty_sigma": 1.2,
+        "k_multiplier": 2.0,
+        "effective_value": 80.9,
+        "threshold": 95.0,
+        "comparison_operator": "<",
+        "margin": 14.099999999999994,
+        "normalized_headroom_pct": 18.79999999999999,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      },
+      "pressure": {
+        "name": "pressure",
+        "variable_symbol": "P_sys",
+        "unit": "bar",
+        "raw_prediction": 3.8,
+        "uncertainty_sigma": null,
+        "k_multiplier": 2.0,
+        "effective_value": 3.8,
+        "threshold": 5.5,
+        "comparison_operator": "<",
+        "margin": 1.7000000000000002,
+        "normalized_headroom_pct": 34.0,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      },
+      "flow": {
+        "name": "flow",
+        "variable_symbol": "F_cool",
+        "unit": "L/min",
+        "raw_prediction": 24.0,
+        "uncertainty_sigma": null,
+        "k_multiplier": 2.0,
+        "effective_value": 24.0,
+        "threshold": 8.0,
+        "comparison_operator": ">",
+        "margin": 16.0,
+        "normalized_headroom_pct": 30.76923076923077,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      },
+      "latent_support": {
+        "name": "latent_support",
+        "variable_symbol": "D_latent",
+        "unit": "d_M",
+        "raw_prediction": 2.1,
+        "uncertainty_sigma": null,
+        "k_multiplier": 0.0,
+        "effective_value": 2.1,
+        "threshold": 15.0,
+        "comparison_operator": "<=",
+        "margin": 12.9,
+        "normalized_headroom_pct": 86.0,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      }
+    },
+    "limiting_constraint": {
+      "constraint_name": "thermal",
+      "variable_symbol": "T_core",
+      "raw_margin": 14.099999999999994,
+      "unit": "\u00b0C",
+      "normalized_headroom_pct": 18.79999999999999,
+      "rationale": "Thermal has the tightest operating buffer (+14.10 \u00b0C, 18.8% headroom).",
+      "normalized_violation_score": 0.0
+    },
+    "violations": [],
+    "uncertainty_adjusted": true,
+    "provenance": {
+      "source_evidence_hash": "dec_hash_s1_safe",
+      "safety_engine_version": "v1.2_authoritative_gate",
+      "model_version": "baseline_005",
+      "scenario_id": "scenario_01",
+      "candidate_id": "cand_valve_open_1.0",
+      "timestamp_utc": "2026-09-11T12:00:00Z",
+      "safety_hash": "4e3ff314515851ee34414e9419818af790a7853988ba96105ec1ef9f287af1e6"
+    }
+  },
+  "abstention": {
+    "abstained": false,
+    "abstention_type": "NONE",
+    "headline": "System Fully Operational: Recommendation Emitted",
+    "primary_reason": "All telemetry matches representation space and candidate simulations passed trust bounds.",
+    "evidence": [
+      {
+        "metric_name": "Thermal Reconstruction Residual (R_T)",
+        "observed_value": 0.45,
+        "threshold": 6.0,
+        "excess": -5.55,
+        "direction": "WITHIN_LIMITS",
+        "unit": "\u00b0C",
+        "is_trigger": false
+      },
+      {
+        "metric_name": "Multivariate 8D Reconstruction Residual (R_8D)",
+        "observed_value": 0.82,
+        "threshold": 1.9,
+        "excess": -1.08,
+        "direction": "WITHIN_LIMITS",
+        "unit": "z-norm",
+        "is_trigger": false
+      },
+      {
+        "metric_name": "Latent Manifold Novelty Distance (D_latent)",
+        "observed_value": 2.1,
+        "threshold": 15.0,
+        "excess": -12.9,
+        "direction": "WITHIN_LIMITS",
+        "unit": "d_M",
+        "is_trigger": false
+      }
+    ],
+    "affected_decision": "NO_ABSTENTION",
+    "blocked_actions": [],
+    "safety_implication": "Predictive simulations are considered decision-grade.",
+    "recommended_next_step": "Proceed with recommended autonomous intervention plan.",
+    "provenance": {
+      "source_evidence_hash": "dec_hash_s1_safe",
+      "engine_version": "v1.0_authoritative_abstention",
+      "model_version": "baseline_005",
+      "scenario_id": "scenario_01",
+      "timestamp_utc": "2026-09-11T12:00:00Z",
+      "abstention_hash": "f8a7efc67b838dfe7301029b80e1144c9a5bf9ff80b0963d400872762811f2dd"
+    }
+  },
+  "decision_quality": {
+    "utility_score": 0.925,
+    "second_best_candidate": "cand_throttle_close_0.5",
+    "second_best_utility": 0.85,
+    "decision_margin": 0.075,
+    "alternatives_rejected": []
+  },
+  "provenance": {
+    "model_version": "baseline_005",
+    "dataset_version": "v2.1",
+    "planner_version": "v1.2",
+    "benchmark_version": "v1.0",
+    "unified_engine_version": "v1.0_unified_assembly",
+    "scenario_id": "scenario_01",
+    "timestamp_utc": "2026-09-11T12:00:00Z",
+    "decision_evidence_hash": "dec_hash_s1_safe",
+    "safety_hash": "4e3ff314515851ee34414e9419818af790a7853988ba96105ec1ef9f287af1e6",
+    "abstention_hash": "f8a7efc67b838dfe7301029b80e1144c9a5bf9ff80b0963d400872762811f2dd",
+    "counterfactual_hash": "cf_hash_s1_001",
+    "unified_record_hash": "82aa85d229813a7359fbbec966eb7bea4edc3e8dbc26d29a699c2c0551acb7de"
+  }
+}

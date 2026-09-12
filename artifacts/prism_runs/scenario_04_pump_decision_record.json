@@ -1,0 +1,319 @@
+{
+  "decision": {
+    "recommendation": "cand_pump_3",
+    "decision_status": "RECOMMENDED",
+    "abstention_reason": null
+  },
+  "trust": {
+    "trust_state": "MODEL_TRUSTED",
+    "reconstruction_residual_t_core": 1.3547793272311566,
+    "reconstruction_residual_8d": 0.37758076190948486,
+    "latent_novelty_d": 5.6609177692521175,
+    "epistemic_uncertainty_sigma": 1.6454521417617798,
+    "tau_residual_t": 6.08,
+    "tau_novelty": 15.0,
+    "trust_reason": "Nominal in-distribution telemetry. Model predictions validated for planning."
+  },
+  "causal_reasoning": {
+    "summary": {
+      "headline": "Increase pump stage to 3",
+      "mechanism": "Increasing pump stage increases coolant circulation, which accelerates convective heat extraction from the server compute core, reducing peak core temperature.",
+      "effect_direction": "REDUCE_CORE_TEMPERATURE"
+    },
+    "intervention": {
+      "target": "A_pump",
+      "value": 3.0,
+      "intervention_type": "ACTION",
+      "baseline_value": null
+    },
+    "causal_chain": {
+      "root_actuator": "A_pump",
+      "target_outcome": "T_core",
+      "nodes": [
+        {
+          "variable": "A_pump",
+          "relationship": "ACTUATOR_INPUT",
+          "predicted_direction": "INCREASE",
+          "predicted_delta": null,
+          "evidence_available": true
+        },
+        {
+          "variable": "F_cool",
+          "relationship": "DIRECT_DESCENDANT",
+          "predicted_direction": "INCREASE",
+          "predicted_delta": 10.810943603515625,
+          "evidence_available": true
+        },
+        {
+          "variable": "T_cool",
+          "relationship": "MEDIATED_DESCENDANT",
+          "predicted_direction": "DECREASE",
+          "predicted_delta": null,
+          "evidence_available": false
+        },
+        {
+          "variable": "T_core",
+          "relationship": "FINAL_OUTCOME",
+          "predicted_direction": "DECREASE",
+          "predicted_delta": -2.8714370727539062,
+          "evidence_available": true
+        }
+      ],
+      "all_affected_descendants": [
+        "F_cool",
+        "P_sys",
+        "T_cool",
+        "T_core",
+        "Vib_pump"
+      ]
+    },
+    "predicted_effects": {
+      "baseline_peak_t_core": 89.09613037109375,
+      "intervened_peak_t_core": 86.22469329833984,
+      "delta_t_core": -2.8714370727539062,
+      "baseline_min_flow": 35.30682373046875,
+      "intervened_min_flow": 44.31049728393555,
+      "delta_flow": 10.810943603515625,
+      "counterfactual_statement": "Under the modeled intervention, `cand_pump_3` is predicted to increase coolant flow by +10.81 L/min and reduce peak core temperature by 2.87\u00b0C relative to the factual baseline trajectory."
+    },
+    "rejected_alternatives": [
+      {
+        "candidate_id": "cand_do_nothing",
+        "reason_code": "LOWER_UTILITY",
+        "reason_explanation": "Sub-optimal utility (\u0394U = -0.1911) compared to recommended action; higher operational/thermal cost.",
+        "utility_score": -0.1876566589908495,
+        "peak_t_core": 89.09613037109375
+      },
+      {
+        "candidate_id": "cand_pump_4",
+        "reason_code": "LATENT_NOVELTY",
+        "reason_explanation": "Rejected because the predicted trajectory entered a region outside the model's validated latent support (D_M = 15.22 > 15.00).",
+        "utility_score": -1000.010856880648,
+        "peak_t_core": 85.40653991699219
+      },
+      {
+        "candidate_id": "cand_valve_85",
+        "reason_code": "LOWER_UTILITY",
+        "reason_explanation": "Sub-optimal utility (\u0394U = -0.2212) compared to recommended action; higher operational/thermal cost.",
+        "utility_score": -0.2177721678641621,
+        "peak_t_core": 89.37139892578125
+      },
+      {
+        "candidate_id": "cand_throttle_50",
+        "reason_code": "LOWER_UTILITY",
+        "reason_explanation": "Sub-optimal utility (\u0394U = -0.7965) compared to recommended action; higher operational/thermal cost.",
+        "utility_score": -0.7931142723938345,
+        "peak_t_core": 83.77790069580078
+      }
+    ],
+    "decision_margin": {
+      "best_candidate": "cand_pump_3",
+      "second_best_candidate": "cand_do_nothing",
+      "decision_strength": "POSITIVE_MARGIN",
+      "decision_margin": 0.19108343315386933,
+      "best_utility": 0.003426774163019841,
+      "second_best_utility": -0.1876566589908495
+    },
+    "abstention_details": null,
+    "trust_qualification": "MODEL_TRUSTED (Validated: Operating within calibrated in-distribution latent support)",
+    "provenance": {
+      "source_evidence_hash": "13888997244686c603ff2e1647b49c7674c88d5bfe149f89143b4c1f70fc6ab9",
+      "model_version": "baseline_005",
+      "dataset_version": "unified_v1_40_40_20",
+      "planner_version": "v1.2_trust_gated",
+      "benchmark_version": "v1.0",
+      "scenario_id": "scenario_04_pump",
+      "timestamp_utc": "2026-09-11T12:00:00Z"
+    }
+  },
+  "counterfactual": null,
+  "safety": {
+    "overall_state": "MARGINAL",
+    "is_safe": true,
+    "constraints": {
+      "thermal": {
+        "name": "thermal",
+        "variable_symbol": "T_core",
+        "unit": "\u00b0C",
+        "raw_prediction": 86.22469329833984,
+        "uncertainty_sigma": 1.6454521417617798,
+        "k_multiplier": 2.0,
+        "effective_value": 89.5155975818634,
+        "threshold": 95.0,
+        "comparison_operator": "<",
+        "margin": 5.484402418136597,
+        "normalized_headroom_pct": 7.312536557515462,
+        "is_passed": true,
+        "is_marginal": true,
+        "violation_message": null
+      },
+      "pressure": {
+        "name": "pressure",
+        "variable_symbol": "P_sys",
+        "unit": "bar",
+        "raw_prediction": 4.136536121368408,
+        "uncertainty_sigma": null,
+        "k_multiplier": 2.0,
+        "effective_value": 4.136536121368408,
+        "threshold": 5.5,
+        "comparison_operator": "<",
+        "margin": 1.3634638786315918,
+        "normalized_headroom_pct": 27.269277572631832,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      },
+      "flow": {
+        "name": "flow",
+        "variable_symbol": "F_cool",
+        "unit": "L/min",
+        "raw_prediction": 44.31049728393555,
+        "uncertainty_sigma": null,
+        "k_multiplier": 2.0,
+        "effective_value": 44.31049728393555,
+        "threshold": 8.0,
+        "comparison_operator": ">",
+        "margin": 36.31049728393555,
+        "normalized_headroom_pct": 69.82787939218375,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      },
+      "latent_support": {
+        "name": "latent_support",
+        "variable_symbol": "D_latent",
+        "unit": "d_M",
+        "raw_prediction": 5.6609177692521175,
+        "uncertainty_sigma": null,
+        "k_multiplier": 0.0,
+        "effective_value": 5.6609177692521175,
+        "threshold": 15.0,
+        "comparison_operator": "<=",
+        "margin": 9.339082230747882,
+        "normalized_headroom_pct": 62.26054820498589,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      }
+    },
+    "limiting_constraint": {
+      "constraint_name": "thermal",
+      "variable_symbol": "T_core",
+      "raw_margin": 5.484402418136597,
+      "unit": "\u00b0C",
+      "normalized_headroom_pct": 7.312536557515462,
+      "rationale": "Thermal has the tightest operating buffer (+5.48 \u00b0C, 7.3% headroom).",
+      "normalized_violation_score": 0.0
+    },
+    "violations": [],
+    "uncertainty_adjusted": true,
+    "provenance": {
+      "source_evidence_hash": "13888997244686c603ff2e1647b49c7674c88d5bfe149f89143b4c1f70fc6ab9",
+      "safety_engine_version": "v1.2_authoritative_gate",
+      "model_version": "baseline_005",
+      "scenario_id": "scenario_04_pump",
+      "candidate_id": "cand_pump_3",
+      "timestamp_utc": "2026-09-11T12:00:00Z",
+      "safety_hash": "d6d2f3f3a38799dfbc79a80273a4fffa3bd268087346a3775523798648e96ae9"
+    }
+  },
+  "abstention": {
+    "abstained": false,
+    "abstention_type": "NONE",
+    "headline": "System Fully Operational: Recommendation Emitted",
+    "primary_reason": "All telemetry matches representation space and candidate simulations passed trust bounds.",
+    "evidence": [
+      {
+        "metric_name": "Thermal Reconstruction Residual (R_T)",
+        "observed_value": 1.3547793272311566,
+        "threshold": 6.08,
+        "excess": -4.7252206727688435,
+        "direction": "WITHIN_LIMITS",
+        "unit": "\u00b0C",
+        "is_trigger": false
+      },
+      {
+        "metric_name": "Multivariate 8D Reconstruction Residual (R_8D)",
+        "observed_value": 0.37758076190948486,
+        "threshold": 1.9,
+        "excess": -1.522419238090515,
+        "direction": "WITHIN_LIMITS",
+        "unit": "z-norm",
+        "is_trigger": false
+      },
+      {
+        "metric_name": "Latent Manifold Novelty Distance (D_latent)",
+        "observed_value": 5.6609177692521175,
+        "threshold": 15.0,
+        "excess": -9.339082230747882,
+        "direction": "WITHIN_LIMITS",
+        "unit": "d_M",
+        "is_trigger": false
+      }
+    ],
+    "affected_decision": "NO_ABSTENTION",
+    "blocked_actions": [],
+    "safety_implication": "Predictive simulations are considered decision-grade.",
+    "recommended_next_step": "Proceed with recommended autonomous intervention plan.",
+    "provenance": {
+      "source_evidence_hash": "13888997244686c603ff2e1647b49c7674c88d5bfe149f89143b4c1f70fc6ab9",
+      "engine_version": "v1.0_authoritative_abstention",
+      "model_version": "baseline_005",
+      "scenario_id": "scenario_04_pump",
+      "timestamp_utc": "2026-09-11T12:00:00Z",
+      "abstention_hash": "45927b639c1a018b73fbcb45470578b8993b9f4493184795b25dcab3bda67be4"
+    }
+  },
+  "decision_quality": {
+    "utility_score": 0.003426774163019841,
+    "second_best_candidate": "cand_do_nothing",
+    "second_best_utility": -0.1876566589908495,
+    "decision_margin": 0.19108343315386933,
+    "alternatives_rejected": [
+      {
+        "candidate_id": "cand_do_nothing",
+        "is_safe": true,
+        "utility_score": -0.1876566589908495,
+        "peak_t_core": 89.09613037109375,
+        "safety_violations": []
+      },
+      {
+        "candidate_id": "cand_pump_4",
+        "is_safe": false,
+        "utility_score": -1000.010856880648,
+        "peak_t_core": 85.40653991699219,
+        "safety_violations": [
+          "Latent manifold novelty (15.22) exceeds epistemic support limit (15.00)."
+        ]
+      },
+      {
+        "candidate_id": "cand_valve_85",
+        "is_safe": true,
+        "utility_score": -0.2177721678641621,
+        "peak_t_core": 89.37139892578125,
+        "safety_violations": []
+      },
+      {
+        "candidate_id": "cand_throttle_50",
+        "is_safe": true,
+        "utility_score": -0.7931142723938345,
+        "peak_t_core": 83.77790069580078,
+        "safety_violations": []
+      }
+    ]
+  },
+  "provenance": {
+    "model_version": "baseline_005",
+    "dataset_version": "v2.1",
+    "planner_version": "v1.2",
+    "benchmark_version": "v1.0",
+    "unified_engine_version": "v1.0_unified_assembly",
+    "scenario_id": "scenario_04_pump",
+    "timestamp_utc": "2026-09-11T12:00:00Z",
+    "decision_evidence_hash": "13888997244686c603ff2e1647b49c7674c88d5bfe149f89143b4c1f70fc6ab9",
+    "safety_hash": "d6d2f3f3a38799dfbc79a80273a4fffa3bd268087346a3775523798648e96ae9",
+    "abstention_hash": "45927b639c1a018b73fbcb45470578b8993b9f4493184795b25dcab3bda67be4",
+    "counterfactual_hash": null,
+    "unified_record_hash": "436957cc7fbd9ede9915f609344d8f0248f758903f6891c9fa5068b975673dbb"
+  }
+}

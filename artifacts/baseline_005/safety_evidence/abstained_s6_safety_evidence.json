@@ -1,0 +1,100 @@
+{
+  "overall_state": "ABSTAIN_REQUIRED",
+  "is_safe": false,
+  "constraints": {
+    "thermal": {
+      "name": "thermal",
+      "variable_symbol": "T_core",
+      "unit": "\u00b0C",
+      "raw_prediction": null,
+      "uncertainty_sigma": null,
+      "k_multiplier": 2.0,
+      "effective_value": null,
+      "threshold": 95.0,
+      "comparison_operator": "<",
+      "margin": null,
+      "normalized_headroom_pct": null,
+      "is_passed": false,
+      "is_marginal": false,
+      "violation_message": "Evaluation withheld: Model trust gateway triggered MODEL_ABSTAIN"
+    },
+    "pressure": {
+      "name": "pressure",
+      "variable_symbol": "P_sys",
+      "unit": "bar",
+      "raw_prediction": null,
+      "uncertainty_sigma": null,
+      "k_multiplier": 2.0,
+      "effective_value": null,
+      "threshold": 5.5,
+      "comparison_operator": "<",
+      "margin": null,
+      "normalized_headroom_pct": null,
+      "is_passed": false,
+      "is_marginal": false,
+      "violation_message": "Evaluation withheld: Model trust gateway triggered MODEL_ABSTAIN"
+    },
+    "flow": {
+      "name": "flow",
+      "variable_symbol": "F_cool",
+      "unit": "L/min",
+      "raw_prediction": null,
+      "uncertainty_sigma": null,
+      "k_multiplier": 2.0,
+      "effective_value": null,
+      "threshold": 8.0,
+      "comparison_operator": ">",
+      "margin": null,
+      "normalized_headroom_pct": null,
+      "is_passed": false,
+      "is_marginal": false,
+      "violation_message": "Evaluation withheld: Model trust gateway triggered MODEL_ABSTAIN"
+    },
+    "latent_support": {
+      "name": "latent_support",
+      "variable_symbol": "D_latent",
+      "unit": "d_M",
+      "raw_prediction": null,
+      "uncertainty_sigma": null,
+      "k_multiplier": 0.0,
+      "effective_value": null,
+      "threshold": 15.0,
+      "comparison_operator": "<=",
+      "margin": null,
+      "normalized_headroom_pct": null,
+      "is_passed": false,
+      "is_marginal": false,
+      "violation_message": null
+    }
+  },
+  "limiting_constraint": {
+    "constraint_name": "model_trust_gateway",
+    "variable_symbol": "R_T",
+    "raw_margin": null,
+    "unit": "N/A",
+    "normalized_headroom_pct": null,
+    "rationale": "Planning aborted due to model abstention: Thermal reconstruction residual R_T = 33.88\u00b0C exceeded threshold 6.00\u00b0C.",
+    "normalized_violation_score": null
+  },
+  "violations": [
+    {
+      "constraint_code": "ABSTAIN_REQUIRED",
+      "variable_symbol": "R_T",
+      "observed_effective_value": 0.0,
+      "threshold": 0.0,
+      "margin_violated_by": 0.0,
+      "severity": "ABSTAIN_REQUIRED",
+      "message": "Model Trust Gateway Aborted: Thermal reconstruction residual R_T = 33.88\u00b0C exceeded threshold 6.00\u00b0C"
+    }
+  ],
+  "uncertainty_adjusted": true,
+  "provenance": {
+    "source_evidence_hash": null,
+    "safety_engine_version": "v1.2_authoritative_gate",
+    "model_version": "baseline_005",
+    "scenario_id": "scenario_06",
+    "candidate_id": null,
+    "timestamp_utc": "2026-09-11T12:00:00Z",
+    "safety_hash": "fbab4777e12bf08df82464ef8ca79c9c08dcd28cbc074d26aa38f4e7b3c1e4bf"
+  }
+}

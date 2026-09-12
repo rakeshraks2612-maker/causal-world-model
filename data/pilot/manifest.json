@@ -1,0 +1,23 @@
+{
+  "dataset_version": "0.1.0-pilot",
+  "simulator_version": "1.1.0",
+  "generation_timestamp": "2026-09-10T10:11:10.551694+00:00",
+  "random_seed_policy": "deterministic_hierarchical_seed_sequence",
+  "total_episodes": 30,
+  "split_counts": {
+    "train": 20,
+    "validation": 5,
+    "test": 5
+  },
+  "regime_counts": {
+    "nominal": 20,
+    "moderate_wear": 2,
+    "moderate_load": 3,
+    "moderate_ambient": 5
+  },
+  "schema_version": "1.0.0",
+  "metadata": {
+    "length": 120,
+    "pilot": true
+  }
+}

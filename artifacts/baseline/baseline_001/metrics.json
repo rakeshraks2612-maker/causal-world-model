@@ -1,0 +1,178 @@
+{
+  "metadata": {
+    "experiment": "baseline_001",
+    "seed": 42,
+    "train_episodes": 20,
+    "test_episodes": 5
+  },
+  "models": {
+    "Persistence": {
+      "model_name": "Persistence",
+      "overall_mae": 0.4308592677116394,
+      "overall_rmse": 0.7213653326034546,
+      "overall_nll": null,
+      "per_channel": {
+        "T_core": {
+          "channel_name": "T_core",
+          "mae": 0.9775187969207764,
+          "rmse": 1.345428705215454,
+          "nll": null
+        },
+        "T_cool": {
+          "channel_name": "T_cool",
+          "mae": 0.41597041487693787,
+          "rmse": 0.5520070195198059,
+          "nll": null
+        },
+        "P_sys": {
+          "channel_name": "P_sys",
+          "mae": 0.06141281500458717,
+          "rmse": 0.07706037908792496,
+          "nll": null
+        },
+        "F_cool": {
+          "channel_name": "F_cool",
+          "mae": 0.4886244833469391,
+          "rmse": 0.693593442440033,
+          "nll": null
+        },
+        "L_cpu": {
+          "channel_name": "L_cpu",
+          "mae": 0.5818449258804321,
+          "rmse": 0.7337743043899536,
+          "nll": null
+        },
+        "V_pos": {
+          "channel_name": "V_pos",
+          "mae": 0.6601450443267822,
+          "rmse": 0.9675251245498657,
+          "nll": null
+        },
+        "Vib_pump": {
+          "channel_name": "Vib_pump",
+          "mae": 0.22821883857250214,
+          "rmse": 0.29118070006370544,
+          "nll": null
+        },
+        "P_elec": {
+          "channel_name": "P_elec",
+          "mae": 0.033138591796159744,
+          "rmse": 0.04156475141644478,
+          "nll": null
+        }
+      }
+    },
+    "MLP_Dynamics": {
+      "model_name": "MLP_Dynamics",
+      "overall_mae": 0.4121810793876648,
+      "overall_rmse": 0.658771812915802,
+      "overall_nll": null,
+      "per_channel": {
+        "T_core": {
+          "channel_name": "T_core",
+          "mae": 0.7994469404220581,
+          "rmse": 1.0174198150634766,
+          "nll": null
+        },
+        "T_cool": {
+          "channel_name": "T_cool",
+          "mae": 0.3682858943939209,
+          "rmse": 0.4765893220901489,
+          "nll": null
+        },
+        "P_sys": {
+          "channel_name": "P_sys",
+          "mae": 0.049728795886039734,
+          "rmse": 0.06171023100614548,
+          "nll": null
+        },
+        "F_cool": {
+          "channel_name": "F_cool",
+          "mae": 0.37818965315818787,
+          "rmse": 0.4800577163696289,
+          "nll": null
+        },
+        "L_cpu": {
+          "channel_name": "L_cpu",
+          "mae": 0.5085033178329468,
+          "rmse": 0.6346136927604675,
+          "nll": null
+        },
+        "V_pos": {
+          "channel_name": "V_pos",
+          "mae": 0.9999497532844543,
+          "rmse": 1.235927939414978,
+          "nll": null
+        },
+        "Vib_pump": {
+          "channel_name": "Vib_pump",
+          "mae": 0.16691549122333527,
+          "rmse": 0.2096773236989975,
+          "nll": null
+        },
+        "P_elec": {
+          "channel_name": "P_elec",
+          "mae": 0.026428861543536186,
+          "rmse": 0.032887253910303116,
+          "nll": null
+        }
+      }
+    },
+    "PRISM_WorldModel": {
+      "model_name": "PRISM_WorldModel",
+      "overall_mae": 0.5507994294166565,
+      "overall_rmse": 1.1083308458328247,
+      "overall_nll": 0.5162925720214844,
+      "per_channel": {
+        "T_core": {
+          "channel_name": "T_core",
+          "mae": 1.2734098434448242,
+          "rmse": 2.208709239959717,
+          "nll": 1.8048609495162964
+        },
+        "T_cool": {
+          "channel_name": "T_cool",
+          "mae": 0.860670268535614,
+          "rmse": 1.466629147529602,
+          "nll": 1.4124915599822998
+        },
+        "P_sys": {
+          "channel_name": "P_sys",
+          "mae": 0.05054169148206711,
+          "rmse": 0.06361314654350281,
+          "nll": -1.306111454963684
+        },
+        "F_cool": {
+          "channel_name": "F_cool",
+          "mae": 0.687272310256958,
+          "rmse": 0.9170826077461243,
+          "nll": 1.3469123840332031
+        },
+        "L_cpu": {
+          "channel_name": "L_cpu",
+          "mae": 0.6734806895256042,
+          "rmse": 0.9435234665870667,
+          "nll": 1.285230040550232
+        },
+        "V_pos": {
+          "channel_name": "V_pos",
+          "mae": 0.6678494811058044,
+          "rmse": 1.0100070238113403,
+          "nll": 1.5029146671295166
+        },
+        "Vib_pump": {
+          "channel_name": "Vib_pump",
+          "mae": 0.16135801374912262,
+          "rmse": 0.20115815103054047,
+          "nll": -0.15655528008937836
+        },
+        "P_elec": {
+          "channel_name": "P_elec",
+          "mae": 0.03181297332048416,
+          "rmse": 0.04336058348417282,
+          "nll": -1.7594021558761597
+        }
+      }
+    }
+  }
+}

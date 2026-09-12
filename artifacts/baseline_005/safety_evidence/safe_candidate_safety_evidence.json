@@ -1,0 +1,90 @@
+{
+  "overall_state": "SAFE",
+  "is_safe": true,
+  "constraints": {
+    "thermal": {
+      "name": "thermal",
+      "variable_symbol": "T_core",
+      "unit": "\u00b0C",
+      "raw_prediction": 78.2,
+      "uncertainty_sigma": 1.1,
+      "k_multiplier": 2.0,
+      "effective_value": 80.4,
+      "threshold": 95.0,
+      "comparison_operator": "<",
+      "margin": 14.599999999999994,
+      "normalized_headroom_pct": 19.46666666666666,
+      "is_passed": true,
+      "is_marginal": false,
+      "violation_message": null
+    },
+    "pressure": {
+      "name": "pressure",
+      "variable_symbol": "P_sys",
+      "unit": "bar",
+      "raw_prediction": 3.4,
+      "uncertainty_sigma": 0.12,
+      "k_multiplier": 2.0,
+      "effective_value": 3.6399999999999997,
+      "threshold": 5.5,
+      "comparison_operator": "<",
+      "margin": 1.8600000000000003,
+      "normalized_headroom_pct": 37.2,
+      "is_passed": true,
+      "is_marginal": false,
+      "violation_message": null
+    },
+    "flow": {
+      "name": "flow",
+      "variable_symbol": "F_cool",
+      "unit": "L/min",
+      "raw_prediction": 28.5,
+      "uncertainty_sigma": 0.9,
+      "k_multiplier": 2.0,
+      "effective_value": 26.7,
+      "threshold": 8.0,
+      "comparison_operator": ">",
+      "margin": 18.7,
+      "normalized_headroom_pct": 35.96153846153846,
+      "is_passed": true,
+      "is_marginal": false,
+      "violation_message": null
+    },
+    "latent_support": {
+      "name": "latent_support",
+      "variable_symbol": "D_latent",
+      "unit": "d_M",
+      "raw_prediction": 2.4,
+      "uncertainty_sigma": null,
+      "k_multiplier": 0.0,
+      "effective_value": 2.4,
+      "threshold": 15.0,
+      "comparison_operator": "<=",
+      "margin": 12.6,
+      "normalized_headroom_pct": 84.0,
+      "is_passed": true,
+      "is_marginal": false,
+      "violation_message": null
+    }
+  },
+  "limiting_constraint": {
+    "constraint_name": "thermal",
+    "variable_symbol": "T_core",
+    "raw_margin": 14.599999999999994,
+    "unit": "\u00b0C",
+    "normalized_headroom_pct": 19.46666666666666,
+    "rationale": "Thermal has the tightest operating buffer (+14.60 \u00b0C, 19.5% headroom).",
+    "normalized_violation_score": 0.0
+  },
+  "violations": [],
+  "uncertainty_adjusted": true,
+  "provenance": {
+    "source_evidence_hash": null,
+    "safety_engine_version": "v1.2_authoritative_gate",
+    "model_version": "baseline_005",
+    "scenario_id": "scenario_01",
+    "candidate_id": "cand_valve_open_1.0",
+    "timestamp_utc": "2026-09-11T12:00:00Z",
+    "safety_hash": "0285eb06735f9daf4f78a75e0bb8a7965b89537bfa4e684b27c8414c5ef9fe96"
+  }
+}

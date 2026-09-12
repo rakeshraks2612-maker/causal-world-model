@@ -1,0 +1,50 @@
+{
+  "system_name": "PRISM",
+  "system_version": "1.0.0-frozen",
+  "system_description": "Uncertainty-Aware Causal World Model & Decision Intelligence Engine",
+  "architecture": {
+    "model_name": "baseline_005",
+    "checkpoint_path": "artifacts/baseline_005/best.pt",
+    "observation_dimension": 8,
+    "action_dimension": 3,
+    "latent_dimension": 16,
+    "context_length": 10,
+    "planning_horizon_steps": 10,
+    "open_loop_eval_horizon": 40,
+    "dynamics_type": "Recurrent Latent State Space (RSSM-GRU with Residual Transition)",
+    "kl_loss_weight": 0.1,
+    "uncertainty_method": "Monte Carlo Particle Rollout (N=50) + Latent Mahalanobis Support Gate"
+  },
+  "safety_constraints": {
+    "t_core_max_celsius": 95.0,
+    "p_sys_max_bar": 5.5,
+    "f_cool_min_lpm": 8.0,
+    "uncertainty_multiplier_k": 2.0,
+    "constraint_evaluation": "Strict conservative bound evaluation (T_eff = μ + k·σ < 95.0°C)"
+  },
+  "trust_gate_thresholds": {
+    "tau_novelty_mahalanobis": 15.0,
+    "tau_residual_t_core_celsius": 6.0826796629368,
+    "tau_residual_8d_normalized": 1.89600537776947,
+    "calibration_percentile": "98th percentile calibrated on validation dataset (3872 samples)"
+  },
+  "evidence_domains": [
+    "decision",
+    "trust",
+    "causal_reasoning",
+    "counterfactual",
+    "safety",
+    "abstention",
+    "decision_quality",
+    "provenance"
+  ],
+  "provenance_security": {
+    "hash_algorithm": "SHA-256",
+    "serialization": "Deterministic Canonical JSON (sorted keys, no whitespace variance)"
+  },
+  "benchmark_reference": {
+    "report_path": "reports/PRISM_Final_Benchmark_Report.md",
+    "results_json": "reports/benchmark_results.json",
+    "evaluation_random_seed": 42
+  }
+}

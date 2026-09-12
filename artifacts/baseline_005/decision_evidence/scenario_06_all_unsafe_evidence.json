@@ -1,0 +1,67 @@
+{
+  "decision": {
+    "recommendation": null,
+    "decision_status": "BLOCKED",
+    "abstention_reason": "Model Trust Layer Aborted: Reconstruction inconsistency: Telemetry contradicts internal world-model dynamics (R_T = 33.88\u00b0C > 6.1\u00b0C, R_8D = 1.82 > 1.90). Acute sensor/physics mismatch detected; triggering hard safety abstention."
+  },
+  "trust": {
+    "trust_state": "MODEL_ABSTAIN",
+    "reconstruction_residual_t_core": 33.876841899061006,
+    "reconstruction_residual_8d": 1.8152518272399902,
+    "latent_novelty_d": 7.731571066873109,
+    "epistemic_uncertainty_sigma": 1.647027611732483,
+    "tau_residual_t": 6.08,
+    "tau_novelty": 15.0,
+    "trust_reason": "Reconstruction inconsistency: Telemetry contradicts internal world-model dynamics (R_T = 33.88\u00b0C > 6.1\u00b0C, R_8D = 1.82 > 1.90). Acute sensor/physics mismatch detected; triggering hard safety abstention."
+  },
+  "causal_evidence": {
+    "intervention_target": "none",
+    "intervention_value": null,
+    "affected_variables": [],
+    "causal_path": [
+      "None"
+    ],
+    "direction_of_effect": "NO_SIMULATION_PERMITTED_UNDER_UNTRUSTED_REGIME",
+    "counterfactual_comparison": {
+      "status": "BLOCKED_BY_TRUST_GATEWAY"
+    }
+  },
+  "predicted_outcome": {
+    "peak_t_core": null,
+    "max_pressure": null,
+    "min_flow": null,
+    "mean_cpu_load": null,
+    "mean_electrical_power": null,
+    "planning_horizon": 40
+  },
+  "safety_evidence": {
+    "safety_state": "ABSTAIN_REQUIRED",
+    "thermal_margin_c": null,
+    "pressure_margin_bar": null,
+    "flow_margin_l_min": null,
+    "latent_support_margin": 7.268428933126891,
+    "hard_constraints": {
+      "max_t_core": 95.0,
+      "max_pressure": 5.5,
+      "min_flow": 8.0,
+      "max_latent_d": 15.0
+    },
+    "is_safe": false
+  },
+  "decision_quality": {
+    "utility_score": null,
+    "second_best_candidate": null,
+    "second_best_utility": null,
+    "decision_margin": null,
+    "alternatives_rejected": []
+  },
+  "provenance": {
+    "model_version": "baseline_005",
+    "dataset_version": "unified_v1_40_40_20",
+    "planner_version": "v1.2_trust_gated",
+    "benchmark_version": "v1.0",
+    "scenario_id": "scenario_06_all_unsafe",
+    "timestamp_utc": "2026-09-11T12:00:00Z",
+    "decision_hash": "172c3627521a58194040a75d0246f0fe1776c1ba842ca03e63163ce24b8fa3ff"
+  }
+}

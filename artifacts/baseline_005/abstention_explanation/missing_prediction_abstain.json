@@ -1,0 +1,50 @@
+{
+  "abstained": true,
+  "abstention_type": "MISSING_PREDICTION",
+  "headline": "Safety Evaluation Unavailable: Required Predictive Telemetry Missing",
+  "primary_reason": "Prediction Incomplete: Missing required simulation channels [T_core, F_cool].",
+  "evidence": [
+    {
+      "metric_name": "Thermal Reconstruction Residual (R_T)",
+      "observed_value": 1.1,
+      "threshold": 6.0,
+      "excess": -4.9,
+      "direction": "WITHIN_LIMITS",
+      "unit": "\u00b0C",
+      "is_trigger": false
+    },
+    {
+      "metric_name": "Multivariate 8D Reconstruction Residual (R_8D)",
+      "observed_value": 0.65,
+      "threshold": 1.9,
+      "excess": -1.25,
+      "direction": "WITHIN_LIMITS",
+      "unit": "z-norm",
+      "is_trigger": false
+    },
+    {
+      "metric_name": "Latent Manifold Novelty Distance (D_latent)",
+      "observed_value": 3.2,
+      "threshold": 15.0,
+      "excess": -11.8,
+      "direction": "WITHIN_LIMITS",
+      "unit": "d_M",
+      "is_trigger": false
+    }
+  ],
+  "affected_decision": "EVALUATION_WITHHELD",
+  "blocked_actions": [
+    "candidate_recommendation",
+    "safety_certification"
+  ],
+  "safety_implication": "Fail-closed safety gate blocked decision because required predictive state dimensions are unavailable. Missing predictions are never assumed safe.",
+  "recommended_next_step": "Inspect simulator telemetry pipeline to restore complete state forecast dimensions.",
+  "provenance": {
+    "source_evidence_hash": "parent_decision_hash_missing",
+    "engine_version": "v1.0_authoritative_abstention",
+    "model_version": "baseline_005",
+    "scenario_id": "scenario_telemetry_gap",
+    "timestamp_utc": "2026-09-11T12:00:00Z",
+    "abstention_hash": "130418fc307831086cecb28ca6768974f5fd92182c4096e76cd65566bb756e5b"
+  }
+}

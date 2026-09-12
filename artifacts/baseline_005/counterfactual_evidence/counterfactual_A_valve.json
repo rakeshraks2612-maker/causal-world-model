@@ -1,0 +1,110 @@
+{
+  "factual_world": {
+    "episode_id": "ep_test_00000",
+    "intervention_time": 20,
+    "planning_horizon": 80,
+    "historical_t_core_at_t_star": 81.22813965174848,
+    "historical_f_cool_at_t_star": 39.03989121362913,
+    "historical_p_sys_at_t_star": 3.164374606127324,
+    "abduced_latent_norm": 12.414533615112305,
+    "abduced_latent_std_mean": 0.48925426602363586
+  },
+  "intervention": {
+    "intervention_target": "A_valve",
+    "original_value": 80.9915984281194,
+    "counterfactual_value": 50.0,
+    "intervention_type": "ACTION",
+    "formal_notation": "do(A_valve = 50.0)"
+  },
+  "counterfactual_world": {
+    "peak_t_core": 86.4726791381836,
+    "max_p_sys": 3.0692436695098877,
+    "min_f_cool": 30.1212100982666,
+    "mean_l_cpu": 66.9236068725586,
+    "mean_p_elec": 2.6512022018432617,
+    "failure_state": false,
+    "time_to_failure": null
+  },
+  "causal_effect": {
+    "delta_t_core_peak": -0.04560089111328125,
+    "delta_p_sys_max": 0.018854379653930664,
+    "delta_f_cool_min": -6.070699691772461,
+    "delta_l_cpu_mean": -0.01886749267578125,
+    "delta_p_elec_mean": -0.0007586479187011719,
+    "primary_effect_direction": "NOMINAL_STABLE",
+    "causal_interpretation": "Under counterfactual replay do(A_valve=50.0), state remains in stable equilibrium.",
+    "horizon_effects": {
+      "1": {
+        "delta_t_core": 0.84344482421875,
+        "delta_f_cool": -6.070699691772461,
+        "delta_p_sys": -0.17712950706481934,
+        "delta_l_cpu": -0.2415771484375,
+        "delta_p_elec": -0.010090112686157227
+      },
+      "5": {
+        "delta_t_core": 0.16175079345703125,
+        "delta_f_cool": -0.9268836975097656,
+        "delta_p_sys": -0.03366446495056152,
+        "delta_l_cpu": 0.03568267822265625,
+        "delta_p_elec": 0.0015850067138671875
+      },
+      "10": {
+        "delta_t_core": 0.00807952880859375,
+        "delta_f_cool": 0.02014923095703125,
+        "delta_p_sys": -0.00638890266418457,
+        "delta_l_cpu": 0.01792144775390625,
+        "delta_p_elec": 0.0008065700531005859
+      },
+      "20": {
+        "delta_t_core": -0.044097900390625,
+        "delta_f_cool": 0.30881500244140625,
+        "delta_p_sys": 0.015058040618896484,
+        "delta_l_cpu": -0.0208892822265625,
+        "delta_p_elec": -0.0008540153503417969
+      },
+      "40": {
+        "delta_t_core": 0.02132415771484375,
+        "delta_f_cool": 0.2575035095214844,
+        "delta_p_sys": 0.015503644943237305,
+        "delta_l_cpu": -0.02169036865234375,
+        "delta_p_elec": -0.0008611679077148438
+      }
+    }
+  },
+  "twin_world_integrity": {
+    "replay_mode": "TWIN_WORLD_FROZEN_EXOGENOUS",
+    "shared_exogenous_conditions": true,
+    "identical_pre_intervention_history": true,
+    "abduction_method": "POSTERIOR_LATENT_INFERENCE_Q_PHI"
+  },
+  "safety_comparison": {
+    "factual_thermal_margin_c": 8.481719970703125,
+    "factual_pressure_margin_bar": 2.449610710144043,
+    "factual_flow_margin_l_min": 28.191909790039062,
+    "counterfactual_thermal_margin_c": 8.527320861816406,
+    "counterfactual_pressure_margin_bar": 2.4307563304901123,
+    "counterfactual_flow_margin_l_min": 22.1212100982666,
+    "factual_safety_state": "SAFE",
+    "counterfactual_safety_state": "SAFE",
+    "safety_transition": "SAFE -> SAFE",
+    "outcome_classification": "INTERVENTION_PRESERVES_SAFETY"
+  },
+  "uncertainty": {
+    "aleatoric_sigma": 0.48925426602363586,
+    "epistemic_sigma": 1.5418990850448608,
+    "latent_novelty_d": 0.0,
+    "support_threshold": 15.0,
+    "within_support": true
+  },
+  "provenance": {
+    "source_evidence_hash": null,
+    "counterfactual_engine_version": "v1.0_pearl_level3",
+    "model_version": "baseline_005",
+    "dataset_version": "unified_v1_40_40_20",
+    "episode_id": "ep_test_00000",
+    "counterfactual_id": "cf_ep_test_00000_t20_A_valve_50",
+    "intervention_time": 20,
+    "timestamp_utc": "2026-09-11T12:00:00Z",
+    "counterfactual_hash": "84bd5b66e90c4e40eb2a69e125661e6b34358d85dc27e3599b5954401687f4f9"
+  }
+}

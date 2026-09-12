@@ -1,0 +1,44 @@
+decoder:
+  dropout: 0.1
+  hidden_dim: 64
+  learn_variance: true
+  num_layers: 2
+encoder:
+  bidirectional: false
+  dropout: 0.1
+  hidden_dim: 64
+  num_layers: 2
+  type: gru
+loss_weights:
+  beta_kl: 0.001
+  lambda_obs: 1.0
+  lambda_rollout: 0.2
+  lambda_trans: 1.0
+  rollout_horizon: 3
+model:
+  action_dim: 4
+  latent_dim: 64
+  max_std: 10.0
+  min_std: 0.001
+  obs_dim: 8
+rollout:
+  confidence_level: 0.9
+  horizons:
+  - 1
+  - 5
+  - 10
+  - 20
+  - 40
+  num_samples: 50
+training:
+  batch_size: 32
+  early_stopping_patience: 6
+  grad_clip_norm: 10.0
+  learning_rate: 0.001
+  max_epochs: 25
+  weight_decay: 1.0e-05
+transition:
+  dropout: 0.1
+  hidden_dim: 64
+  num_layers: 2
+  residual: true

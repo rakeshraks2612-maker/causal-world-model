@@ -41,6 +41,7 @@ class WorldModelLossCalculator:
         observation_mask: Tensor,                    # Binary mask [B, T, 8]
         rollout_obs: Optional[List[ObservationDistribution]] = None,
         rollout_targets: Optional[List[Tuple[Tensor, Tensor]]] = None,
+        timestep_weights: Optional[Tensor] = None,   # [B, T] or [B, T, 1] weighting
     ) -> LossOutput:
         """Compute the full variational ELBO loss across a sequence batch.
         
@@ -52,13 +53,13 @@ class WorldModelLossCalculator:
             observation_mask: Sensor availability mask [B, T, 8]
             rollout_obs: Optional list of predicted ObservationDistributions at rollout horizons [1..K]
             rollout_targets: Optional list of (target_obs, observation_mask) tuples at rollout horizons [1..K]
+            timestep_weights: Optional sample/timestep weights for safety-critical weighting
             
         Returns:
             LossOutput containing scalar total_loss and decomposed terms
         """
-        # 1. Observation Reconstruction Loss: Masked Negative Log-Likelihood
-        # masked_log_prob returns sum over observed channels: [B, T]
-        log_p_obs = reconstructed_obs.masked_log_prob(target_obs, observation_mask)
+        # 1. Observation Reconstruction Loss: Masked Negative Log-Likelihood with safety weights
+        log_p_obs = reconstructed_obs.masked_log_prob(target_obs, observation_mask, weights=timestep_weights)
         # Average over batch and valid time steps
         obs_nll = -torch.mean(log_p_obs)
 

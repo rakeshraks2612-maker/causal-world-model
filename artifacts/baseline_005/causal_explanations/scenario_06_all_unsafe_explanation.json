@@ -1,0 +1,55 @@
+{
+  "summary": {
+    "headline": "Abstain from intervention: Observation inconsistency violates model trust",
+    "mechanism": "The observed telemetry contradicts the learned world model state representation (reconstruction residual R_T = 33.88\u00b0C exceeded calibrated threshold of 6.08\u00b0C by +27.80\u00b0C). Autonomous simulation and intervention planning are blocked to prevent unsafe hallucinations.",
+    "effect_direction": "NO_EFFECT_UNTRUSTED"
+  },
+  "intervention": {
+    "target": "none",
+    "value": null,
+    "intervention_type": "NONE",
+    "baseline_value": null
+  },
+  "causal_chain": {
+    "root_actuator": "none",
+    "target_outcome": "none",
+    "nodes": [],
+    "all_affected_descendants": []
+  },
+  "predicted_effects": {
+    "baseline_peak_t_core": null,
+    "intervened_peak_t_core": null,
+    "delta_t_core": null,
+    "baseline_min_flow": null,
+    "intervened_min_flow": null,
+    "delta_flow": null,
+    "counterfactual_statement": "Counterfactual simulation withheld: Model trust failure (PLANNING_BLOCKED)."
+  },
+  "rejected_alternatives": [],
+  "decision_margin": {
+    "best_candidate": null,
+    "second_best_candidate": null,
+    "decision_strength": "N/A_ABSTAIN",
+    "decision_margin": null,
+    "best_utility": null,
+    "second_best_utility": null
+  },
+  "abstention_details": {
+    "trigger": "RECONSTRUCTION_INCONSISTENCY",
+    "observed_value": 33.876841899061006,
+    "threshold": 6.08,
+    "violation_delta": 27.796841899061008,
+    "consequence": "WORLD_MODEL_NOT_TRUSTED",
+    "action_taken": "PLANNING_BLOCKED"
+  },
+  "trust_qualification": "MODEL_ABSTAIN (Untrusted: Telemetry contradicts internal model dynamics; action search blocked)",
+  "provenance": {
+    "source_evidence_hash": "ece1c8457d4324f0c72202087de7ce950bec579350ed1b7e57feabab8d8c0332",
+    "model_version": "baseline_005",
+    "dataset_version": "unified_v1_40_40_20",
+    "planner_version": "v1.2_trust_gated",
+    "benchmark_version": "v1.0",
+    "scenario_id": "scenario_06_all_unsafe",
+    "timestamp_utc": "2026-09-11T12:00:00Z"
+  }
+}

@@ -1,0 +1,385 @@
+{
+  "latent_sensitivity": {
+    "horizons": [
+      1,
+      5,
+      10,
+      20,
+      40
+    ],
+    "norm_delta_z_state_vpos": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "norm_delta_z_action_valve": [
+      2.2550456523895264,
+      5.992828369140625,
+      7.852065086364746,
+      10.388213157653809,
+      14.03696346282959
+    ],
+    "norm_delta_z_state_lcpu": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "norm_delta_z_state_vib": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "causal_chain_breakdown": {
+    "do(V_pos=50)": {
+      "oracle": {
+        "V_pos": -0.3079203680223713,
+        "F_cool": -0.23420597224441622,
+        "P_sys": -0.011178332984497353,
+        "T_cool": 0.02181199885218561,
+        "T_core": -0.19411809982729408
+      },
+      "prism": {
+        "V_pos": -4.364627265930176,
+        "F_cool": 0.0,
+        "P_sys": 0.0,
+        "T_cool": 0.0,
+        "T_core": 0.0
+      }
+    },
+    "do(V_pos=70)": {
+      "oracle": {
+        "V_pos": 19.692079631977627,
+        "F_cool": 11.15849075675376,
+        "P_sys": 0.2960369151797412,
+        "T_cool": 0.4080679729600661,
+        "T_core": -3.857164051361694
+      },
+      "prism": {
+        "V_pos": 15.635372734069824,
+        "F_cool": 0.0,
+        "P_sys": 0.0,
+        "T_cool": 0.0,
+        "T_core": 0.0
+      }
+    },
+    "do(V_pos=85)": {
+      "oracle": {
+        "V_pos": 34.69207963197763,
+        "F_cool": 20.5061691965832,
+        "P_sys": 0.6506695481473811,
+        "T_cool": 0.526542765765084,
+        "T_core": -4.996600361906568
+      },
+      "prism": {
+        "V_pos": 30.635372734069826,
+        "F_cool": 0.0,
+        "P_sys": 0.0,
+        "T_cool": 0.0,
+        "T_core": 0.0
+      }
+    },
+    "do(V_pos=100)": {
+      "oracle": {
+        "V_pos": 49.69207963197763,
+        "F_cool": 30.448935693877313,
+        "P_sys": 1.129344955192634,
+        "T_cool": 0.5824015657079726,
+        "T_core": -5.546042887215185
+      },
+      "prism": {
+        "V_pos": 45.635372734069826,
+        "F_cool": 0.0,
+        "P_sys": 0.0,
+        "T_cool": 0.0,
+        "T_core": 0.0
+      }
+    }
+  },
+  "false_safe_audit": {
+    "total_false_safes": 16,
+    "category_counts": {
+      "Thermal Runaway": 16
+    },
+    "cases": [
+      {
+        "intervention_id": "inv_ep_test_00000_t20_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 20,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 74,
+        "oracle_time_to_failure": 54,
+        "oracle_peak_t_core": 109.97749413467878,
+        "oracle_max_p_sys": 2.6091165243417893,
+        "oracle_min_f_cool": 19.198097647473194,
+        "prism_peak_t_core": 82.1097412109375,
+        "prism_max_p_sys": 2.951181173324585,
+        "prism_min_f_cool": 20.686922073364258,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      },
+      {
+        "intervention_id": "inv_ep_test_00000_t40_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 40,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 78,
+        "oracle_time_to_failure": 38,
+        "oracle_peak_t_core": 109.32545905967685,
+        "oracle_max_p_sys": 2.610856266087903,
+        "oracle_min_f_cool": 19.408962469925555,
+        "prism_peak_t_core": 81.82598876953125,
+        "prism_max_p_sys": 2.913957357406616,
+        "prism_min_f_cool": 21.707225799560547,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      },
+      {
+        "intervention_id": "inv_ep_test_00000_t60_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 60,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 83,
+        "oracle_time_to_failure": 23,
+        "oracle_peak_t_core": 108.68990898869194,
+        "oracle_max_p_sys": 2.6055678023809326,
+        "oracle_min_f_cool": 19.62067847493466,
+        "prism_peak_t_core": 81.93497467041016,
+        "prism_max_p_sys": 2.8601465225219727,
+        "prism_min_f_cool": 21.31888198852539,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      },
+      {
+        "intervention_id": "inv_ep_test_00000_t80_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 80,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 105,
+        "oracle_time_to_failure": 25,
+        "oracle_peak_t_core": 108.08640402052642,
+        "oracle_max_p_sys": 2.609286336763358,
+        "oracle_min_f_cool": 19.816250664059684,
+        "prism_peak_t_core": 81.76834106445312,
+        "prism_max_p_sys": 2.8035316467285156,
+        "prism_min_f_cool": 21.91368865966797,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      },
+      {
+        "intervention_id": "inv_ep_test_00001_t20_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 20,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 57,
+        "oracle_time_to_failure": 37,
+        "oracle_peak_t_core": 108.32788821366296,
+        "oracle_max_p_sys": 2.569725841921838,
+        "oracle_min_f_cool": 17.00382147800925,
+        "prism_peak_t_core": 82.70640563964844,
+        "prism_max_p_sys": 2.880136728286743,
+        "prism_min_f_cool": 18.873897552490234,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      },
+      {
+        "intervention_id": "inv_ep_test_00001_t40_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 40,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 65,
+        "oracle_time_to_failure": 25,
+        "oracle_peak_t_core": 107.71684072228202,
+        "oracle_max_p_sys": 2.5731830757154066,
+        "oracle_min_f_cool": 17.205154250845048,
+        "prism_peak_t_core": 82.60874938964844,
+        "prism_max_p_sys": 2.8373019695281982,
+        "prism_min_f_cool": 19.15670394897461,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      },
+      {
+        "intervention_id": "inv_ep_test_00001_t60_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 60,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 77,
+        "oracle_time_to_failure": 17,
+        "oracle_peak_t_core": 106.96857398784469,
+        "oracle_max_p_sys": 2.5762193795749826,
+        "oracle_min_f_cool": 17.401773075956218,
+        "prism_peak_t_core": 82.63489532470703,
+        "prism_max_p_sys": 2.787900686264038,
+        "prism_min_f_cool": 19.078136444091797,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      },
+      {
+        "intervention_id": "inv_ep_test_00002_t20_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 20,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 120,
+        "oracle_time_to_failure": 100,
+        "oracle_peak_t_core": 107.60284492263371,
+        "oracle_max_p_sys": 2.743229517797995,
+        "oracle_min_f_cool": 23.91686227292869,
+        "prism_peak_t_core": 80.02230072021484,
+        "prism_max_p_sys": 3.126927375793457,
+        "prism_min_f_cool": 30.77095603942871,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      },
+      {
+        "intervention_id": "inv_ep_test_00003_t20_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 20,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 92,
+        "oracle_time_to_failure": 72,
+        "oracle_peak_t_core": 111.97382909025679,
+        "oracle_max_p_sys": 2.5479984121203993,
+        "oracle_min_f_cool": 16.52781442082791,
+        "prism_peak_t_core": 82.87505340576172,
+        "prism_max_p_sys": 2.8625681400299072,
+        "prism_min_f_cool": 18.416017532348633,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      },
+      {
+        "intervention_id": "inv_ep_test_00003_t40_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 40,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 97,
+        "oracle_time_to_failure": 57,
+        "oracle_peak_t_core": 111.20844169281966,
+        "oracle_max_p_sys": 2.5483022349564797,
+        "oracle_min_f_cool": 16.72520936900722,
+        "prism_peak_t_core": 82.86263275146484,
+        "prism_max_p_sys": 2.8157167434692383,
+        "prism_min_f_cool": 18.447813034057617,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      },
+      {
+        "intervention_id": "inv_ep_test_00003_t60_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 60,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 98,
+        "oracle_time_to_failure": 38,
+        "oracle_peak_t_core": 110.44579021431244,
+        "oracle_max_p_sys": 2.5518026351452403,
+        "oracle_min_f_cool": 16.92804869142166,
+        "prism_peak_t_core": 82.90718841552734,
+        "prism_max_p_sys": 2.7632899284362793,
+        "prism_min_f_cool": 18.32125473022461,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      },
+      {
+        "intervention_id": "inv_ep_test_00003_t80_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 80,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 102,
+        "oracle_time_to_failure": 22,
+        "oracle_peak_t_core": 109.68075191339136,
+        "oracle_max_p_sys": 2.555013243360184,
+        "oracle_min_f_cool": 17.125857570223587,
+        "prism_peak_t_core": 82.9609375,
+        "prism_max_p_sys": 2.6830577850341797,
+        "prism_min_f_cool": 18.159727096557617,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      },
+      {
+        "intervention_id": "inv_ep_test_00004_t20_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 20,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 60,
+        "oracle_time_to_failure": 40,
+        "oracle_peak_t_core": 111.42653910339835,
+        "oracle_max_p_sys": 2.5295261086008747,
+        "oracle_min_f_cool": 13.924839236740002,
+        "prism_peak_t_core": 83.4269027709961,
+        "prism_max_p_sys": 2.7975361347198486,
+        "prism_min_f_cool": 16.89979362487793,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      },
+      {
+        "intervention_id": "inv_ep_test_00004_t40_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 40,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 66,
+        "oracle_time_to_failure": 26,
+        "oracle_peak_t_core": 110.48073225024525,
+        "oracle_max_p_sys": 2.519413713691152,
+        "oracle_min_f_cool": 14.135374846374395,
+        "prism_peak_t_core": 83.32540893554688,
+        "prism_max_p_sys": 2.756762742996216,
+        "prism_min_f_cool": 17.164384841918945,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      },
+      {
+        "intervention_id": "inv_ep_test_00004_t60_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 60,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 83,
+        "oracle_time_to_failure": 23,
+        "oracle_peak_t_core": 109.66198087416684,
+        "oracle_max_p_sys": 2.514738849425893,
+        "oracle_min_f_cool": 14.32219315916838,
+        "prism_peak_t_core": 83.27388763427734,
+        "prism_max_p_sys": 2.7069756984710693,
+        "prism_min_f_cool": 17.301570892333984,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      },
+      {
+        "intervention_id": "inv_ep_test_00004_t80_L_cpu_80",
+        "target": "L_cpu",
+        "value": 80.0,
+        "intervention_time": 80,
+        "oracle_failure_mode": "thermal_runaway",
+        "oracle_failure_time": 95,
+        "oracle_time_to_failure": 15,
+        "oracle_peak_t_core": 108.76851774115255,
+        "oracle_max_p_sys": 2.5172725065200487,
+        "oracle_min_f_cool": 14.491662741782664,
+        "prism_peak_t_core": 83.22242736816406,
+        "prism_max_p_sys": 2.6394379138946533,
+        "prism_min_f_cool": 17.43903160095215,
+        "prism_predicted_failed": false,
+        "failure_category": "Thermal Runaway"
+      }
+    ]
+  }
+}

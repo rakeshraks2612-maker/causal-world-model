@@ -1,0 +1,173 @@
+{
+  "benchmark_summary": {
+    "records_processed": 448,
+    "records_successful": 448,
+    "records_blocked": 0,
+    "records_failed": 0,
+    "elapsed_seconds": 4.270575874950737
+  },
+  "counterfactual_metrics": {
+    "total_records": 448,
+    "horizons": [
+      1,
+      5,
+      10,
+      20,
+      40
+    ],
+    "mean_causal_error_by_horizon": {
+      "1": {
+        "delta_t_core": 0.8431468833652833,
+        "delta_t_cool": 1.1920874204174765,
+        "delta_p_sys": 0.2542516995347236,
+        "delta_f_cool": 2.8375046305010447,
+        "delta_l_cpu": 1.6704042276451732,
+        "delta_v_pos": 2.724259790029546,
+        "delta_vib_pump": 1.2066045768863798,
+        "delta_p_elec": 0.06994585348698124
+      },
+      "5": {
+        "delta_t_core": 0.6510410847028465,
+        "delta_t_cool": 0.49300120247000223,
+        "delta_p_sys": 0.05109076451689963,
+        "delta_f_cool": 0.6915141151000448,
+        "delta_l_cpu": 0.21821277416366452,
+        "delta_v_pos": 0.9415773872218595,
+        "delta_vib_pump": 0.20454496582800785,
+        "delta_p_elec": 0.009466632504278807
+      },
+      "10": {
+        "delta_t_core": 0.6780831188114237,
+        "delta_t_cool": 0.4489847307268252,
+        "delta_p_sys": 0.03645759896927957,
+        "delta_f_cool": 0.6601174371601859,
+        "delta_l_cpu": 0.35161149461704394,
+        "delta_v_pos": 1.1256120182270262,
+        "delta_vib_pump": 0.1391983638256982,
+        "delta_p_elec": 0.015463521863498328
+      },
+      "20": {
+        "delta_t_core": 0.6240850449901668,
+        "delta_t_cool": 0.4255981375317289,
+        "delta_p_sys": 0.030685818959371003,
+        "delta_f_cool": 0.6884173788286173,
+        "delta_l_cpu": 0.26657722035183773,
+        "delta_v_pos": 1.160198816417335,
+        "delta_vib_pump": 0.10006107157501372,
+        "delta_p_elec": 0.011760930004487188
+      },
+      "40": {
+        "delta_t_core": 0.5049118924096406,
+        "delta_t_cool": 0.32921117611827927,
+        "delta_p_sys": 0.02388158935326501,
+        "delta_f_cool": 0.5830663367639782,
+        "delta_l_cpu": 0.1932683663633671,
+        "delta_v_pos": 0.9580015557871777,
+        "delta_vib_pump": 0.0773912350715889,
+        "delta_p_elec": 0.008520411825213844
+      }
+    },
+    "mean_relative_error_by_horizon": {
+      "1": {
+        "delta_t_core": 0.3431795364204289,
+        "delta_t_cool": 2.3144235763288914,
+        "delta_p_sys": 1.706063024334293,
+        "delta_f_cool": 2.637714407433777,
+        "delta_l_cpu": 0.21452052764717358,
+        "delta_v_pos": 1.6044390660424297,
+        "delta_vib_pump": 1.5943912787582575,
+        "delta_p_elec": 0.15623062947669977
+      },
+      "5": {
+        "delta_t_core": 0.34048125309231103,
+        "delta_t_cool": 0.3346193815377204,
+        "delta_p_sys": 0.9579711511207295,
+        "delta_f_cool": 1.2170156109213666,
+        "delta_l_cpu": 0.0858755480925246,
+        "delta_v_pos": 0.8287457469731694,
+        "delta_vib_pump": 0.960463019243206,
+        "delta_p_elec": 0.05325084249023103
+      },
+      "10": {
+        "delta_t_core": 0.5068296155196803,
+        "delta_t_cool": 0.3547855426910109,
+        "delta_p_sys": 0.6992203152145711,
+        "delta_f_cool": 1.2176303876111703,
+        "delta_l_cpu": 0.2784792101925367,
+        "delta_v_pos": 1.1043400371126764,
+        "delta_vib_pump": 0.6802743361273585,
+        "delta_p_elec": 0.13870128432452833
+      },
+      "20": {
+        "delta_t_core": 0.8012195375581523,
+        "delta_t_cool": 0.5733391943439745,
+        "delta_p_sys": 0.5934257378042452,
+        "delta_f_cool": 1.2746119673338694,
+        "delta_l_cpu": 0.26563728413446375,
+        "delta_v_pos": 1.15667303822955,
+        "delta_vib_pump": 0.49711640493387865,
+        "delta_p_elec": 0.11743064546333902
+      },
+      "40": {
+        "delta_t_core": 0.9126714592150004,
+        "delta_t_cool": 0.6417923771401908,
+        "delta_p_sys": 0.46021236651099884,
+        "delta_f_cool": 1.075365295470247,
+        "delta_l_cpu": 0.1932682454822037,
+        "delta_v_pos": 0.9555494825018054,
+        "delta_vib_pump": 0.3844880324293364,
+        "delta_p_elec": 0.08520409533081794
+      }
+    },
+    "overall_mean_causal_error": 0.6007962140527141,
+    "overall_mean_relative_error": 0.7668555961597018,
+    "directional_accuracy_by_var": {
+      "delta_t_core": 0.8712406015037594,
+      "delta_t_cool": 0.7612781954887218,
+      "delta_p_sys": 0.8707706766917294,
+      "delta_f_cool": 0.6193609022556391,
+      "delta_l_cpu": 0.8049812030075187,
+      "delta_v_pos": 0.5620300751879699,
+      "delta_vib_pump": 0.7095864661654135,
+      "delta_p_elec": 1.0
+    },
+    "overall_directional_accuracy": 0.7749060150375939,
+    "peak_t_core_mae": 1.4413049822524004,
+    "max_pressure_mae": 0.39181467623964084,
+    "min_flow_mae": 2.103049892894084,
+    "safety_summary": {
+      "true_critical": 0,
+      "false_safe": 0,
+      "false_alarm": 0,
+      "true_safe": 448,
+      "false_safe_rate": 0.0
+    },
+    "breakdown_by_target": {
+      "A_pump": {
+        "count": 64,
+        "mean_causal_error": 0.47306814365526373,
+        "directional_accuracy": 0.6776315789473685,
+        "peak_t_core_mae": 1.221027283733122
+      },
+      "A_throttle": {
+        "count": 192,
+        "mean_causal_error": 1.0310376541229804,
+        "directional_accuracy": 0.6726973684210527,
+        "peak_t_core_mae": 1.7479684136192202
+      },
+      "A_valve": {
+        "count": 192,
+        "mean_causal_error": 0.21313079744826444,
+        "directional_accuracy": 0.9095394736842105,
+        "peak_t_core_mae": 1.2080674503920068
+      }
+    }
+  },
+  "exemplar_ids": {
+    "A_valve": "cf_ep_test_00000_t20_A_valve_50",
+    "A_throttle": "cf_ep_test_00000_t20_A_throttle_20",
+    "A_pump": "cf_ep_test_00000_t20_A_pump_4",
+    "A_flush": null,
+    "unsafe_transition": "cf_ep_test_00009_t60_A_pump_4"
+  }
+}

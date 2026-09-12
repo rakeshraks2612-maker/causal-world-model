@@ -1,0 +1,52 @@
+{
+  "experiment_name": "baseline_004_minimal_corrective_experiment",
+  "task": "Task 5.7C",
+  "timestamp": "2026-09-10T22:23:00Z",
+  "hypothesis": "Action effect suppression in baseline_003 stems from training data imbalance/confounding and single-step teacher forcing. Balanced orthogonal excitation data + multi-step rollout loss will restore persistent multi-step action sensitivity and enable correct Scenario 4 decision making without altering the frozen benchmark or planner.",
+  "frozen_contract": {
+    "decision_benchmark_dir": "data/decision_benchmark",
+    "scenarios_frozen": [
+      "scenario_01_do_nothing",
+      "scenario_02_valve",
+      "scenario_03_throttle",
+      "scenario_04_pump",
+      "scenario_05_combined",
+      "scenario_06_all_unsafe"
+    ],
+    "scenario_04_candidates_frozen": [
+      "cand_do_nothing",
+      "cand_valve_85",
+      "cand_throttle_50",
+      "cand_pump_3",
+      "cand_pump_4"
+    ],
+    "oracle_optimal_scenario_04": "cand_pump_3",
+    "baseline_003_frozen_path": "artifacts/baseline_003",
+    "safety_constraints": {
+      "T_core_max": 95.0,
+      "P_sys_max": 5.5,
+      "F_cool_min": 8.0,
+      "max_latent_uncertainty": 15.0
+    },
+    "decision_cost_config": {
+      "k_risk_multiplier": 2.0,
+      "w_thermal": 1.0,
+      "w_pressure": 1.0,
+      "w_cooling": 0.05,
+      "w_throttle": 0.5,
+      "w_actuation": 0.01
+    },
+    "metrics": [
+      "Action Agreement",
+      "Utility Regret",
+      "Safety Gate Classification",
+      "Causal Path Directionality",
+      "Multi-Step Trajectory Divergence"
+    ]
+  },
+  "training_modifications": {
+    "excitation_dataset": "data/excitation_dataset (balanced pump stages 1-4, orthogonal variations, short holds)",
+    "loss_objective": "Multi-step autoregressive rollout loss (K=5 / K=10) with observation NLL and transition consistency",
+    "architecture_changes": "None (identical latent_dim=64, encoder/transition/decoder=64)"
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "summary": {
+    "headline": "Increase pump stage to 4",
+    "mechanism": "Increasing pump stage increases coolant circulation, which accelerates convective heat extraction from the semiconductor junction, reducing peak core temperature.",
+    "effect_direction": "REDUCE_CORE_TEMPERATURE"
+  },
+  "intervention": {
+    "target": "A_pump",
+    "value": 4.0,
+    "intervention_type": "ACTION",
+    "baseline_value": null
+  },
+  "causal_chain": {
+    "root_actuator": "A_pump",
+    "target_outcome": "T_core",
+    "nodes": [
+      {
+        "variable": "A_pump",
+        "relationship": "ACTUATOR_INPUT",
+        "predicted_direction": "INCREASE",
+        "predicted_delta": null,
+        "evidence_available": true
+      },
+      {
+        "variable": "F_cool",
+        "relationship": "DIRECT_DESCENDANT",
+        "predicted_direction": "INCREASE",
+        "predicted_delta": 8.280219078063965,
+        "evidence_available": true
+      },
+      {
+        "variable": "T_cool",
+        "relationship": "MEDIATED_DESCENDANT",
+        "predicted_direction": "DECREASE",
+        "predicted_delta": null,
+        "evidence_available": false
+      },
+      {
+        "variable": "T_core",
+        "relationship": "FINAL_OUTCOME",
+        "predicted_direction": "DECREASE",
+        "predicted_delta": -6.3152313232421875,
+        "evidence_available": true
+      }
+    ],
+    "all_affected_descendants": [
+      "F_cool",
+      "P_sys",
+      "T_cool",
+      "T_core",
+      "Vib_pump"
+    ]
+  },
+  "predicted_effects": {
+    "baseline_peak_t_core": 97.8946304321289,
+    "intervened_peak_t_core": 91.57939910888672,
+    "delta_t_core": -6.3152313232421875,
+    "baseline_min_flow": 12.535797119140625,
+    "intervened_min_flow": 19.94970703125,
+    "delta_flow": 8.280219078063965,
+    "counterfactual_statement": "Under the modeled intervention, `cand_pump_4_only` is predicted to increase coolant flow by +8.28 L/min and reduce peak core temperature by 6.32\u00b0C relative to the factual baseline trajectory."
+  },
+  "rejected_alternatives": [
+    {
+      "candidate_id": "cand_do_nothing",
+      "reason_code": "SAFETY_VIOLATION",
+      "reason_explanation": "Rejected due to physical safety boundary violation: Peak core temperature (97.89\u00b0C) exceeds hard threshold (95.00\u00b0C)..",
+      "utility_score": -1001.0865084360053,
+      "peak_t_core": 97.8946304321289
+    },
+    {
+      "candidate_id": "cand_valve_85_only",
+      "reason_code": "LATENT_NOVELTY",
+      "reason_explanation": "Rejected because the predicted trajectory entered a region outside the model's validated latent support (D_M = 15.62 > 15.00).",
+      "utility_score": -1000.6376162420121,
+      "peak_t_core": 93.40626525878906
+    },
+    {
+      "candidate_id": "cand_throttle_40_only",
+      "reason_code": "LOWER_UTILITY",
+      "reason_explanation": "Sub-optimal utility (\u0394U = -0.7627) compared to recommended action; higher operational/thermal cost.",
+      "utility_score": -1.257614802186235,
+      "peak_t_core": 88.32701110839844
+    },
+    {
+      "candidate_id": "cand_combined_valve80_pump3",
+      "reason_code": "LOWER_UTILITY",
+      "reason_explanation": "Sub-optimal utility (\u0394U = -0.0071) compared to recommended action; higher operational/thermal cost.",
+      "utility_score": -0.5020021757904336,
+      "peak_t_core": 91.07844543457031
+    }
+  ],
+  "decision_margin": {
+    "best_candidate": "cand_pump_4_only",
+    "second_best_candidate": "cand_combined_valve80_pump3",
+    "decision_strength": "POSITIVE_MARGIN",
+    "decision_margin": 0.00705116052129906,
+    "best_utility": -0.49495101526913454,
+    "second_best_utility": -0.5020021757904336
+  },
+  "abstention_details": null,
+  "trust_qualification": "MODEL_TRUSTED (Validated: Operating within calibrated in-distribution latent support)",
+  "provenance": {
+    "source_evidence_hash": "04544fd96086975bbecaf799dde79bbc97896d81533e71884fa47d3cb1b057d1",
+    "model_version": "baseline_005",
+    "dataset_version": "unified_v1_40_40_20",
+    "planner_version": "v1.2_trust_gated",
+    "benchmark_version": "v1.0",
+    "scenario_id": "scenario_05_combined",
+    "timestamp_utc": "2026-09-11T12:00:00Z"
+  }
+}

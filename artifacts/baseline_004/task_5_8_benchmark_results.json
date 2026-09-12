@@ -1,0 +1,1282 @@
+{
+  "baseline_004": {
+    "scenario_01_do_nothing": {
+      "scenario_id": "scenario_01_do_nothing",
+      "title": "Scenario 1: Inaction Restraint",
+      "prism_selected": "cand_valve_85",
+      "oracle_optimal": "cand_do_nothing",
+      "agreement": false,
+      "should_abstain": false,
+      "prism_utility": 0.06698224249725493,
+      "oracle_selected_utility": -0.05680665302743215,
+      "oracle_optimal_utility": -0.056491232214182396,
+      "utility_regret": 0.000315420813249756,
+      "margin_vs_second_best": 0.009359851021898513,
+      "planning_time_ms": 117.54600005224347,
+      "explanation": {
+        "summary": "Recommend `A_valve=85.0` to achieve peak core temperature 85.6\u00b0C (Utility: 0.07).",
+        "diagnosis": "Factual baseline operates within nominal support (Peak T_core = 86.0\u00b0C).",
+        "recommended_action": "A_valve=85.0",
+        "physical_mechanism": "Setting `A_valve=85.0%` expands valve conductance, increasing coolant flow by -1.45 L/min. This accelerates convective heat dissipation from the core manifold, reducing peak core temperature by 0.4\u00b0C.",
+        "counterfactual_contrast": "Without intervention, factual baseline reaches peak T_core of 86.0\u00b0C. Under recommended `A_valve=85.0`, core temperature safely peaks at 85.6\u00b0C (Net causal benefit: -0.4\u00b0C).",
+        "rejected_alternatives": [
+          {
+            "candidate": "A_valve=84.7",
+            "reason": "Sub-optimal utility (+0.0388 vs +0.0670, \u0394U=-0.0282) \u2014 Peak T_core: 86.0\u00b0C, Mean CPU Load: 66.2%"
+          },
+          {
+            "candidate": "A_pump=4.0",
+            "reason": "Sub-optimal utility (+0.0576 vs +0.0670, \u0394U=-0.0094) \u2014 Peak T_core: 83.5\u00b0C, Mean CPU Load: 66.6%"
+          },
+          {
+            "candidate": "A_throttle=30.0",
+            "reason": "Sub-optimal utility (-1.2740 vs +0.0670, \u0394U=-1.3409) \u2014 Peak T_core: 82.3\u00b0C, Mean CPU Load: 39.2%"
+          }
+        ],
+        "confidence_level": "HIGH (Within Latent Manifold Support)",
+        "safety_verdict": "\ud83d\udfe2 SAFE & OPTIMAL"
+      },
+      "candidates": [
+        {
+          "candidate_id": "cand_do_nothing",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 85.9584732055664,
+          "max_pressure": 3.4192566871643066,
+          "min_flow": 41.78689956665039,
+          "latent_novelty": 7.766666412353516,
+          "utility_prism": 0.038829309939372614,
+          "utility_oracle": -0.056491232214182396,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_valve_85",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 85.57347106933594,
+          "max_pressure": 3.383857011795044,
+          "min_flow": 41.80781173706055,
+          "latent_novelty": 7.281109809875488,
+          "utility_prism": 0.06698224249725493,
+          "utility_oracle": -0.05680665302743215,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_pump_4",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 83.53349304199219,
+          "max_pressure": 4.8810577392578125,
+          "min_flow": 49.188270568847656,
+          "latent_novelty": 9.881322860717773,
+          "utility_prism": 0.057622391475356416,
+          "utility_oracle": -0.36860007735293276,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_throttle_30",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 82.30362701416016,
+          "max_pressure": 3.659580707550049,
+          "min_flow": 41.63933563232422,
+          "latent_novelty": 10.052294731140137,
+          "utility_prism": -1.273963808585579,
+          "utility_oracle": -1.351181538363853,
+          "violations": []
+        }
+      ]
+    },
+    "scenario_02_valve": {
+      "scenario_id": "scenario_02_valve",
+      "title": "Scenario 2: Valve Intervention",
+      "prism_selected": "cand_throttle_30",
+      "oracle_optimal": "cand_valve_85",
+      "agreement": false,
+      "should_abstain": false,
+      "prism_utility": -2.1193752052675774,
+      "oracle_selected_utility": -1003.258549072212,
+      "oracle_optimal_utility": -0.38745944790882847,
+      "utility_regret": 1002.8710896243032,
+      "margin_vs_second_best": 0.0,
+      "planning_time_ms": 654.792790999636,
+      "explanation": {
+        "summary": "Recommend `A_throttle=30.0` to achieve peak core temperature 91.9\u00b0C (Utility: -2.12).",
+        "diagnosis": "Under factual baseline trajectory, system core temperature reaches 115.1\u00b0C, violating safe thermal limits and risking thermal runaway.",
+        "recommended_action": "A_throttle=30.0",
+        "physical_mechanism": "Throttling CPU workload to `A_throttle=30.0%` directly diminishes Joule heating generation in the core, stabilizing thermal accumulation and lowering core temperature by 23.1\u00b0C.",
+        "counterfactual_contrast": "Without intervention, factual baseline reaches peak T_core of 115.1\u00b0C. Under recommended `A_throttle=30.0`, core temperature safely peaks at 91.9\u00b0C (Net causal benefit: -23.1\u00b0C).",
+        "rejected_alternatives": [
+          {
+            "candidate": "V_pos=30.0",
+            "reason": "Rejected due to safety violations: Peak core temperature (115.05\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          },
+          {
+            "candidate": "V_pos=85.0",
+            "reason": "Rejected due to safety violations: Peak core temperature (107.96\u00b0C) exceeds hard threshold (95.00\u00b0C).; Latent manifold novelty (33.65) exceeds epistemic support limit (15.00)."
+          },
+          {
+            "candidate": "V_pos=15.0",
+            "reason": "Rejected due to safety violations: Peak core temperature (130.02\u00b0C) exceeds hard threshold (95.00\u00b0C).; Minimum coolant flow (4.27 L/min) below safety threshold (8.00 L/min)."
+          },
+          {
+            "candidate": "A_pump=4.0",
+            "reason": "Rejected due to safety violations: Peak core temperature (106.75\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          }
+        ],
+        "confidence_level": "HIGH (Within Latent Manifold Support)",
+        "safety_verdict": "\ud83d\udfe2 SAFE & OPTIMAL"
+      },
+      "candidates": [
+        {
+          "candidate_id": "cand_do_nothing",
+          "is_safe_prism": false,
+          "is_safe_oracle": false,
+          "peak_t_core": 115.05128479003906,
+          "max_pressure": 2.4581992626190186,
+          "min_flow": 8.678508758544922,
+          "latent_novelty": 7.898688316345215,
+          "utility_prism": -1003.3840576410012,
+          "utility_oracle": -1001.9910762143691,
+          "violations": [
+            "Peak core temperature (115.05\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ]
+        },
+        {
+          "candidate_id": "cand_valve_85",
+          "is_safe_prism": false,
+          "is_safe_oracle": true,
+          "peak_t_core": 107.95539855957031,
+          "max_pressure": 2.5338315963745117,
+          "min_flow": 9.025888442993164,
+          "latent_novelty": 33.64944076538086,
+          "utility_prism": -1002.4095320933981,
+          "utility_oracle": -0.38745944790882847,
+          "violations": [
+            "Peak core temperature (107.96\u00b0C) exceeds hard threshold (95.00\u00b0C).",
+            "Latent manifold novelty (33.65) exceeds epistemic support limit (15.00)."
+          ]
+        },
+        {
+          "candidate_id": "cand_valve_15",
+          "is_safe_prism": false,
+          "is_safe_oracle": false,
+          "peak_t_core": 130.02333068847656,
+          "max_pressure": 2.589275598526001,
+          "min_flow": 4.268993377685547,
+          "latent_novelty": 8.15800666809082,
+          "utility_prism": -1005.8281711606015,
+          "utility_oracle": -1006.7482887096614,
+          "violations": [
+            "Peak core temperature (130.02\u00b0C) exceeds hard threshold (95.00\u00b0C).",
+            "Minimum coolant flow (4.27 L/min) below safety threshold (8.00 L/min)."
+          ]
+        },
+        {
+          "candidate_id": "cand_pump_4",
+          "is_safe_prism": false,
+          "is_safe_oracle": false,
+          "peak_t_core": 106.75272369384766,
+          "max_pressure": 3.6146199703216553,
+          "min_flow": 10.701679229736328,
+          "latent_novelty": 9.31277084350586,
+          "utility_prism": -1002.2571321396898,
+          "utility_oracle": -1001.4070668326012,
+          "violations": [
+            "Peak core temperature (106.75\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ]
+        },
+        {
+          "candidate_id": "cand_throttle_30",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 91.90434265136719,
+          "max_pressure": 2.623614549636841,
+          "min_flow": 9.713895797729492,
+          "latent_novelty": 10.061924934387207,
+          "utility_prism": -2.1193752052675774,
+          "utility_oracle": -1003.258549072212,
+          "violations": []
+        }
+      ]
+    },
+    "scenario_03_throttle": {
+      "scenario_id": "scenario_03_throttle",
+      "title": "Scenario 3: Workload Throttling",
+      "prism_selected": "cand_do_nothing",
+      "oracle_optimal": "cand_throttle_50",
+      "agreement": false,
+      "should_abstain": false,
+      "prism_utility": -0.12759298311422906,
+      "oracle_selected_utility": -1002.8038766602375,
+      "oracle_optimal_utility": -1.0785041404064293,
+      "utility_regret": 1001.7253725198311,
+      "margin_vs_second_best": 0.24197162478834122,
+      "planning_time_ms": 41.45033308304846,
+      "explanation": {
+        "summary": "Maintain baseline operation (DO NOTHING): system is in stable thermal equilibrium (Peak T_core: 88.2\u00b0C, Utility: -0.13).",
+        "diagnosis": "Factual baseline operates within nominal support (Peak T_core = 88.2\u00b0C).",
+        "recommended_action": "DO_NOTHING",
+        "physical_mechanism": "Current operating state is within a stable thermal, pressure, and cooling regime. No candidate intervention provides sufficient risk-adjusted benefit to justify its operational or actuation cost.",
+        "counterfactual_contrast": "Factual baseline operates safely at peak T_core of 88.2\u00b0C. Alternative interventions provide negligible thermal benefit while incurring unnecessary operational penalties.",
+        "rejected_alternatives": [
+          {
+            "candidate": "L_cpu=50.0",
+            "reason": "Rejected due to safety violations: Latent manifold novelty (35.61) exceeds epistemic support limit (15.00)."
+          },
+          {
+            "candidate": "L_cpu=20.0",
+            "reason": "Rejected due to safety violations: Latent manifold novelty (35.75) exceeds epistemic support limit (15.00)."
+          },
+          {
+            "candidate": "V_pos=100.0 + L_cpu=95.0",
+            "reason": "Rejected due to safety violations: Peak core temperature (100.67\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          },
+          {
+            "candidate": "A_pump=4.0 + L_cpu=95.0",
+            "reason": "Sub-optimal utility (-0.3696 vs -0.1276, \u0394U=-0.2420) \u2014 Peak T_core: 87.4\u00b0C, Mean CPU Load: 68.2%"
+          }
+        ],
+        "confidence_level": "HIGH (Within Latent Manifold Support)",
+        "safety_verdict": "\ud83d\udfe2 SAFE & OPTIMAL"
+      },
+      "candidates": [
+        {
+          "candidate_id": "cand_do_nothing",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 88.22888946533203,
+          "max_pressure": 3.6076467037200928,
+          "min_flow": 46.11459732055664,
+          "latent_novelty": 7.268675327301025,
+          "utility_prism": -0.12759298311422906,
+          "utility_oracle": -1002.8038766602375,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_throttle_50",
+          "is_safe_prism": false,
+          "is_safe_oracle": true,
+          "peak_t_core": 81.82435607910156,
+          "max_pressure": 3.4397032260894775,
+          "min_flow": 27.217771530151367,
+          "latent_novelty": 35.61497116088867,
+          "utility_prism": -999.8318788708829,
+          "utility_oracle": -1.0785041404064293,
+          "violations": [
+            "Latent manifold novelty (35.61) exceeds epistemic support limit (15.00)."
+          ]
+        },
+        {
+          "candidate_id": "cand_throttle_20",
+          "is_safe_prism": false,
+          "is_safe_oracle": true,
+          "peak_t_core": 81.70915985107422,
+          "max_pressure": 3.4444425106048584,
+          "min_flow": 27.27009391784668,
+          "latent_novelty": 35.74796676635742,
+          "utility_prism": -1000.1247718346012,
+          "utility_oracle": -2.0308005036036327,
+          "violations": [
+            "Latent manifold novelty (35.75) exceeds epistemic support limit (15.00)."
+          ]
+        },
+        {
+          "candidate_id": "cand_valve_100",
+          "is_safe_prism": false,
+          "is_safe_oracle": false,
+          "peak_t_core": 100.67124938964844,
+          "max_pressure": 3.5892412662506104,
+          "min_flow": 42.1308479309082,
+          "latent_novelty": 10.222640037536621,
+          "utility_prism": -1001.206555872996,
+          "utility_oracle": -1002.8002787498676,
+          "violations": [
+            "Peak core temperature (100.67\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ]
+        },
+        {
+          "candidate_id": "cand_pump_4",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 87.39462280273438,
+          "max_pressure": 5.205705642700195,
+          "min_flow": 54.90837097167969,
+          "latent_novelty": 9.967705726623535,
+          "utility_prism": -0.3695646079025703,
+          "utility_oracle": -1003.0463091694171,
+          "violations": []
+        }
+      ]
+    },
+    "scenario_04_pump": {
+      "scenario_id": "scenario_04_pump",
+      "title": "Scenario 4: Pump Head Modulating",
+      "prism_selected": "cand_pump_3",
+      "oracle_optimal": "cand_pump_3",
+      "agreement": true,
+      "should_abstain": false,
+      "prism_utility": 0.07406699347785117,
+      "oracle_selected_utility": -0.34090119694749477,
+      "oracle_optimal_utility": -0.34090119694749477,
+      "utility_regret": 0.0,
+      "margin_vs_second_best": 0.1963366359061619,
+      "planning_time_ms": 23.874458158388734,
+      "explanation": {
+        "summary": "Recommend `A_pump=3` to achieve peak core temperature 85.3\u00b0C (Utility: 0.07).",
+        "diagnosis": "Under factual baseline trajectory, system core temperature reaches 95.2\u00b0C, violating safe thermal limits and risking thermal runaway.",
+        "recommended_action": "A_pump=3",
+        "physical_mechanism": "Adjusting pump stage to `A_pump=3` modulates hydraulic head and fluid delivery, yielding coolant flow change of +10.19 L/min. Increasing pump stage increases coolant circulation, modifies the hydraulic/thermal state, and reduces thermal risk, providing the optimal safety-performance-cost tradeoff.",
+        "counterfactual_contrast": "Without intervention, factual baseline reaches peak T_core of 95.2\u00b0C. Under recommended `A_pump=3`, core temperature safely peaks at 85.3\u00b0C (Net causal benefit: -9.9\u00b0C).",
+        "rejected_alternatives": [
+          {
+            "candidate": "A_pump=1.0",
+            "reason": "Rejected due to safety violations: Peak core temperature (95.20\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          },
+          {
+            "candidate": "A_pump=4.0",
+            "reason": "Sub-optimal utility (-0.1223 vs +0.0741, \u0394U=-0.1963) \u2014 Peak T_core: 84.7\u00b0C, Mean CPU Load: 67.2%"
+          },
+          {
+            "candidate": "A_valve=85.0",
+            "reason": "Rejected due to safety violations: Peak core temperature (96.67\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          },
+          {
+            "candidate": "A_throttle=50.0",
+            "reason": "Sub-optimal utility (-1.1117 vs +0.0741, \u0394U=-1.1857) \u2014 Peak T_core: 89.7\u00b0C, Mean CPU Load: 67.5%"
+          }
+        ],
+        "confidence_level": "HIGH (Within Latent Manifold Support)",
+        "safety_verdict": "\ud83d\udfe2 SAFE & OPTIMAL"
+      },
+      "candidates": [
+        {
+          "candidate_id": "cand_do_nothing",
+          "is_safe_prism": false,
+          "is_safe_oracle": true,
+          "peak_t_core": 95.19620513916016,
+          "max_pressure": 3.2517545223236084,
+          "min_flow": 37.8148078918457,
+          "latent_novelty": 7.3806328773498535,
+          "utility_prism": -1000.773388891387,
+          "utility_oracle": -0.3931275527797945,
+          "violations": [
+            "Peak core temperature (95.20\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ]
+        },
+        {
+          "candidate_id": "cand_pump_3",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 85.3053970336914,
+          "max_pressure": 4.402521133422852,
+          "min_flow": 50.54077911376953,
+          "latent_novelty": 7.21084451675415,
+          "utility_prism": 0.07406699347785117,
+          "utility_oracle": -0.34090119694749477,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_pump_4",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 84.67278289794922,
+          "max_pressure": 5.229460716247559,
+          "min_flow": 55.242156982421875,
+          "latent_novelty": 9.312376022338867,
+          "utility_prism": -0.12226964242831073,
+          "utility_oracle": -0.5420621534528197,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_valve_85",
+          "is_safe_prism": false,
+          "is_safe_oracle": true,
+          "peak_t_core": 96.6678695678711,
+          "max_pressure": 3.2104945182800293,
+          "min_flow": 36.16844177246094,
+          "latent_novelty": 7.046926498413086,
+          "utility_prism": -1000.9315576646369,
+          "utility_oracle": -0.3981784867057899,
+          "violations": [
+            "Peak core temperature (96.67\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ]
+        },
+        {
+          "candidate_id": "cand_throttle_50",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 89.70077514648438,
+          "max_pressure": 3.265767812728882,
+          "min_flow": 40.73882293701172,
+          "latent_novelty": 8.143895149230957,
+          "utility_prism": -1.1116577362671094,
+          "utility_oracle": -1.2641885241308624,
+          "violations": []
+        }
+      ]
+    },
+    "scenario_05_combined": {
+      "scenario_id": "scenario_05_combined",
+      "title": "Scenario 5: Multi-Variable Compound",
+      "prism_selected": "cand_valve_85_only",
+      "oracle_optimal": "cand_combined_valve80_pump3",
+      "agreement": false,
+      "should_abstain": false,
+      "prism_utility": -0.25292361572507815,
+      "oracle_selected_utility": -1001.6311085619899,
+      "oracle_optimal_utility": -1001.7258324168986,
+      "utility_regret": -0.09472385490869328,
+      "margin_vs_second_best": 0.059760636559896496,
+      "planning_time_ms": 24.193666875362396,
+      "explanation": {
+        "summary": "Recommend `A_valve=85.0` to achieve peak core temperature 89.3\u00b0C (Utility: -0.25).",
+        "diagnosis": "Under factual baseline trajectory, system core temperature reaches 109.0\u00b0C, violating safe thermal limits and risking thermal runaway.",
+        "recommended_action": "A_valve=85.0",
+        "physical_mechanism": "Setting `A_valve=85.0%` expands valve conductance, increasing coolant flow by +20.78 L/min. This accelerates convective heat dissipation from the core manifold, reducing peak core temperature by 19.7\u00b0C.",
+        "counterfactual_contrast": "Without intervention, factual baseline reaches peak T_core of 109.0\u00b0C. Under recommended `A_valve=85.0`, core temperature safely peaks at 89.3\u00b0C (Net causal benefit: -19.7\u00b0C).",
+        "rejected_alternatives": [
+          {
+            "candidate": "A_valve=40.0",
+            "reason": "Rejected due to safety violations: Peak core temperature (109.00\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          },
+          {
+            "candidate": "A_pump=4.0",
+            "reason": "Sub-optimal utility (-0.7838 vs -0.2529, \u0394U=-0.5309) \u2014 Peak T_core: 94.5\u00b0C, Mean CPU Load: 67.4%"
+          },
+          {
+            "candidate": "A_throttle=40.0",
+            "reason": "Sub-optimal utility (-1.9024 vs -0.2529, \u0394U=-1.6495) \u2014 Peak T_core: 93.0\u00b0C, Mean CPU Load: 41.4%"
+          },
+          {
+            "candidate": "A_valve=80.0 + A_pump=3.0",
+            "reason": "Sub-optimal utility (-0.3127 vs -0.2529, \u0394U=-0.0598) \u2014 Peak T_core: 88.9\u00b0C, Mean CPU Load: 67.5%"
+          }
+        ],
+        "confidence_level": "HIGH (Within Latent Manifold Support)",
+        "safety_verdict": "\ud83d\udfe2 SAFE & OPTIMAL"
+      },
+      "candidates": [
+        {
+          "candidate_id": "cand_do_nothing",
+          "is_safe_prism": false,
+          "is_safe_oracle": false,
+          "peak_t_core": 108.99522399902344,
+          "max_pressure": 2.2338485717773438,
+          "min_flow": 12.091564178466797,
+          "latent_novelty": 8.409333229064941,
+          "utility_prism": -1002.4833977973476,
+          "utility_oracle": -1001.5921342370376,
+          "violations": [
+            "Peak core temperature (109.00\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ]
+        },
+        {
+          "candidate_id": "cand_valve_85_only",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 89.3111572265625,
+          "max_pressure": 2.5732665061950684,
+          "min_flow": 23.603731155395508,
+          "latent_novelty": 8.650050163269043,
+          "utility_prism": -0.25292361572507815,
+          "utility_oracle": -1001.6311085619899,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_pump_4_only",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 94.4607925415039,
+          "max_pressure": 3.9312355518341064,
+          "min_flow": 18.89274787902832,
+          "latent_novelty": 8.702719688415527,
+          "utility_prism": -0.7837798983219622,
+          "utility_oracle": -1000.8968402285014,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_throttle_40_only",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 93.00086212158203,
+          "max_pressure": 2.2039084434509277,
+          "min_flow": 10.898778915405273,
+          "latent_novelty": 8.766799926757812,
+          "utility_prism": -1.9024236177952176,
+          "utility_oracle": -1002.6718148335577,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_combined_valve80_pump3",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 88.93536376953125,
+          "max_pressure": 3.864041328430176,
+          "min_flow": 24.878463745117188,
+          "latent_novelty": 7.3816304206848145,
+          "utility_prism": -0.31268425228497465,
+          "utility_oracle": -1001.7258324168986,
+          "violations": []
+        }
+      ]
+    },
+    "scenario_06_all_unsafe": {
+      "scenario_id": "scenario_06_all_unsafe",
+      "title": "Scenario 6: All-Unsafe Abstention",
+      "prism_selected": "cand_valve_100",
+      "oracle_optimal": "ABSTAIN",
+      "agreement": false,
+      "should_abstain": false,
+      "prism_utility": -0.14697831040694542,
+      "oracle_selected_utility": -1000.0,
+      "oracle_optimal_utility": null,
+      "utility_regret": null,
+      "margin_vs_second_best": 0.06800357685386893,
+      "planning_time_ms": 33.46962505020201,
+      "explanation": {
+        "summary": "Recommend `A_valve=100.0` to achieve peak core temperature 88.5\u00b0C (Utility: -0.15).",
+        "diagnosis": "Factual baseline operates within nominal support (Peak T_core = 88.8\u00b0C).",
+        "recommended_action": "A_valve=100.0",
+        "physical_mechanism": "Setting `A_valve=100.0%` expands valve conductance, increasing coolant flow by +0.36 L/min. This accelerates convective heat dissipation from the core manifold, reducing peak core temperature by 0.3\u00b0C.",
+        "counterfactual_contrast": "Without intervention, factual baseline reaches peak T_core of 88.8\u00b0C. Under recommended `A_valve=100.0`, core temperature safely peaks at 88.5\u00b0C (Net causal benefit: -0.3\u00b0C).",
+        "rejected_alternatives": [
+          {
+            "candidate": "A_valve=50.0",
+            "reason": "Sub-optimal utility (-0.2150 vs -0.1470, \u0394U=-0.0680) \u2014 Peak T_core: 88.8\u00b0C, Mean CPU Load: 69.2%"
+          },
+          {
+            "candidate": "A_pump=4.0",
+            "reason": "Sub-optimal utility (-0.4273 vs -0.1470, \u0394U=-0.2804) \u2014 Peak T_core: 89.0\u00b0C, Mean CPU Load: 68.8%"
+          },
+          {
+            "candidate": "A_throttle=20.0",
+            "reason": "Sub-optimal utility (-2.1364 vs -0.1470, \u0394U=-1.9894) \u2014 Peak T_core: 88.7\u00b0C, Mean CPU Load: 24.9%"
+          },
+          {
+            "candidate": "A_flush=1.0",
+            "reason": "Sub-optimal utility (-0.6894 vs -0.1470, \u0394U=-0.5424) \u2014 Peak T_core: 89.0\u00b0C, Mean CPU Load: 68.8%"
+          },
+          {
+            "candidate": "A_valve=100.0 + A_pump=4.0",
+            "reason": "Sub-optimal utility (-0.4738 vs -0.1470, \u0394U=-0.3268) \u2014 Peak T_core: 88.9\u00b0C, Mean CPU Load: 68.7%"
+          }
+        ],
+        "confidence_level": "HIGH (Within Latent Manifold Support)",
+        "safety_verdict": "\ud83d\udfe2 SAFE & OPTIMAL"
+      },
+      "candidates": [
+        {
+          "candidate_id": "cand_do_nothing",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 88.81524658203125,
+          "max_pressure": 3.622624158859253,
+          "min_flow": 45.242584228515625,
+          "latent_novelty": 8.538865089416504,
+          "utility_prism": -0.21498188726081435,
+          "utility_oracle": -1000.0,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_valve_100",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 88.46871185302734,
+          "max_pressure": 3.6332879066467285,
+          "min_flow": 46.49077224731445,
+          "latent_novelty": 8.99866008758545,
+          "utility_prism": -0.14697831040694542,
+          "utility_oracle": -1000.0,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_pump_4",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 88.97844696044922,
+          "max_pressure": 5.130494117736816,
+          "min_flow": 54.24676513671875,
+          "latent_novelty": 11.092884063720703,
+          "utility_prism": -0.4273377032181339,
+          "utility_oracle": -1000.0,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_throttle_20",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 88.74422454833984,
+          "max_pressure": 3.8619816303253174,
+          "min_flow": 40.26158142089844,
+          "latent_novelty": 10.64000129699707,
+          "utility_prism": -2.136351504546713,
+          "utility_oracle": -1000.0,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_flush_1",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 88.9950942993164,
+          "max_pressure": 3.8290469646453857,
+          "min_flow": 48.04464340209961,
+          "latent_novelty": 9.283377647399902,
+          "utility_prism": -0.6894268166782747,
+          "utility_oracle": -1000.0,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_combined_extreme",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 88.93484497070312,
+          "max_pressure": 5.112176418304443,
+          "min_flow": 54.270164489746094,
+          "latent_novelty": 11.494750022888184,
+          "utility_prism": -0.47381436284104383,
+          "utility_oracle": -1000.0,
+          "violations": []
+        }
+      ]
+    }
+  },
+  "baseline_003": {
+    "scenario_01_do_nothing": {
+      "scenario_id": "scenario_01_do_nothing",
+      "title": "Scenario 1: Inaction Restraint",
+      "prism_selected": "cand_do_nothing",
+      "oracle_optimal": "cand_do_nothing",
+      "agreement": true,
+      "should_abstain": false,
+      "prism_utility": 0.14910684638636507,
+      "oracle_selected_utility": -0.056491232214182396,
+      "oracle_optimal_utility": -0.056491232214182396,
+      "utility_regret": 0.0,
+      "margin_vs_second_best": 0.0007614809877223294,
+      "planning_time_ms": 19.6686249691993,
+      "explanation": {
+        "summary": "Maintain baseline operation (DO NOTHING): system is in stable thermal equilibrium (Peak T_core: 84.6\u00b0C, Utility: +0.15).",
+        "diagnosis": "Factual baseline operates within nominal support (Peak T_core = 84.6\u00b0C).",
+        "recommended_action": "DO_NOTHING",
+        "physical_mechanism": "Current operating state is within a stable thermal, pressure, and cooling regime. No candidate intervention provides sufficient risk-adjusted benefit to justify its operational or actuation cost.",
+        "counterfactual_contrast": "Factual baseline operates safely at peak T_core of 84.6\u00b0C. Alternative interventions provide negligible thermal benefit while incurring unnecessary operational penalties.",
+        "rejected_alternatives": [
+          {
+            "candidate": "A_valve=85.0",
+            "reason": "Sub-optimal utility (+0.1483 vs +0.1491, \u0394U=-0.0008) \u2014 Peak T_core: 84.6\u00b0C, Mean CPU Load: 66.9%"
+          },
+          {
+            "candidate": "A_pump=4.0",
+            "reason": "Sub-optimal utility (+0.0986 vs +0.1491, \u0394U=-0.0505) \u2014 Peak T_core: 84.6\u00b0C, Mean CPU Load: 66.9%"
+          },
+          {
+            "candidate": "A_throttle=30.0",
+            "reason": "Sub-optimal utility (-1.1480 vs +0.1491, \u0394U=-1.2971) \u2014 Peak T_core: 84.5\u00b0C, Mean CPU Load: 66.9%"
+          }
+        ],
+        "confidence_level": "HIGH (Within Latent Manifold Support)",
+        "safety_verdict": "\ud83d\udfe2 SAFE & OPTIMAL"
+      },
+      "candidates": [
+        {
+          "candidate_id": "cand_do_nothing",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 84.59579467773438,
+          "max_pressure": 3.2724761962890625,
+          "min_flow": 40.752506256103516,
+          "latent_novelty": 7.8130903244018555,
+          "utility_prism": 0.14910684638636507,
+          "utility_oracle": -0.056491232214182396,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_valve_85",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 84.6017837524414,
+          "max_pressure": 3.2725441455841064,
+          "min_flow": 40.72248458862305,
+          "latent_novelty": 7.772216796875,
+          "utility_prism": 0.14834536539864274,
+          "utility_oracle": -0.05680665302743215,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_pump_4",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 84.60195922851562,
+          "max_pressure": 3.269871711730957,
+          "min_flow": 40.67837142944336,
+          "latent_novelty": 7.805903434753418,
+          "utility_prism": 0.0985718567775431,
+          "utility_oracle": -0.36860007735293276,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_throttle_30",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 84.50699615478516,
+          "max_pressure": 3.2959437370300293,
+          "min_flow": 41.070343017578125,
+          "latent_novelty": 8.07475471496582,
+          "utility_prism": -1.1480247658170124,
+          "utility_oracle": -1.351181538363853,
+          "violations": []
+        }
+      ]
+    },
+    "scenario_02_valve": {
+      "scenario_id": "scenario_02_valve",
+      "title": "Scenario 2: Valve Intervention",
+      "prism_selected": "cand_valve_85",
+      "oracle_optimal": "cand_valve_85",
+      "agreement": true,
+      "should_abstain": false,
+      "prism_utility": 0.2488005580221268,
+      "oracle_selected_utility": -0.38745944790882847,
+      "oracle_optimal_utility": -0.38745944790882847,
+      "utility_regret": 0.0,
+      "margin_vs_second_best": 0.9734435481387569,
+      "planning_time_ms": 35.71095806546509,
+      "explanation": {
+        "summary": "Recommend `V_pos=85.0` to achieve peak core temperature 83.1\u00b0C (Utility: 0.25).",
+        "diagnosis": "Factual baseline operates within nominal support (Peak T_core = 94.9\u00b0C).",
+        "recommended_action": "V_pos=85.0",
+        "physical_mechanism": "Setting `V_pos=85.0%` expands valve conductance, increasing coolant flow by +15.73 L/min. This accelerates convective heat dissipation from the core manifold, reducing peak core temperature by 11.8\u00b0C.",
+        "counterfactual_contrast": "Without intervention, factual baseline reaches peak T_core of 94.9\u00b0C. Under recommended `V_pos=85.0`, core temperature safely peaks at 83.1\u00b0C (Net causal benefit: -11.8\u00b0C).",
+        "rejected_alternatives": [
+          {
+            "candidate": "V_pos=30.0",
+            "reason": "Sub-optimal utility (-0.7246 vs +0.2488, \u0394U=-0.9734) \u2014 Peak T_core: 94.9\u00b0C, Mean CPU Load: 72.6%"
+          },
+          {
+            "candidate": "V_pos=15.0",
+            "reason": "Rejected due to safety violations: Peak core temperature (107.41\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          },
+          {
+            "candidate": "A_pump=4.0",
+            "reason": "Sub-optimal utility (-0.7787 vs +0.2488, \u0394U=-1.0275) \u2014 Peak T_core: 94.9\u00b0C, Mean CPU Load: 72.6%"
+          },
+          {
+            "candidate": "A_throttle=30.0",
+            "reason": "Sub-optimal utility (-2.0393 vs +0.2488, \u0394U=-2.2881) \u2014 Peak T_core: 95.0\u00b0C, Mean CPU Load: 72.7%"
+          }
+        ],
+        "confidence_level": "HIGH (Within Latent Manifold Support)",
+        "safety_verdict": "\ud83d\udfe2 SAFE & OPTIMAL"
+      },
+      "candidates": [
+        {
+          "candidate_id": "cand_do_nothing",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 94.8686752319336,
+          "max_pressure": 2.5741543769836426,
+          "min_flow": 20.57381820678711,
+          "latent_novelty": 10.976217269897461,
+          "utility_prism": -0.72464299011663,
+          "utility_oracle": -1001.9910762143691,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_valve_85",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 83.11604309082031,
+          "max_pressure": 3.093992233276367,
+          "min_flow": 36.42336654663086,
+          "latent_novelty": 12.735695838928223,
+          "utility_prism": 0.2488005580221268,
+          "utility_oracle": -0.38745944790882847,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_valve_15",
+          "is_safe_prism": false,
+          "is_safe_oracle": false,
+          "peak_t_core": 107.40653228759766,
+          "max_pressure": 2.3843307495117188,
+          "min_flow": 9.169265747070312,
+          "latent_novelty": 11.912863731384277,
+          "utility_prism": -1002.250446127516,
+          "utility_oracle": -1006.7482887096614,
+          "violations": [
+            "Peak core temperature (107.41\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ]
+        },
+        {
+          "candidate_id": "cand_pump_4",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 94.90972900390625,
+          "max_pressure": 2.572924852371216,
+          "min_flow": 20.51806640625,
+          "latent_novelty": 11.040009498596191,
+          "utility_prism": -0.7787070777519858,
+          "utility_oracle": -1001.4070668326012,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_throttle_30",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 94.98092651367188,
+          "max_pressure": 2.575188159942627,
+          "min_flow": 20.55078887939453,
+          "latent_novelty": 10.897492408752441,
+          "utility_prism": -2.0392959791151513,
+          "utility_oracle": -1003.258549072212,
+          "violations": []
+        }
+      ]
+    },
+    "scenario_03_throttle": {
+      "scenario_id": "scenario_03_throttle",
+      "title": "Scenario 3: Workload Throttling",
+      "prism_selected": "cand_throttle_50",
+      "oracle_optimal": "cand_throttle_50",
+      "agreement": true,
+      "should_abstain": false,
+      "prism_utility": 0.16022138001660075,
+      "oracle_selected_utility": -1.0785041404064293,
+      "oracle_optimal_utility": -1.0785041404064293,
+      "utility_regret": 0.0,
+      "margin_vs_second_best": 0.19464764419527764,
+      "planning_time_ms": 41.560458950698376,
+      "explanation": {
+        "summary": "Recommend `L_cpu=50.0` to achieve peak core temperature 82.0\u00b0C (Utility: 0.16).",
+        "diagnosis": "Factual baseline operates within nominal support (Peak T_core = 87.1\u00b0C).",
+        "recommended_action": "L_cpu=50.0",
+        "physical_mechanism": "Throttling CPU workload to `L_cpu=50.0%` directly diminishes Joule heating generation in the core, stabilizing thermal accumulation and lowering core temperature by 5.2\u00b0C.",
+        "counterfactual_contrast": "Without intervention, factual baseline reaches peak T_core of 87.1\u00b0C. Under recommended `L_cpu=50.0`, core temperature safely peaks at 82.0\u00b0C (Net causal benefit: -5.2\u00b0C).",
+        "rejected_alternatives": [
+          {
+            "candidate": "L_cpu=95.0",
+            "reason": "Sub-optimal utility (-0.0344 vs +0.1602, \u0394U=-0.1946) \u2014 Peak T_core: 87.1\u00b0C, Mean CPU Load: 68.4%"
+          },
+          {
+            "candidate": "L_cpu=20.0",
+            "reason": "Sub-optimal utility (-0.1363 vs +0.1602, \u0394U=-0.2965) \u2014 Peak T_core: 81.9\u00b0C, Mean CPU Load: 20.0%"
+          },
+          {
+            "candidate": "V_pos=100.0 + L_cpu=95.0",
+            "reason": "Rejected due to safety violations: Peak core temperature (102.09\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          },
+          {
+            "candidate": "A_pump=4.0 + L_cpu=95.0",
+            "reason": "Sub-optimal utility (-0.1378 vs +0.1602, \u0394U=-0.2980) \u2014 Peak T_core: 87.2\u00b0C, Mean CPU Load: 68.4%"
+          }
+        ],
+        "confidence_level": "HIGH (Within Latent Manifold Support)",
+        "safety_verdict": "\ud83d\udfe2 SAFE & OPTIMAL"
+      },
+      "candidates": [
+        {
+          "candidate_id": "cand_do_nothing",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 87.1376953125,
+          "max_pressure": 3.5276715755462646,
+          "min_flow": 45.477821350097656,
+          "latent_novelty": 8.876205444335938,
+          "utility_prism": -0.03442626417867689,
+          "utility_oracle": -1002.8038766602375,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_throttle_50",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 81.9512710571289,
+          "max_pressure": 3.3064608573913574,
+          "min_flow": 40.657020568847656,
+          "latent_novelty": 8.831559181213379,
+          "utility_prism": 0.16022138001660075,
+          "utility_oracle": -1.0785041404064293,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_throttle_20",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 81.89543914794922,
+          "max_pressure": 3.304880380630493,
+          "min_flow": 40.55927276611328,
+          "latent_novelty": 8.843740463256836,
+          "utility_prism": -0.13629443061082386,
+          "utility_oracle": -2.0308005036036327,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_valve_100",
+          "is_safe_prism": false,
+          "is_safe_oracle": false,
+          "peak_t_core": 102.08688354492188,
+          "max_pressure": 3.5620598793029785,
+          "min_flow": 44.52826690673828,
+          "latent_novelty": 10.871885299682617,
+          "utility_prism": -1001.3789922844969,
+          "utility_oracle": -1002.8002787498676,
+          "violations": [
+            "Peak core temperature (102.09\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ]
+        },
+        {
+          "candidate_id": "cand_pump_4",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 87.18009185791016,
+          "max_pressure": 3.528613567352295,
+          "min_flow": 45.457313537597656,
+          "latent_novelty": 8.899588584899902,
+          "utility_prism": -0.13777867191117588,
+          "utility_oracle": -1003.0463091694171,
+          "violations": []
+        }
+      ]
+    },
+    "scenario_04_pump": {
+      "scenario_id": "scenario_04_pump",
+      "title": "Scenario 4: Pump Head Modulating",
+      "prism_selected": "cand_do_nothing",
+      "oracle_optimal": "cand_pump_3",
+      "agreement": false,
+      "should_abstain": false,
+      "prism_utility": 0.09661297476325104,
+      "oracle_selected_utility": -0.3931275527797945,
+      "oracle_optimal_utility": -0.34090119694749477,
+      "utility_regret": 0.05222635583229973,
+      "margin_vs_second_best": 0.006047241922505275,
+      "planning_time_ms": 23.775957990437746,
+      "explanation": {
+        "summary": "Maintain baseline operation (DO NOTHING): system is in stable thermal equilibrium (Peak T_core: 85.7\u00b0C, Utility: +0.10).",
+        "diagnosis": "Factual baseline operates within nominal support (Peak T_core = 85.7\u00b0C).",
+        "recommended_action": "DO_NOTHING",
+        "physical_mechanism": "Current operating state is within a stable thermal, pressure, and cooling regime. No candidate intervention provides sufficient risk-adjusted benefit to justify its operational or actuation cost.",
+        "counterfactual_contrast": "Factual baseline operates safely at peak T_core of 85.7\u00b0C. Alternative interventions provide negligible thermal benefit while incurring unnecessary operational penalties.",
+        "rejected_alternatives": [
+          {
+            "candidate": "A_pump=3.0",
+            "reason": "Sub-optimal utility (+0.0471 vs +0.0966, \u0394U=-0.0495) \u2014 Peak T_core: 85.7\u00b0C, Mean CPU Load: 67.6%"
+          },
+          {
+            "candidate": "A_pump=4.0",
+            "reason": "Sub-optimal utility (+0.0223 vs +0.0966, \u0394U=-0.0743) \u2014 Peak T_core: 85.7\u00b0C, Mean CPU Load: 67.5%"
+          },
+          {
+            "candidate": "A_valve=85.0",
+            "reason": "Sub-optimal utility (+0.0906 vs +0.0966, \u0394U=-0.0060) \u2014 Peak T_core: 85.7\u00b0C, Mean CPU Load: 67.6%"
+          },
+          {
+            "candidate": "A_throttle=50.0",
+            "reason": "Sub-optimal utility (-0.7677 vs +0.0966, \u0394U=-0.8644) \u2014 Peak T_core: 85.6\u00b0C, Mean CPU Load: 67.6%"
+          }
+        ],
+        "confidence_level": "HIGH (Within Latent Manifold Support)",
+        "safety_verdict": "\ud83d\udfe2 SAFE & OPTIMAL"
+      },
+      "candidates": [
+        {
+          "candidate_id": "cand_do_nothing",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 85.70884704589844,
+          "max_pressure": 3.4810986518859863,
+          "min_flow": 44.796653747558594,
+          "latent_novelty": 7.710652828216553,
+          "utility_prism": 0.09661297476325104,
+          "utility_oracle": -0.3931275527797945,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_pump_3",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 85.70101165771484,
+          "max_pressure": 3.4807610511779785,
+          "min_flow": 44.790802001953125,
+          "latent_novelty": 7.673362731933594,
+          "utility_prism": 0.047066035902638026,
+          "utility_oracle": -0.34090119694749477,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_pump_4",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 85.69731140136719,
+          "max_pressure": 3.4805984497070312,
+          "min_flow": 44.7872314453125,
+          "latent_novelty": 7.695284366607666,
+          "utility_prism": 0.022274128540700877,
+          "utility_oracle": -0.5420621534528197,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_valve_85",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 85.72229766845703,
+          "max_pressure": 3.480414867401123,
+          "min_flow": 44.77283477783203,
+          "latent_novelty": 7.67350435256958,
+          "utility_prism": 0.09056573284074576,
+          "utility_oracle": -0.3981784867057899,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_throttle_50",
+          "is_safe_prism": true,
+          "is_safe_oracle": true,
+          "peak_t_core": 85.62773895263672,
+          "max_pressure": 3.4852242469787598,
+          "min_flow": 44.93125915527344,
+          "latent_novelty": 7.895487308502197,
+          "utility_prism": -0.7677481201658469,
+          "utility_oracle": -1.2641885241308624,
+          "violations": []
+        }
+      ]
+    },
+    "scenario_05_combined": {
+      "scenario_id": "scenario_05_combined",
+      "title": "Scenario 5: Multi-Variable Compound",
+      "prism_selected": "ABSTAIN",
+      "oracle_optimal": "cand_combined_valve80_pump3",
+      "agreement": false,
+      "should_abstain": true,
+      "prism_utility": null,
+      "oracle_selected_utility": null,
+      "oracle_optimal_utility": -1001.7258324168986,
+      "utility_regret": null,
+      "margin_vs_second_best": 0.0,
+      "planning_time_ms": 23.744957987219095,
+      "explanation": {
+        "summary": "Abstaining from intervention: No candidate satisfied all hard safety constraints.",
+        "diagnosis": "Under factual baseline trajectory, system core temperature reaches 95.2\u00b0C, violating safe thermal limits and risking thermal runaway.",
+        "recommended_action": "ABSTAIN",
+        "physical_mechanism": "All evaluated candidate interventions violate either thermal limits, pressure constraints, flow minimums, or latent support.",
+        "counterfactual_contrast": "All candidate interventions cross hard safety envelopes. Autonomous intervention withheld to prevent compounding risk.",
+        "rejected_alternatives": [
+          {
+            "candidate": "A_valve=40.0",
+            "reason": "Rejected: Peak core temperature (95.22\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          },
+          {
+            "candidate": "A_valve=85.0",
+            "reason": "Rejected: Peak core temperature (95.43\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          },
+          {
+            "candidate": "A_pump=4.0",
+            "reason": "Rejected: Peak core temperature (95.25\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          },
+          {
+            "candidate": "A_throttle=40.0",
+            "reason": "Rejected: Peak core temperature (95.38\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          },
+          {
+            "candidate": "A_valve=80.0 + A_pump=3.0",
+            "reason": "Rejected: Peak core temperature (95.43\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          }
+        ],
+        "confidence_level": "HIGH (All candidates verified unsafe / OOD)",
+        "safety_verdict": "\ud83d\udd34 ALL CANDIDATES UNSAFE / ABSTAIN REQUIRED"
+      },
+      "candidates": [
+        {
+          "candidate_id": "cand_do_nothing",
+          "is_safe_prism": false,
+          "is_safe_oracle": false,
+          "peak_t_core": 95.21817779541016,
+          "max_pressure": 2.5546858310699463,
+          "min_flow": 19.84773826599121,
+          "latent_novelty": 10.977930068969727,
+          "utility_prism": -1000.7360805289524,
+          "utility_oracle": -1001.5921342370376,
+          "violations": [
+            "Peak core temperature (95.22\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ]
+        },
+        {
+          "candidate_id": "cand_valve_85_only",
+          "is_safe_prism": false,
+          "is_safe_oracle": false,
+          "peak_t_core": 95.43180084228516,
+          "max_pressure": 2.5570449829101562,
+          "min_flow": 19.911996841430664,
+          "latent_novelty": 10.897802352905273,
+          "utility_prism": -1000.8029561166325,
+          "utility_oracle": -1001.6311085619899,
+          "violations": [
+            "Peak core temperature (95.43\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ]
+        },
+        {
+          "candidate_id": "cand_pump_4_only",
+          "is_safe_prism": false,
+          "is_safe_oracle": false,
+          "peak_t_core": 95.2497787475586,
+          "max_pressure": 2.5522446632385254,
+          "min_flow": 19.703216552734375,
+          "latent_novelty": 11.045945167541504,
+          "utility_prism": -1000.8140162266968,
+          "utility_oracle": -1000.8968402285014,
+          "violations": [
+            "Peak core temperature (95.25\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ]
+        },
+        {
+          "candidate_id": "cand_throttle_40_only",
+          "is_safe_prism": false,
+          "is_safe_oracle": false,
+          "peak_t_core": 95.38438415527344,
+          "max_pressure": 2.5566225051879883,
+          "min_flow": 19.831666946411133,
+          "latent_novelty": 10.930233001708984,
+          "utility_prism": -1001.8365038169297,
+          "utility_oracle": -1002.6718148335577,
+          "violations": [
+            "Peak core temperature (95.38\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ]
+        },
+        {
+          "candidate_id": "cand_combined_valve80_pump3",
+          "is_safe_prism": false,
+          "is_safe_oracle": false,
+          "peak_t_core": 95.42620849609375,
+          "max_pressure": 2.554858684539795,
+          "min_flow": 19.809558868408203,
+          "latent_novelty": 10.892298698425293,
+          "utility_prism": -1000.8971858849625,
+          "utility_oracle": -1001.7258324168986,
+          "violations": [
+            "Peak core temperature (95.43\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ]
+        }
+      ]
+    },
+    "scenario_06_all_unsafe": {
+      "scenario_id": "scenario_06_all_unsafe",
+      "title": "Scenario 6: All-Unsafe Abstention",
+      "prism_selected": "cand_valve_100",
+      "oracle_optimal": "ABSTAIN",
+      "agreement": false,
+      "should_abstain": false,
+      "prism_utility": -0.12627217677436486,
+      "oracle_selected_utility": -1000.0,
+      "oracle_optimal_utility": null,
+      "utility_regret": null,
+      "margin_vs_second_best": 0.04153071511721573,
+      "planning_time_ms": 31.44158306531608,
+      "explanation": {
+        "summary": "Recommend `A_valve=100.0` to achieve peak core temperature 88.6\u00b0C (Utility: -0.13).",
+        "diagnosis": "Factual baseline operates within nominal support (Peak T_core = 88.6\u00b0C).",
+        "recommended_action": "A_valve=100.0",
+        "physical_mechanism": "Setting `A_valve=100.0%` expands valve conductance, increasing coolant flow by +0.02 L/min. This accelerates convective heat dissipation from the core manifold, reducing peak core temperature by 0.0\u00b0C.",
+        "counterfactual_contrast": "Without intervention, factual baseline reaches peak T_core of 88.6\u00b0C. Under recommended `A_valve=100.0`, core temperature safely peaks at 88.6\u00b0C (Net causal benefit: -0.0\u00b0C).",
+        "rejected_alternatives": [
+          {
+            "candidate": "A_valve=50.0",
+            "reason": "Sub-optimal utility (-0.1678 vs -0.1263, \u0394U=-0.0415) \u2014 Peak T_core: 88.6\u00b0C, Mean CPU Load: 72.4%"
+          },
+          {
+            "candidate": "A_pump=4.0",
+            "reason": "Sub-optimal utility (-0.1766 vs -0.1263, \u0394U=-0.0503) \u2014 Peak T_core: 88.7\u00b0C, Mean CPU Load: 72.5%"
+          },
+          {
+            "candidate": "A_throttle=20.0",
+            "reason": "Sub-optimal utility (-1.6490 vs -0.1263, \u0394U=-1.5227) \u2014 Peak T_core: 88.6\u00b0C, Mean CPU Load: 72.1%"
+          },
+          {
+            "candidate": "A_flush=1.0",
+            "reason": "Sub-optimal utility (-0.6240 vs -0.1263, \u0394U=-0.4978) \u2014 Peak T_core: 88.7\u00b0C, Mean CPU Load: 72.4%"
+          },
+          {
+            "candidate": "A_valve=100.0 + A_pump=4.0",
+            "reason": "Sub-optimal utility (-0.2300 vs -0.1263, \u0394U=-0.1037) \u2014 Peak T_core: 88.7\u00b0C, Mean CPU Load: 72.5%"
+          }
+        ],
+        "confidence_level": "HIGH (Within Latent Manifold Support)",
+        "safety_verdict": "\ud83d\udfe2 SAFE & OPTIMAL"
+      },
+      "candidates": [
+        {
+          "candidate_id": "cand_do_nothing",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 88.64142608642578,
+          "max_pressure": 3.539350748062134,
+          "min_flow": 46.29058837890625,
+          "latent_novelty": 10.38215160369873,
+          "utility_prism": -0.1678028918915806,
+          "utility_oracle": -1000.0,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_valve_100",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 88.61869812011719,
+          "max_pressure": 3.5401017665863037,
+          "min_flow": 46.31496810913086,
+          "latent_novelty": 10.41847038269043,
+          "utility_prism": -0.12627217677436486,
+          "utility_oracle": -1000.0,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_pump_4",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 88.70177459716797,
+          "max_pressure": 3.538637161254883,
+          "min_flow": 46.27019500732422,
+          "latent_novelty": 10.419340133666992,
+          "utility_prism": -0.17661393538672676,
+          "utility_oracle": -1000.0,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_throttle_20",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 88.56505584716797,
+          "max_pressure": 3.55022931098938,
+          "min_flow": 46.54875183105469,
+          "latent_novelty": 10.71369457244873,
+          "utility_prism": -1.6489712902524574,
+          "utility_oracle": -1000.0,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_flush_1",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 88.66075897216797,
+          "max_pressure": 3.5386247634887695,
+          "min_flow": 46.262054443359375,
+          "latent_novelty": 10.336155891418457,
+          "utility_prism": -0.624046791467551,
+          "utility_oracle": -1000.0,
+          "violations": []
+        },
+        {
+          "candidate_id": "cand_combined_extreme",
+          "is_safe_prism": true,
+          "is_safe_oracle": false,
+          "peak_t_core": 88.67780303955078,
+          "max_pressure": 3.539632797241211,
+          "min_flow": 46.296600341796875,
+          "latent_novelty": 10.45152759552002,
+          "utility_prism": -0.22995348590182807,
+          "utility_oracle": -1000.0,
+          "violations": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,207 @@
+{
+  "audit_census": {
+    "train": {
+      "total_episodes": 20,
+      "total_timesteps": 2420,
+      "thermal_runaway_episodes": 0,
+      "near_failure_episodes": 1,
+      "peak_t_core_distribution": {
+        "min": 84.19551501480007,
+        "mean": 87.97339998852394,
+        "median": 87.55443952117488,
+        "p90": 90.4387313111066,
+        "max": 97.74450953297925
+      },
+      "load_distribution": {
+        "l_cpu_mean": 66.16830065193892,
+        "l_cpu_std": 2.201238863333643,
+        "l_cpu_max": 69.24996226285008,
+        "pct_above_70": 0.0,
+        "pct_above_80": 0.0,
+        "pct_above_90": 0.0
+      },
+      "p_elec_mean": 2.6171327506989575,
+      "t_core_mean": 82.95820177763581,
+      "q_int_mean": 0.19287698903263484
+    },
+    "validation": {
+      "total_episodes": 5,
+      "total_timesteps": 605,
+      "thermal_runaway_episodes": 0,
+      "near_failure_episodes": 0,
+      "peak_t_core_distribution": {
+        "min": 87.94575240869082,
+        "mean": 90.93838629374969,
+        "median": 89.60836420179035,
+        "p90": 94.19910246577217,
+        "max": 94.70082431267667
+      },
+      "load_distribution": {
+        "l_cpu_mean": 66.87892412145202,
+        "l_cpu_std": 2.0874879178451664,
+        "l_cpu_max": 74.89805799310767,
+        "pct_above_70": 0.3305785123966942,
+        "pct_above_80": 0.0,
+        "pct_above_90": 0.0
+      },
+      "p_elec_mean": 2.6461569766809734,
+      "t_core_mean": 85.23980985379285,
+      "q_int_mean": 0.2056885231810237
+    },
+    "test": {
+      "total_episodes": 5,
+      "total_timesteps": 605,
+      "thermal_runaway_episodes": 0,
+      "near_failure_episodes": 0,
+      "peak_t_core_distribution": {
+        "min": 85.66593379866664,
+        "mean": 87.57443267976805,
+        "median": 86.87119957755287,
+        "p90": 89.55050104081631,
+        "max": 90.13108359488139
+      },
+      "load_distribution": {
+        "l_cpu_mean": 66.39324560694835,
+        "l_cpu_std": 2.2672570940620522,
+        "l_cpu_max": 69.68762299432238,
+        "pct_above_70": 0.0,
+        "pct_above_80": 0.0,
+        "pct_above_90": 0.0
+      },
+      "p_elec_mean": 2.6275280097822575,
+      "t_core_mean": 82.76205351853574,
+      "q_int_mean": 0.19317260057972918
+    },
+    "ood": {
+      "total_episodes": 0,
+      "total_timesteps": 0,
+      "thermal_runaway_episodes": 0,
+      "near_failure_episodes": 0,
+      "peak_t_core_distribution": {
+        "min": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "p90": 0.0,
+        "max": 0.0
+      },
+      "load_distribution": {
+        "l_cpu_mean": 0.0,
+        "l_cpu_std": 0.0,
+        "l_cpu_max": 0.0,
+        "pct_above_70": 0.0,
+        "pct_above_80": 0.0,
+        "pct_above_90": 0.0
+      },
+      "p_elec_mean": 0.0,
+      "t_core_mean": 0.0,
+      "q_int_mean": 0.0
+    },
+    "intervention": {
+      "total_records": 220,
+      "target_counts": {
+        "L_cpu": 60,
+        "V_pos": 80,
+        "Vib_pump": 80
+      },
+      "thermal_runaway_records": 16,
+      "runaway_by_target": {
+        "L_cpu": 16
+      },
+      "near_failure_records": 44,
+      "peak_t_core_distribution": {
+        "min": 84.94272301143789,
+        "mean": 94.38346630739717,
+        "median": 93.32140436657656,
+        "p90": 96.58978742219148,
+        "max": 111.97382909025679
+      }
+    }
+  },
+  "manifold_grounding_diagnostic": {
+    "v_pos_samples": [
+      {
+        "record": "inv_ep_test_00000_t20_V_pos_85.npz",
+        "dz_t0": 5.303222179412842,
+        "dz_h40": 4.40056848526001,
+        "delta_f_cool_h1": 5.9150238037109375,
+        "delta_t_core_h1": -1.5116806030273438
+      },
+      {
+        "record": "inv_ep_test_00000_t40_V_pos_85.npz",
+        "dz_t0": 5.153195858001709,
+        "dz_h40": 4.205710411071777,
+        "delta_f_cool_h1": 5.91004753112793,
+        "delta_t_core_h1": -1.44659423828125
+      },
+      {
+        "record": "inv_ep_test_00000_t60_V_pos_85.npz",
+        "dz_t0": 5.137244701385498,
+        "dz_h40": 4.234041213989258,
+        "delta_f_cool_h1": 5.922731399536133,
+        "delta_t_core_h1": -1.463348388671875
+      },
+      {
+        "record": "inv_ep_test_00000_t80_V_pos_85.npz",
+        "dz_t0": 5.06519079208374,
+        "dz_h40": 4.155633449554443,
+        "delta_f_cool_h1": 5.943584442138672,
+        "delta_t_core_h1": -1.427490234375
+      },
+      {
+        "record": "inv_ep_test_00001_t20_V_pos_85.npz",
+        "dz_t0": 5.8363776206970215,
+        "dz_h40": 4.884393692016602,
+        "delta_f_cool_h1": 5.830595016479492,
+        "delta_t_core_h1": -1.7336349487304688
+      }
+    ],
+    "l_cpu_samples": [
+      {
+        "record": "inv_ep_test_00000_t20_L_cpu_80.npz",
+        "dz_t0": 8.714306831359863,
+        "dz_h40": 6.010005474090576,
+        "delta_p_elec_h1": 0.01499176025390625,
+        "delta_t_core_h1": 2.36602783203125,
+        "delta_t_core_h40": 0.9588851928710938
+      },
+      {
+        "record": "inv_ep_test_00000_t40_L_cpu_80.npz",
+        "dz_t0": 8.881441116333008,
+        "dz_h40": 6.195302486419678,
+        "delta_p_elec_h1": 0.01603555679321289,
+        "delta_t_core_h1": 2.6089019775390625,
+        "delta_t_core_h40": 1.0636825561523438
+      },
+      {
+        "record": "inv_ep_test_00000_t60_L_cpu_80.npz",
+        "dz_t0": 8.863965034484863,
+        "dz_h40": 6.171960830688477,
+        "delta_p_elec_h1": 0.01587390899658203,
+        "delta_t_core_h1": 2.5240478515625,
+        "delta_t_core_h40": 1.0459671020507812
+      },
+      {
+        "record": "inv_ep_test_00000_t80_L_cpu_80.npz",
+        "dz_t0": 8.942093849182129,
+        "dz_h40": 6.294577121734619,
+        "delta_p_elec_h1": 0.016674518585205078,
+        "delta_t_core_h1": 2.6679763793945312,
+        "delta_t_core_h40": 1.1004638671875
+      },
+      {
+        "record": "inv_ep_test_00001_t20_L_cpu_80.npz",
+        "dz_t0": 8.447391510009766,
+        "dz_h40": 6.17611026763916,
+        "delta_p_elec_h1": 0.011763811111450195,
+        "delta_t_core_h1": 1.8643264770507812,
+        "delta_t_core_h40": 0.9265213012695312
+      }
+    ]
+  },
+  "verdict_summary": {
+    "training_runaway_count": 0,
+    "training_near_failure_count": 1,
+    "intervention_runaway_count": 16,
+    "root_cause": "The training split contains 0 thermal runaway trajectories and 0 sustained L_cpu >= 80% open-loop regimes without active cooling counteraction. The model was trained purely in nominal closed-loop PID regimes where T_core never exceeded 92\u00b0C. Consequently, the transition model's latent dynamics have never observed or parameterized the non-linear heat accumulation regime."
+  }
+}

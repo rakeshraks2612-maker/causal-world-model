@@ -1,0 +1,100 @@
+{
+  "overall_state": "UNSAFE",
+  "is_safe": false,
+  "constraints": {
+    "thermal": {
+      "name": "thermal",
+      "variable_symbol": "T_core",
+      "unit": "\u00b0C",
+      "raw_prediction": 94.5,
+      "uncertainty_sigma": 1.8,
+      "k_multiplier": 2.0,
+      "effective_value": 98.1,
+      "threshold": 95.0,
+      "comparison_operator": "<",
+      "margin": -3.0999999999999943,
+      "normalized_headroom_pct": -4.133333333333326,
+      "is_passed": false,
+      "is_marginal": false,
+      "violation_message": "T_core effective (98.10\u00b0C) exceeds thermal limit (95.0\u00b0C) by 3.10\u00b0C."
+    },
+    "pressure": {
+      "name": "pressure",
+      "variable_symbol": "P_sys",
+      "unit": "bar",
+      "raw_prediction": 4.1,
+      "uncertainty_sigma": 0.2,
+      "k_multiplier": 2.0,
+      "effective_value": 4.5,
+      "threshold": 5.5,
+      "comparison_operator": "<",
+      "margin": 1.0,
+      "normalized_headroom_pct": 20.0,
+      "is_passed": true,
+      "is_marginal": false,
+      "violation_message": null
+    },
+    "flow": {
+      "name": "flow",
+      "variable_symbol": "F_cool",
+      "unit": "L/min",
+      "raw_prediction": 18.0,
+      "uncertainty_sigma": 1.0,
+      "k_multiplier": 2.0,
+      "effective_value": 16.0,
+      "threshold": 8.0,
+      "comparison_operator": ">",
+      "margin": 8.0,
+      "normalized_headroom_pct": 15.384615384615385,
+      "is_passed": true,
+      "is_marginal": false,
+      "violation_message": null
+    },
+    "latent_support": {
+      "name": "latent_support",
+      "variable_symbol": "D_latent",
+      "unit": "d_M",
+      "raw_prediction": 3.8,
+      "uncertainty_sigma": null,
+      "k_multiplier": 0.0,
+      "effective_value": 3.8,
+      "threshold": 15.0,
+      "comparison_operator": "<=",
+      "margin": 11.2,
+      "normalized_headroom_pct": 74.66666666666666,
+      "is_passed": true,
+      "is_marginal": false,
+      "violation_message": null
+    }
+  },
+  "limiting_constraint": {
+    "constraint_name": "thermal",
+    "variable_symbol": "T_core",
+    "raw_margin": -3.0999999999999943,
+    "unit": "\u00b0C",
+    "normalized_headroom_pct": -4.133333333333326,
+    "rationale": "Hard safety boundary breached: Thermal exceeds limit with dimensionless normalized violation score 0.041 (4.1% over span, raw breach: 3.10 \u00b0C).",
+    "normalized_violation_score": 0.04133333333333326
+  },
+  "violations": [
+    {
+      "constraint_code": "THERMAL_LIMIT_EXCEEDED",
+      "variable_symbol": "T_core",
+      "observed_effective_value": 98.1,
+      "threshold": 95.0,
+      "margin_violated_by": 3.0999999999999943,
+      "severity": "UNSAFE",
+      "message": "T_core effective (98.10\u00b0C) exceeds thermal limit (95.0\u00b0C) by 3.10\u00b0C."
+    }
+  ],
+  "uncertainty_adjusted": true,
+  "provenance": {
+    "source_evidence_hash": null,
+    "safety_engine_version": "v1.2_authoritative_gate",
+    "model_version": "baseline_005",
+    "scenario_id": "scenario_03",
+    "candidate_id": "cand_throttle_close_0.2",
+    "timestamp_utc": "2026-09-11T12:00:00Z",
+    "safety_hash": "fc14fd23e32497d7e3745ebd5c4f8e016047d205fef21473178c25294fa40469"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "system": {
+    "platform": "macOS",
+    "system": "Darwin",
+    "machine": "arm64"
+  },
+  "runtime": {
+    "python_version": "3.12.13",
+    "python_implementation": "CPython"
+  },
+  "core_libraries": {
+    "torch": "2.14.0",
+    "streamlit": "1.63.0",
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scipy": "1.18.1",
+    "altair": "6.2.2",
+    "pytest": "9.1.1"
+  },
+  "frozen_system": {
+    "checkpoint": "artifacts/baseline_005/best.pt",
+    "trust_calibration": "artifacts/baseline_005/trust_calibration.json",
+    "demo_config": "demo/demo_config.json",
+    "system_config": "configs/frozen_system_config.json",
+    "evaluation_seed": 42,
+    "total_regression_tests": 410
+  }
+}

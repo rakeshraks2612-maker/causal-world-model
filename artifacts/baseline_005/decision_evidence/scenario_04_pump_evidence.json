@@ -1,0 +1,112 @@
+{
+  "decision": {
+    "recommendation": "cand_pump_3",
+    "decision_status": "RECOMMENDED",
+    "abstention_reason": null
+  },
+  "trust": {
+    "trust_state": "MODEL_TRUSTED",
+    "reconstruction_residual_t_core": 1.3547793272311566,
+    "reconstruction_residual_8d": 0.37758076190948486,
+    "latent_novelty_d": 5.6609177692521175,
+    "epistemic_uncertainty_sigma": 1.6454521417617798,
+    "tau_residual_t": 6.08,
+    "tau_novelty": 15.0,
+    "trust_reason": "Nominal in-distribution telemetry. Model predictions validated for planning."
+  },
+  "causal_evidence": {
+    "intervention_target": "A_pump",
+    "intervention_value": 3.0,
+    "affected_variables": [
+      "F_cool",
+      "P_sys",
+      "T_cool",
+      "T_core",
+      "Vib_pump"
+    ],
+    "causal_path": [
+      "A_pump",
+      "F_cool",
+      "T_cool",
+      "T_core"
+    ],
+    "direction_of_effect": "INCREASE_COOLANT_CIRCULATION_REDUCE_CORE_TEMP",
+    "counterfactual_comparison": {
+      "baseline_peak_t_core": 89.09613037109375,
+      "baseline_min_flow": 35.30682373046875,
+      "recommended_peak_t_core": 86.22469329833984,
+      "recommended_min_flow": 44.31049728393555,
+      "delta_t_core": -2.8714370727539062,
+      "delta_flow": 10.810943603515625
+    }
+  },
+  "predicted_outcome": {
+    "peak_t_core": 86.22469329833984,
+    "max_pressure": 4.136536121368408,
+    "min_flow": 44.31049728393555,
+    "mean_cpu_load": 67.3036117553711,
+    "mean_electrical_power": 2.6667590141296387,
+    "planning_horizon": 40
+  },
+  "safety_evidence": {
+    "safety_state": "SAFE",
+    "thermal_margin_c": 8.775306701660156,
+    "pressure_margin_bar": 1.3634638786315918,
+    "flow_margin_l_min": 36.31049728393555,
+    "latent_support_margin": 9.339082230747882,
+    "hard_constraints": {
+      "max_t_core": 95.0,
+      "max_pressure": 5.5,
+      "min_flow": 8.0,
+      "max_latent_d": 15.0
+    },
+    "is_safe": true
+  },
+  "decision_quality": {
+    "utility_score": 0.003426774163019841,
+    "second_best_candidate": "cand_do_nothing",
+    "second_best_utility": -0.1876566589908495,
+    "decision_margin": 0.19108343315386933,
+    "alternatives_rejected": [
+      {
+        "candidate_id": "cand_do_nothing",
+        "is_safe": true,
+        "utility_score": -0.1876566589908495,
+        "peak_t_core": 89.09613037109375,
+        "safety_violations": []
+      },
+      {
+        "candidate_id": "cand_pump_4",
+        "is_safe": false,
+        "utility_score": -1000.010856880648,
+        "peak_t_core": 85.40653991699219,
+        "safety_violations": [
+          "Latent manifold novelty (15.22) exceeds epistemic support limit (15.00)."
+        ]
+      },
+      {
+        "candidate_id": "cand_valve_85",
+        "is_safe": true,
+        "utility_score": -0.2177721678641621,
+        "peak_t_core": 89.37139892578125,
+        "safety_violations": []
+      },
+      {
+        "candidate_id": "cand_throttle_50",
+        "is_safe": true,
+        "utility_score": -0.7931142723938345,
+        "peak_t_core": 83.77790069580078,
+        "safety_violations": []
+      }
+    ]
+  },
+  "provenance": {
+    "model_version": "baseline_005",
+    "dataset_version": "unified_v1_40_40_20",
+    "planner_version": "v1.2_trust_gated",
+    "benchmark_version": "v1.0",
+    "scenario_id": "scenario_04_pump",
+    "timestamp_utc": "2026-09-11T12:00:00Z",
+    "decision_hash": "13888997244686c603ff2e1647b49c7674c88d5bfe149f89143b4c1f70fc6ab9"
+  }
+}

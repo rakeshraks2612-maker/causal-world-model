@@ -1,0 +1,25 @@
+{
+  "dataset_name": "intervention_aware_training_v2",
+  "total_train_episodes": 100,
+  "total_train_steps": 12100,
+  "thermal_runaways": 41,
+  "near_failures": 17,
+  "recovery_episodes": 15,
+  "l_cpu_metrics": {
+    "mean": 72.37115609190651,
+    "min": 19.892771271050638,
+    "max": 94.89665777823826,
+    "pct_ge_70": 51.413223140495866,
+    "pct_ge_80": 32.62809917355372,
+    "pct_ge_90": 4.578512396694215
+  },
+  "t_core_metrics": {
+    "mean": 98.3062764340481,
+    "min": 49.58495353153835,
+    "max": 135.0,
+    "peak_mean": 105.41881144980339,
+    "peak_max": 135.0,
+    "pct_ge_95": 44.553719008264466,
+    "pct_ge_105": 31.62809917355372
+  }
+}

@@ -128,7 +128,11 @@ class CausalWorldModel(nn.Module):
 
         return posterior_latents, prior_transitions, reconstructed_obs, rollout_obs, rollout_targets
 
-    def compute_loss(self, inputs: ModelInputs) -> LossOutput:
+    def compute_loss(
+        self,
+        inputs: ModelInputs,
+        timestep_weights: Optional[Tensor] = None,
+    ) -> LossOutput:
         """Execute forward pass and compute complete variational loss including multi-step rollout loss."""
         k_rollout = self.config.loss_weights.rollout_horizon if self.config.loss_weights.lambda_rollout > 0.0 else 1
         post_latents, prior_trans, recon_obs, r_obs, r_targets = self.forward_multistep(inputs, rollout_horizon=k_rollout)
@@ -140,6 +144,7 @@ class CausalWorldModel(nn.Module):
             observation_mask=inputs.observation_mask,
             rollout_obs=r_obs,
             rollout_targets=r_targets,
+            timestep_weights=timestep_weights,
         )
 
     def forecast(

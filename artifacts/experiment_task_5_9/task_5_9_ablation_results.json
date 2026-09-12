@@ -1,0 +1,226 @@
+{
+  "variant_0_control": {
+    "variant": "Variant 0 (Control: B004)",
+    "classes": {
+      "class_a_nominal": {
+        "t_core_mae": 1.3308025598526,
+        "t_peak_error": 1.1406390380859375,
+        "total_mse": 2.4010266041755677,
+        "mean_true_endpoint_T": 84.0556869506836,
+        "mean_rec_endpoint_T": 83.86217834472656
+      },
+      "class_b_high_safe": {
+        "t_core_mae": 1.2582359313964844,
+        "t_peak_error": 1.3746537780761718,
+        "total_mse": 2.5030825662612917,
+        "mean_true_endpoint_T": 91.00031295776367,
+        "mean_rec_endpoint_T": 90.09553512573243
+      },
+      "class_c_boundary": {
+        "t_core_mae": 3.6459219455718994,
+        "t_peak_error": 1.4013433837890625,
+        "total_mse": 7.563586268424988,
+        "mean_true_endpoint_T": 97.59759262084961,
+        "mean_rec_endpoint_T": 94.71558792114257
+      },
+      "class_d_runaway": {
+        "t_core_mae": 4.569988250732422,
+        "t_peak_error": 2.7633599853515625,
+        "total_mse": 23.81357765197754,
+        "mean_true_endpoint_T": 135.02428588867187,
+        "mean_rec_endpoint_T": 131.52601959228517
+      },
+      "class_e_acute_shocks": {
+        "t_core_mae": 4.911535263061523,
+        "t_peak_error": 8.024122314453125,
+        "total_mse": 26.939220066070558,
+        "mean_true_endpoint_T": 135.0170849609375,
+        "mean_rec_endpoint_T": 126.95903701782227
+      }
+    },
+    "summary": {},
+    "latent_separations_from_a": {
+      "class_a_nominal": 2.3312952518463135,
+      "class_b_high_safe": 8.078051567077637,
+      "class_c_boundary": 9.170244216918945,
+      "class_d_runaway": 11.285147666931152,
+      "class_e_acute_shocks": 12.193700790405273
+    },
+    "shock_sensitivity": {
+      "mean_latent_shock_displacement": 0.39017014861106875,
+      "correlation_deltaT_deltaZ": -0.3657808237308818
+    },
+    "safety_probe": {
+      "roc_auc": 0.9972965686841493,
+      "accuracy": 0.9893333333333333
+    }
+  },
+  "variant_1_reduced_kl": {
+    "variant": "Variant 1 (Reduced KL: beta=1e-5)",
+    "classes": {
+      "class_a_nominal": {
+        "t_core_mae": 1.2019493579864502,
+        "t_peak_error": 0.8267530822753906,
+        "total_mse": 2.218681230545044,
+        "mean_true_endpoint_T": 84.0556869506836,
+        "mean_rec_endpoint_T": 84.16899520874023
+      },
+      "class_b_high_safe": {
+        "t_core_mae": 1.4044582843780518,
+        "t_peak_error": 0.7995993041992188,
+        "total_mse": 2.6315980792045592,
+        "mean_true_endpoint_T": 91.00031295776367,
+        "mean_rec_endpoint_T": 90.98112503051757
+      },
+      "class_c_boundary": {
+        "t_core_mae": 2.9552969932556152,
+        "t_peak_error": 1.8337409973144532,
+        "total_mse": 6.722945713996888,
+        "mean_true_endpoint_T": 97.59759262084961,
+        "mean_rec_endpoint_T": 96.13886703491211
+      },
+      "class_d_runaway": {
+        "t_core_mae": 4.823092460632324,
+        "t_peak_error": 4.778629150390625,
+        "total_mse": 27.17845226287842,
+        "mean_true_endpoint_T": 135.02428588867187,
+        "mean_rec_endpoint_T": 130.1452215576172
+      },
+      "class_e_acute_shocks": {
+        "t_core_mae": 5.60610294342041,
+        "t_peak_error": 8.308206787109375,
+        "total_mse": 26.05622018814087,
+        "mean_true_endpoint_T": 135.0170849609375,
+        "mean_rec_endpoint_T": 126.55059219360352
+      }
+    },
+    "summary": {},
+    "latent_separations_from_a": {
+      "class_a_nominal": 2.262118339538574,
+      "class_b_high_safe": 8.162103652954102,
+      "class_c_boundary": 9.211982727050781,
+      "class_d_runaway": 11.26893424987793,
+      "class_e_acute_shocks": 12.232043266296387
+    },
+    "shock_sensitivity": {
+      "mean_latent_shock_displacement": 0.5752520620822906,
+      "correlation_deltaT_deltaZ": -0.3554462793098442
+    },
+    "safety_probe": {
+      "roc_auc": 0.9963465376678732,
+      "accuracy": 0.9873333333333333
+    }
+  },
+  "variant_2_shock_weighted": {
+    "variant": "Variant 2 (Shock-Weighted Recon)",
+    "classes": {
+      "class_a_nominal": {
+        "t_core_mae": 1.3136000633239746,
+        "t_peak_error": 0.712855224609375,
+        "total_mse": 2.198456020355225,
+        "mean_true_endpoint_T": 84.0556869506836,
+        "mean_rec_endpoint_T": 84.52611648559571
+      },
+      "class_b_high_safe": {
+        "t_core_mae": 1.8743175268173218,
+        "t_peak_error": 0.5692446899414062,
+        "total_mse": 3.337777953147888,
+        "mean_true_endpoint_T": 91.00031295776367,
+        "mean_rec_endpoint_T": 92.01725341796875
+      },
+      "class_c_boundary": {
+        "t_core_mae": 3.3479011058807373,
+        "t_peak_error": 2.4520001220703125,
+        "total_mse": 7.13516170501709,
+        "mean_true_endpoint_T": 97.59759262084961,
+        "mean_rec_endpoint_T": 94.83130279541015
+      },
+      "class_d_runaway": {
+        "t_core_mae": 2.085031509399414,
+        "t_peak_error": 0.42442626953125,
+        "total_mse": 9.013548440933228,
+        "mean_true_endpoint_T": 135.02428588867187,
+        "mean_rec_endpoint_T": 133.84910034179688
+      },
+      "class_e_acute_shocks": {
+        "t_core_mae": 4.102318286895752,
+        "t_peak_error": 6.508927307128906,
+        "total_mse": 14.0613352394104,
+        "mean_true_endpoint_T": 135.0170849609375,
+        "mean_rec_endpoint_T": 128.46379684448243
+      }
+    },
+    "summary": {},
+    "latent_separations_from_a": {
+      "class_a_nominal": 0.8154855966567993,
+      "class_b_high_safe": 3.930882215499878,
+      "class_c_boundary": 4.648919582366943,
+      "class_d_runaway": 8.037485122680664,
+      "class_e_acute_shocks": 8.681797981262207
+    },
+    "shock_sensitivity": {
+      "mean_latent_shock_displacement": 0.6981447046995163,
+      "correlation_deltaT_deltaZ": 0.2624599500017656
+    },
+    "safety_probe": {
+      "roc_auc": 0.9928104473464852,
+      "accuracy": 0.9823333333333333
+    }
+  },
+  "variant_3_temporal_shock": {
+    "variant": "Variant 3 (Temporal Shock Diff)",
+    "classes": {
+      "class_a_nominal": {
+        "t_core_mae": 4.289502143859863,
+        "t_peak_error": 1.3329228210449218,
+        "total_mse": 11.10751724243164,
+        "mean_true_endpoint_T": 84.0556869506836,
+        "mean_rec_endpoint_T": 84.48618560791016
+      },
+      "class_b_high_safe": {
+        "t_core_mae": 3.2359232902526855,
+        "t_peak_error": 3.446869354248047,
+        "total_mse": 5.613271150588989,
+        "mean_true_endpoint_T": 91.00031295776367,
+        "mean_rec_endpoint_T": 88.40552536010742
+      },
+      "class_c_boundary": {
+        "t_core_mae": 10.98254680633545,
+        "t_peak_error": 10.009234771728515,
+        "total_mse": 33.908774337768556,
+        "mean_true_endpoint_T": 97.59759262084961,
+        "mean_rec_endpoint_T": 91.11809310913085
+      },
+      "class_d_runaway": {
+        "t_core_mae": 4.100081443786621,
+        "t_peak_error": 2.766473693847656,
+        "total_mse": 28.183134346008302,
+        "mean_true_endpoint_T": 135.02428588867187,
+        "mean_rec_endpoint_T": 132.5473861694336
+      },
+      "class_e_acute_shocks": {
+        "t_core_mae": 6.117701053619385,
+        "t_peak_error": 6.549174194335937,
+        "total_mse": 35.2489338684082,
+        "mean_true_endpoint_T": 135.0170849609375,
+        "mean_rec_endpoint_T": 129.06970001220702
+      }
+    },
+    "summary": {},
+    "latent_separations_from_a": {
+      "class_a_nominal": 0.6480699777603149,
+      "class_b_high_safe": 3.6006112098693848,
+      "class_c_boundary": 4.269678115844727,
+      "class_d_runaway": 9.475088119506836,
+      "class_e_acute_shocks": 10.339727401733398
+    },
+    "shock_sensitivity": {
+      "mean_latent_shock_displacement": 0.5183782297372818,
+      "correlation_deltaT_deltaZ": 0.1928938389887317
+    },
+    "safety_probe": {
+      "roc_auc": 0.9236088797492307,
+      "accuracy": 0.815
+    }
+  }
+}

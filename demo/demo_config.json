@@ -1,0 +1,41 @@
+{
+  "demo_version": "v1.0_frozen",
+  "model_version": "baseline_005",
+  "dataset_version": "v2.1",
+  "planner_version": "v1.2",
+  "benchmark_version": "v1.0",
+  "uncertainty_multiplier_k": 2.0,
+  "planning_horizon": 40,
+  "thermal_limit_c": 95.0,
+  "pressure_limit_bar": 5.50,
+  "flow_limit_l_min": 8.0,
+  "latent_support_limit": 15.0,
+  "trust_threshold_rt_c": 6.08,
+  "trust_threshold_r8d": 1.90,
+  "scenarios": {
+    "demo_01_decision": {
+      "scenario_id": "scenario_04_pump",
+      "title": "Autonomous Intervention Decision (Pump Modulation)",
+      "expected_decision": "cand_pump_3",
+      "expected_status": "RECOMMENDED",
+      "expected_trust": "MODEL_TRUSTED",
+      "expected_safety": "SAFE"
+    },
+    "demo_02_uncertainty": {
+      "scenario_id": "scenario_02_valve",
+      "title": "Uncertainty-Aware Safety Catch (Point Estimate vs k=2)",
+      "expected_decision": "cand_pump_4",
+      "expected_status": "RECOMMENDED",
+      "expected_trust": "MODEL_TRUSTED",
+      "expected_safety": "UNSAFE"
+    },
+    "demo_03_abstention": {
+      "scenario_id": "scenario_06_all_unsafe",
+      "title": "Upfront Model Distrust & Fail-Closed Abstention",
+      "expected_decision": null,
+      "expected_status": "BLOCKED",
+      "expected_trust": "MODEL_ABSTAIN",
+      "expected_safety": "ABSTAIN_REQUIRED"
+    }
+  }
+}

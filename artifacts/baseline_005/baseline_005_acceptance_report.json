@@ -1,0 +1,148 @@
+{
+  "gate_2_multi_horizon_accuracy": {
+    "h=1": {
+      "mean_8d_mae": 0.8645417909200586,
+      "mean_t_core_mae": 1.3667773840628576
+    },
+    "h=5": {
+      "mean_8d_mae": 1.0129240267275677,
+      "mean_t_core_mae": 1.4575767158004298
+    },
+    "h=10": {
+      "mean_8d_mae": 0.9937128915202402,
+      "mean_t_core_mae": 1.6043886918640382
+    },
+    "h=20": {
+      "mean_8d_mae": 1.1012849328371446,
+      "mean_t_core_mae": 1.788689988205747
+    },
+    "h=40": {
+      "mean_8d_mae": 1.372199981899048,
+      "mean_t_core_mae": 2.2122211440673794
+    }
+  },
+  "gate_3_pump_decision_scenario_4": {
+    "recommended_candidate": "cand_pump_3",
+    "is_correct_pump3": true,
+    "utility_margin_over_2nd": 0.19108343315386933,
+    "predicted_peak_t_core": 86.22469329833984,
+    "is_safe": true
+  },
+  "gate_4_benchmark_trust_and_abstention": {
+    "scenario_01_do_nothing": {
+      "state": "model_trusted",
+      "residual_t_core": 1.1013668102151826,
+      "residual_8d_norm": 0.16912725567817688,
+      "latent_mahalanobis_d": 5.1294699923426545,
+      "epistemic_sigma": 1.6263798475265503,
+      "aleatoric_sigma": 0.48973268270492554,
+      "is_novel_latent": false,
+      "is_reconstruction_inconsistent": false,
+      "rationale": "Nominal in-distribution telemetry. Model predictions validated for planning."
+    },
+    "scenario_02_valve": {
+      "state": "model_trusted",
+      "residual_t_core": 0.23466141117800987,
+      "residual_8d_norm": 0.2762693464756012,
+      "latent_mahalanobis_d": 5.976687600814884,
+      "epistemic_sigma": 1.4060006141662598,
+      "aleatoric_sigma": 0.4855978488922119,
+      "is_novel_latent": false,
+      "is_reconstruction_inconsistent": false,
+      "rationale": "Nominal in-distribution telemetry. Model predictions validated for planning."
+    },
+    "scenario_03_throttle": {
+      "state": "model_trusted",
+      "residual_t_core": 1.5376407205315559,
+      "residual_8d_norm": 0.524518609046936,
+      "latent_mahalanobis_d": 6.501998007411176,
+      "epistemic_sigma": 1.657236099243164,
+      "aleatoric_sigma": 0.4932290017604828,
+      "is_novel_latent": false,
+      "is_reconstruction_inconsistent": false,
+      "rationale": "Nominal in-distribution telemetry. Model predictions validated for planning."
+    },
+    "scenario_04_pump": {
+      "state": "model_trusted",
+      "residual_t_core": 1.3547793272311566,
+      "residual_8d_norm": 0.37758076190948486,
+      "latent_mahalanobis_d": 5.6609177692521175,
+      "epistemic_sigma": 1.6454521417617798,
+      "aleatoric_sigma": 0.4897477924823761,
+      "is_novel_latent": false,
+      "is_reconstruction_inconsistent": false,
+      "rationale": "Nominal in-distribution telemetry. Model predictions validated for planning."
+    },
+    "scenario_05_combined": {
+      "state": "model_trusted",
+      "residual_t_core": 0.6436160402599569,
+      "residual_8d_norm": 0.22302882373332977,
+      "latent_mahalanobis_d": 5.857881320031186,
+      "epistemic_sigma": 1.4229507446289062,
+      "aleatoric_sigma": 0.4846671521663666,
+      "is_novel_latent": false,
+      "is_reconstruction_inconsistent": false,
+      "rationale": "Nominal in-distribution telemetry. Model predictions validated for planning."
+    },
+    "scenario_06_all_unsafe": {
+      "state": "model_abstain",
+      "residual_t_core": 33.876841899061006,
+      "residual_8d_norm": 1.8152518272399902,
+      "latent_mahalanobis_d": 7.731571066873109,
+      "epistemic_sigma": 1.647027611732483,
+      "aleatoric_sigma": 0.49378031492233276,
+      "is_novel_latent": false,
+      "is_reconstruction_inconsistent": true,
+      "rationale": "Reconstruction inconsistency: Telemetry contradicts internal world-model dynamics (R_T = 33.88\u00b0C > 6.1\u00b0C, R_8D = 1.82 > 1.90). Acute sensor/physics mismatch detected; triggering hard safety abstention."
+    }
+  },
+  "gate_5_multivariate_consistency": {
+    "A_89C_Baseline": {
+      "true_t_core": 89.34123384084499,
+      "rec_t_core": 86.99691772460938,
+      "residual_t_core": 2.3443161162356176,
+      "latent_mahalanobis_d": 6.962964859790108,
+      "trust_state": "model_trusted"
+    },
+    "B_89C_Plus_120C_Shock": {
+      "true_t_core": 120.37,
+      "rec_t_core": 87.23555755615234,
+      "residual_t_core": 33.13444244384766,
+      "latent_mahalanobis_d": 7.049610359841594,
+      "trust_state": "model_abstain"
+    },
+    "C_89C_Plus_Valve_Closed": {
+      "true_t_core": 89.34123384084499,
+      "rec_t_core": 116.96778869628906,
+      "residual_t_core": 27.62655485544407,
+      "latent_mahalanobis_d": 15.230279898322618,
+      "trust_state": "model_abstain"
+    },
+    "D_89C_Plus_Valve_Closed_Low_Load": {
+      "true_t_core": 89.34123384084499,
+      "rec_t_core": 88.6686019897461,
+      "residual_t_core": 0.6726318510988989,
+      "latent_mahalanobis_d": 10.525106296319677,
+      "trust_state": "model_abstain"
+    },
+    "E_Valve_Closed_Low_Load_Plus_120C_Shock": {
+      "true_t_core": 120.37,
+      "rec_t_core": 89.59246826171875,
+      "residual_t_core": 30.777531738281255,
+      "latent_mahalanobis_d": 10.589948213935143,
+      "trust_state": "model_abstain"
+    },
+    "F_Full_S6_History": {
+      "true_t_core": 120.36945664515476,
+      "rec_t_core": 86.49261474609375,
+      "residual_t_core": 33.876841899061006,
+      "latent_mahalanobis_d": 7.731571066873109,
+      "trust_state": "model_abstain"
+    }
+  },
+  "gate_6_non_descendant_invariance": {
+    "non_descendant_invariance_pass": true,
+    "base_t_core_h40": 86.79529571533203,
+    "base_flow_h40": 40.64289474487305
+  }
+}

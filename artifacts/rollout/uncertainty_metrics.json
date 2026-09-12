@@ -1,0 +1,538 @@
+{
+  "model_name": "PRISM_MonteCarlo_50",
+  "num_particles": 50,
+  "horizons": [
+    1,
+    5,
+    10,
+    20,
+    40
+  ],
+  "by_horizon": {
+    "1": {
+      "horizon": 1,
+      "mean_predictive_std_norm": 0.2737303078174591,
+      "mean_interval_width_norm": 0.9005727171897888,
+      "overall_empirical_coverage_90": 0.9388888888888889,
+      "overall_coverage_error": 0.058333333333333334,
+      "per_channel": {
+        "T_core": {
+          "channel_name": "T_core",
+          "horizon": 1,
+          "predictive_mean_mae": 1.1485677627170396,
+          "predictive_mean_rmse": 1.3830799959633078,
+          "mean_predictive_std": 1.5315122604370117,
+          "mean_interval_width_90": 5.0386762619018555,
+          "empirical_coverage_90": 0.9111111111111111,
+          "coverage_error": 0.011111111111111072,
+          "error_uncertainty_correlation": -0.19776025664322963,
+          "spearman_correlation": -0.12674571805006585
+        },
+        "T_cool": {
+          "channel_name": "T_cool",
+          "horizon": 1,
+          "predictive_mean_mae": 0.9936068849586694,
+          "predictive_mean_rmse": 1.2034565294579411,
+          "mean_predictive_std": 1.0595202445983887,
+          "mean_interval_width_90": 3.485820770263672,
+          "empirical_coverage_90": 0.8222222222222222,
+          "coverage_error": 0.07777777777777783,
+          "error_uncertainty_correlation": -0.22861289465161397,
+          "spearman_correlation": -0.1984189723320158
+        },
+        "P_sys": {
+          "channel_name": "P_sys",
+          "horizon": 1,
+          "predictive_mean_mae": 0.06428676574315587,
+          "predictive_mean_rmse": 0.07752254427049719,
+          "mean_predictive_std": 0.0957491472363472,
+          "mean_interval_width_90": 0.31501471996307373,
+          "empirical_coverage_90": 0.9333333333333333,
+          "coverage_error": 0.033333333333333326,
+          "error_uncertainty_correlation": -0.2040340021839656,
+          "spearman_correlation": -0.1538866930171278
+        },
+        "F_cool": {
+          "channel_name": "F_cool",
+          "horizon": 1,
+          "predictive_mean_mae": 0.8395923325756915,
+          "predictive_mean_rmse": 1.013196864527499,
+          "mean_predictive_std": 1.792216181755066,
+          "mean_interval_width_90": 5.896390914916992,
+          "empirical_coverage_90": 1.0,
+          "coverage_error": 0.09999999999999998,
+          "error_uncertainty_correlation": -0.27412229162081186,
+          "spearman_correlation": -0.3391304347826087
+        },
+        "L_cpu": {
+          "channel_name": "L_cpu",
+          "horizon": 1,
+          "predictive_mean_mae": 0.535700838115236,
+          "predictive_mean_rmse": 0.6951165695405164,
+          "mean_predictive_std": 0.8038638830184937,
+          "mean_interval_width_90": 2.6447129249572754,
+          "empirical_coverage_90": 0.9333333333333333,
+          "coverage_error": 0.033333333333333326,
+          "error_uncertainty_correlation": 0.0009629739636119779,
+          "spearman_correlation": -0.027667984189723313
+        },
+        "V_pos": {
+          "channel_name": "V_pos",
+          "horizon": 1,
+          "predictive_mean_mae": 1.2229664640002027,
+          "predictive_mean_rmse": 1.4696368226022467,
+          "mean_predictive_std": 3.0017879009246826,
+          "mean_interval_width_90": 9.875884056091309,
+          "empirical_coverage_90": 1.0,
+          "coverage_error": 0.09999999999999998,
+          "error_uncertainty_correlation": 0.16141067063935788,
+          "spearman_correlation": 0.13267457180500658
+        },
+        "Vib_pump": {
+          "channel_name": "Vib_pump",
+          "horizon": 1,
+          "predictive_mean_mae": 0.20800023793661,
+          "predictive_mean_rmse": 0.25426403724910296,
+          "mean_predictive_std": 0.298481822013855,
+          "mean_interval_width_90": 0.9820050001144409,
+          "empirical_coverage_90": 0.9555555555555556,
+          "coverage_error": 0.05555555555555558,
+          "error_uncertainty_correlation": -0.028653574563745864,
+          "spearman_correlation": -0.03689064558629776
+        },
+        "P_elec": {
+          "channel_name": "P_elec",
+          "horizon": 1,
+          "predictive_mean_mae": 0.030355668725470332,
+          "predictive_mean_rmse": 0.03733190711216772,
+          "mean_predictive_std": 0.038081374019384384,
+          "mean_interval_width_90": 0.12528769671916962,
+          "empirical_coverage_90": 0.9555555555555556,
+          "coverage_error": 0.05555555555555558,
+          "error_uncertainty_correlation": -0.2812837969229671,
+          "spearman_correlation": -0.21857707509881422
+        }
+      }
+    },
+    "5": {
+      "horizon": 5,
+      "mean_predictive_std_norm": 0.31465262174606323,
+      "mean_interval_width_norm": 1.0352071523666382,
+      "overall_empirical_coverage_90": 0.9333333333333333,
+      "overall_coverage_error": 0.06388888888888887,
+      "per_channel": {
+        "T_core": {
+          "channel_name": "T_core",
+          "horizon": 5,
+          "predictive_mean_mae": 1.3190852558029678,
+          "predictive_mean_rmse": 1.6906351693909114,
+          "mean_predictive_std": 1.6956301927566528,
+          "mean_interval_width_90": 5.578622341156006,
+          "empirical_coverage_90": 0.8666666666666667,
+          "coverage_error": 0.033333333333333326,
+          "error_uncertainty_correlation": -0.32032090263307383,
+          "spearman_correlation": -0.3321475625823451
+        },
+        "T_cool": {
+          "channel_name": "T_cool",
+          "horizon": 5,
+          "predictive_mean_mae": 1.1251180456547196,
+          "predictive_mean_rmse": 1.372333155006154,
+          "mean_predictive_std": 1.2860498428344727,
+          "mean_interval_width_90": 4.231104850769043,
+          "empirical_coverage_90": 0.8444444444444444,
+          "coverage_error": 0.05555555555555558,
+          "error_uncertainty_correlation": -0.3083469726625236,
+          "spearman_correlation": -0.241897233201581
+        },
+        "P_sys": {
+          "channel_name": "P_sys",
+          "horizon": 5,
+          "predictive_mean_mae": 0.06300220239690851,
+          "predictive_mean_rmse": 0.08232153456084203,
+          "mean_predictive_std": 0.1133149266242981,
+          "mean_interval_width_90": 0.3728061318397522,
+          "empirical_coverage_90": 1.0,
+          "coverage_error": 0.09999999999999998,
+          "error_uncertainty_correlation": 0.13057183106078774,
+          "spearman_correlation": 0.1820816864295125
+        },
+        "F_cool": {
+          "channel_name": "F_cool",
+          "horizon": 5,
+          "predictive_mean_mae": 1.2652679647700293,
+          "predictive_mean_rmse": 1.4942836086355284,
+          "mean_predictive_std": 2.3133857250213623,
+          "mean_interval_width_90": 7.611037731170654,
+          "empirical_coverage_90": 1.0,
+          "coverage_error": 0.09999999999999998,
+          "error_uncertainty_correlation": 0.11265579332778461,
+          "spearman_correlation": -0.04743083003952568
+        },
+        "L_cpu": {
+          "channel_name": "L_cpu",
+          "horizon": 5,
+          "predictive_mean_mae": 0.6932517672860642,
+          "predictive_mean_rmse": 0.7824904087740686,
+          "mean_predictive_std": 0.8404858708381653,
+          "mean_interval_width_90": 2.7651994228363037,
+          "empirical_coverage_90": 0.9777777777777777,
+          "coverage_error": 0.07777777777777772,
+          "error_uncertainty_correlation": 0.0368690358416069,
+          "spearman_correlation": 0.0035573122529644263
+        },
+        "V_pos": {
+          "channel_name": "V_pos",
+          "horizon": 5,
+          "predictive_mean_mae": 2.221146540200885,
+          "predictive_mean_rmse": 2.5281887921733075,
+          "mean_predictive_std": 3.811393976211548,
+          "mean_interval_width_90": 12.539485931396484,
+          "empirical_coverage_90": 1.0,
+          "coverage_error": 0.09999999999999998,
+          "error_uncertainty_correlation": -0.009806930701653975,
+          "spearman_correlation": -0.0032938076416337285
+        },
+        "Vib_pump": {
+          "channel_name": "Vib_pump",
+          "horizon": 5,
+          "predictive_mean_mae": 0.24232710745479488,
+          "predictive_mean_rmse": 0.2917221939724497,
+          "mean_predictive_std": 0.347573459148407,
+          "mean_interval_width_90": 1.1435166597366333,
+          "empirical_coverage_90": 0.9111111111111111,
+          "coverage_error": 0.011111111111111072,
+          "error_uncertainty_correlation": -0.14914603420798214,
+          "spearman_correlation": -0.18366271409749668
+        },
+        "P_elec": {
+          "channel_name": "P_elec",
+          "horizon": 5,
+          "predictive_mean_mae": 0.03232040759667475,
+          "predictive_mean_rmse": 0.04213316024551369,
+          "mean_predictive_std": 0.04074180871248245,
+          "mean_interval_width_90": 0.13404054939746857,
+          "empirical_coverage_90": 0.8666666666666667,
+          "coverage_error": 0.033333333333333326,
+          "error_uncertainty_correlation": -0.05592544366958569,
+          "spearman_correlation": -0.03359683794466403
+        }
+      }
+    },
+    "10": {
+      "horizon": 10,
+      "mean_predictive_std_norm": 0.3436349630355835,
+      "mean_interval_width_norm": 1.130558967590332,
+      "overall_empirical_coverage_90": 0.9222222222222223,
+      "overall_coverage_error": 0.05833333333333332,
+      "per_channel": {
+        "T_core": {
+          "channel_name": "T_core",
+          "horizon": 10,
+          "predictive_mean_mae": 1.4611033498793555,
+          "predictive_mean_rmse": 1.7975452561254448,
+          "mean_predictive_std": 1.9440094232559204,
+          "mean_interval_width_90": 6.395791053771973,
+          "empirical_coverage_90": 0.9111111111111111,
+          "coverage_error": 0.011111111111111072,
+          "error_uncertainty_correlation": -0.22339150559971602,
+          "spearman_correlation": -0.3216073781291172
+        },
+        "T_cool": {
+          "channel_name": "T_cool",
+          "horizon": 10,
+          "predictive_mean_mae": 1.2516884704197486,
+          "predictive_mean_rmse": 1.5419444509869078,
+          "mean_predictive_std": 1.4204638004302979,
+          "mean_interval_width_90": 4.673325538635254,
+          "empirical_coverage_90": 0.8,
+          "coverage_error": 0.09999999999999998,
+          "error_uncertainty_correlation": -0.3296998190309295,
+          "spearman_correlation": -0.3108036890645586
+        },
+        "P_sys": {
+          "channel_name": "P_sys",
+          "horizon": 10,
+          "predictive_mean_mae": 0.08049928658897551,
+          "predictive_mean_rmse": 0.10150812043109161,
+          "mean_predictive_std": 0.12532681226730347,
+          "mean_interval_width_90": 0.4123252034187317,
+          "empirical_coverage_90": 0.9555555555555556,
+          "coverage_error": 0.05555555555555558,
+          "error_uncertainty_correlation": -0.04634340218342451,
+          "spearman_correlation": -0.11357048748353095
+        },
+        "F_cool": {
+          "channel_name": "F_cool",
+          "horizon": 10,
+          "predictive_mean_mae": 1.7793773111224949,
+          "predictive_mean_rmse": 2.014134350990475,
+          "mean_predictive_std": 2.625830888748169,
+          "mean_interval_width_90": 8.638982772827148,
+          "empirical_coverage_90": 0.9777777777777777,
+          "coverage_error": 0.07777777777777772,
+          "error_uncertainty_correlation": -0.019206254896135335,
+          "spearman_correlation": -0.0909090909090909
+        },
+        "L_cpu": {
+          "channel_name": "L_cpu",
+          "horizon": 10,
+          "predictive_mean_mae": 0.6906644309631244,
+          "predictive_mean_rmse": 0.8036526566119168,
+          "mean_predictive_std": 0.8738152384757996,
+          "mean_interval_width_90": 2.8748528957366943,
+          "empirical_coverage_90": 0.9777777777777777,
+          "coverage_error": 0.07777777777777772,
+          "error_uncertainty_correlation": -0.11786422594272362,
+          "spearman_correlation": -0.11304347826086955
+        },
+        "V_pos": {
+          "channel_name": "V_pos",
+          "horizon": 10,
+          "predictive_mean_mae": 3.006432067845558,
+          "predictive_mean_rmse": 3.2740205361152794,
+          "mean_predictive_std": 4.52079963684082,
+          "mean_interval_width_90": 14.873430252075195,
+          "empirical_coverage_90": 1.0,
+          "coverage_error": 0.09999999999999998,
+          "error_uncertainty_correlation": -0.03163761195376436,
+          "spearman_correlation": -0.0743083003952569
+        },
+        "Vib_pump": {
+          "channel_name": "Vib_pump",
+          "horizon": 10,
+          "predictive_mean_mae": 0.2847627531947816,
+          "predictive_mean_rmse": 0.34137602538084005,
+          "mean_predictive_std": 0.38141247630119324,
+          "mean_interval_width_90": 1.2548468112945557,
+          "empirical_coverage_90": 0.8666666666666667,
+          "coverage_error": 0.033333333333333326,
+          "error_uncertainty_correlation": -0.15892884426170054,
+          "spearman_correlation": -0.15243741765480895
+        },
+        "P_elec": {
+          "channel_name": "P_elec",
+          "horizon": 10,
+          "predictive_mean_mae": 0.035839403726937856,
+          "predictive_mean_rmse": 0.044732045197198984,
+          "mean_predictive_std": 0.04036322608590126,
+          "mean_interval_width_90": 0.13279499113559723,
+          "empirical_coverage_90": 0.8888888888888888,
+          "coverage_error": 0.011111111111111183,
+          "error_uncertainty_correlation": -0.09662340004451565,
+          "spearman_correlation": -0.07733860342555994
+        }
+      }
+    },
+    "20": {
+      "horizon": 20,
+      "mean_predictive_std_norm": 0.3824516236782074,
+      "mean_interval_width_norm": 1.2582658529281616,
+      "overall_empirical_coverage_90": 0.925,
+      "overall_coverage_error": 0.047222222222222235,
+      "per_channel": {
+        "T_core": {
+          "channel_name": "T_core",
+          "horizon": 20,
+          "predictive_mean_mae": 1.594757814125959,
+          "predictive_mean_rmse": 1.9790968476691944,
+          "mean_predictive_std": 2.125920534133911,
+          "mean_interval_width_90": 6.994278907775879,
+          "empirical_coverage_90": 0.8888888888888888,
+          "coverage_error": 0.011111111111111183,
+          "error_uncertainty_correlation": -0.06273531941201115,
+          "spearman_correlation": -0.05638998682476943
+        },
+        "T_cool": {
+          "channel_name": "T_cool",
+          "horizon": 20,
+          "predictive_mean_mae": 1.3371420112028418,
+          "predictive_mean_rmse": 1.639183864400205,
+          "mean_predictive_std": 1.5931835174560547,
+          "mean_interval_width_90": 5.241573810577393,
+          "empirical_coverage_90": 0.8666666666666667,
+          "coverage_error": 0.033333333333333326,
+          "error_uncertainty_correlation": -0.16952215599306167,
+          "spearman_correlation": -0.20289855072463767
+        },
+        "P_sys": {
+          "channel_name": "P_sys",
+          "horizon": 20,
+          "predictive_mean_mae": 0.10314611542260366,
+          "predictive_mean_rmse": 0.12419908054911095,
+          "mean_predictive_std": 0.13656000792980194,
+          "mean_interval_width_90": 0.4492824673652649,
+          "empirical_coverage_90": 0.9555555555555556,
+          "coverage_error": 0.05555555555555558,
+          "error_uncertainty_correlation": -0.10558075006246014,
+          "spearman_correlation": -0.014229249011857705
+        },
+        "F_cool": {
+          "channel_name": "F_cool",
+          "horizon": 20,
+          "predictive_mean_mae": 2.244393100382565,
+          "predictive_mean_rmse": 2.5879195573794966,
+          "mean_predictive_std": 3.1684603691101074,
+          "mean_interval_width_90": 10.424233436584473,
+          "empirical_coverage_90": 0.9777777777777777,
+          "coverage_error": 0.07777777777777772,
+          "error_uncertainty_correlation": 0.11847540838956308,
+          "spearman_correlation": 0.19420289855072462
+        },
+        "L_cpu": {
+          "channel_name": "L_cpu",
+          "horizon": 20,
+          "predictive_mean_mae": 0.7115808879561617,
+          "predictive_mean_rmse": 0.8576928716575493,
+          "mean_predictive_std": 0.9169008135795593,
+          "mean_interval_width_90": 3.0166025161743164,
+          "empirical_coverage_90": 0.9555555555555556,
+          "coverage_error": 0.05555555555555558,
+          "error_uncertainty_correlation": 0.041042862696966755,
+          "spearman_correlation": 0.05797101449275362
+        },
+        "V_pos": {
+          "channel_name": "V_pos",
+          "horizon": 20,
+          "predictive_mean_mae": 4.24569053424476,
+          "predictive_mean_rmse": 4.681609268086061,
+          "mean_predictive_std": 5.566159248352051,
+          "mean_interval_width_90": 18.312665939331055,
+          "empirical_coverage_90": 1.0,
+          "coverage_error": 0.09999999999999998,
+          "error_uncertainty_correlation": 0.19783099624127265,
+          "spearman_correlation": 0.2617918313570487
+        },
+        "Vib_pump": {
+          "channel_name": "Vib_pump",
+          "horizon": 20,
+          "predictive_mean_mae": 0.35564932663585563,
+          "predictive_mean_rmse": 0.42959835212747577,
+          "mean_predictive_std": 0.41995006799697876,
+          "mean_interval_width_90": 1.3816356658935547,
+          "empirical_coverage_90": 0.8888888888888888,
+          "coverage_error": 0.011111111111111183,
+          "error_uncertainty_correlation": 0.04460712470231819,
+          "spearman_correlation": 0.03504611330698287
+        },
+        "P_elec": {
+          "channel_name": "P_elec",
+          "horizon": 20,
+          "predictive_mean_mae": 0.03483782850513639,
+          "predictive_mean_rmse": 0.04523197829012071,
+          "mean_predictive_std": 0.043048907071352005,
+          "mean_interval_width_90": 0.14163090288639069,
+          "empirical_coverage_90": 0.8666666666666667,
+          "coverage_error": 0.033333333333333326,
+          "error_uncertainty_correlation": -0.0911817545274541,
+          "spearman_correlation": -0.14308300395256918
+        }
+      }
+    },
+    "40": {
+      "horizon": 40,
+      "mean_predictive_std_norm": 0.42689573764801025,
+      "mean_interval_width_norm": 1.4044870138168335,
+      "overall_empirical_coverage_90": 0.9416666666666667,
+      "overall_coverage_error": 0.06666666666666665,
+      "per_channel": {
+        "T_core": {
+          "channel_name": "T_core",
+          "horizon": 40,
+          "predictive_mean_mae": 1.890924454228505,
+          "predictive_mean_rmse": 2.1883448672050854,
+          "mean_predictive_std": 2.2814149856567383,
+          "mean_interval_width_90": 7.505856513977051,
+          "empirical_coverage_90": 0.9555555555555556,
+          "coverage_error": 0.05555555555555558,
+          "error_uncertainty_correlation": -0.057450208381600996,
+          "spearman_correlation": 0.08616600790513831
+        },
+        "T_cool": {
+          "channel_name": "T_cool",
+          "horizon": 40,
+          "predictive_mean_mae": 1.5182299250844102,
+          "predictive_mean_rmse": 1.8353706391628883,
+          "mean_predictive_std": 1.8004826307296753,
+          "mean_interval_width_90": 5.923588275909424,
+          "empirical_coverage_90": 0.9333333333333333,
+          "coverage_error": 0.033333333333333326,
+          "error_uncertainty_correlation": 0.08240616772040664,
+          "spearman_correlation": 0.09011857707509881
+        },
+        "P_sys": {
+          "channel_name": "P_sys",
+          "horizon": 40,
+          "predictive_mean_mae": 0.13757403112174138,
+          "predictive_mean_rmse": 0.15672049167213398,
+          "mean_predictive_std": 0.15950515866279602,
+          "mean_interval_width_90": 0.5247719883918762,
+          "empirical_coverage_90": 0.9555555555555556,
+          "coverage_error": 0.05555555555555558,
+          "error_uncertainty_correlation": 0.3008310603261376,
+          "spearman_correlation": 0.30171277997364954
+        },
+        "F_cool": {
+          "channel_name": "F_cool",
+          "horizon": 40,
+          "predictive_mean_mae": 2.8217148182355767,
+          "predictive_mean_rmse": 3.2510511790529484,
+          "mean_predictive_std": 3.7836804389953613,
+          "mean_interval_width_90": 12.448309898376465,
+          "empirical_coverage_90": 0.9777777777777777,
+          "coverage_error": 0.07777777777777772,
+          "error_uncertainty_correlation": 0.3156251829067091,
+          "spearman_correlation": 0.3022397891963109
+        },
+        "L_cpu": {
+          "channel_name": "L_cpu",
+          "horizon": 40,
+          "predictive_mean_mae": 0.583931623593708,
+          "predictive_mean_rmse": 0.7218776139978218,
+          "mean_predictive_std": 0.9688245058059692,
+          "mean_interval_width_90": 3.1874332427978516,
+          "empirical_coverage_90": 0.9777777777777777,
+          "coverage_error": 0.07777777777777772,
+          "error_uncertainty_correlation": -0.06256678984277965,
+          "spearman_correlation": -0.08050065876152832
+        },
+        "V_pos": {
+          "channel_name": "V_pos",
+          "horizon": 40,
+          "predictive_mean_mae": 5.433872534847972,
+          "predictive_mean_rmse": 6.137966646371109,
+          "mean_predictive_std": 6.3838582038879395,
+          "mean_interval_width_90": 21.00288963317871,
+          "empirical_coverage_90": 1.0,
+          "coverage_error": 0.09999999999999998,
+          "error_uncertainty_correlation": 0.2797897470448814,
+          "spearman_correlation": 0.3051383399209486
+        },
+        "Vib_pump": {
+          "channel_name": "Vib_pump",
+          "horizon": 40,
+          "predictive_mean_mae": 0.46048327477852696,
+          "predictive_mean_rmse": 0.5387972936013751,
+          "mean_predictive_std": 0.47953927516937256,
+          "mean_interval_width_90": 1.5776841640472412,
+          "empirical_coverage_90": 0.8,
+          "coverage_error": 0.09999999999999998,
+          "error_uncertainty_correlation": -0.002694027657795712,
+          "spearman_correlation": -0.01949934123847167
+        },
+        "P_elec": {
+          "channel_name": "P_elec",
+          "horizon": 40,
+          "predictive_mean_mae": 0.026949369947707653,
+          "predictive_mean_rmse": 0.03669368153694708,
+          "mean_predictive_std": 0.04449337720870972,
+          "mean_interval_width_90": 0.14638325572013855,
+          "empirical_coverage_90": 0.9333333333333333,
+          "coverage_error": 0.033333333333333326,
+          "error_uncertainty_correlation": 0.2346451567251037,
+          "spearman_correlation": 0.3508563899868247
+        }
+      }
+    }
+  }
+}

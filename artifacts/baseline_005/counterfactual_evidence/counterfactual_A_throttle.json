@@ -1,0 +1,110 @@
+{
+  "factual_world": {
+    "episode_id": "ep_test_00000",
+    "intervention_time": 20,
+    "planning_horizon": 80,
+    "historical_t_core_at_t_star": 81.22813965174848,
+    "historical_f_cool_at_t_star": 39.03989121362913,
+    "historical_p_sys_at_t_star": 3.164374606127324,
+    "abduced_latent_norm": 12.414533615112305,
+    "abduced_latent_std_mean": 0.48925426602363586
+  },
+  "intervention": {
+    "intervention_target": "A_throttle",
+    "original_value": 80.9915984281194,
+    "counterfactual_value": 20.0,
+    "intervention_type": "ACTION",
+    "formal_notation": "do(A_throttle = 20.0)"
+  },
+  "counterfactual_world": {
+    "peak_t_core": 84.45697021484375,
+    "max_p_sys": 3.1196634769439697,
+    "min_f_cool": 33.12189483642578,
+    "mean_l_cpu": 65.3563461303711,
+    "mean_p_elec": 2.5830698013305664,
+    "failure_state": false,
+    "time_to_failure": null
+  },
+  "causal_effect": {
+    "delta_t_core_peak": -2.061309814453125,
+    "delta_p_sys_max": 0.0692741870880127,
+    "delta_f_cool_min": -3.0700149536132812,
+    "delta_l_cpu_mean": -1.5861282348632812,
+    "delta_p_elec_mean": -0.06889104843139648,
+    "primary_effect_direction": "REDUCES_CORE_TEMPERATURE",
+    "causal_interpretation": "Under counterfactual replay do(A_throttle=20.0), peak core temperature drops by 2.06\u00b0C (86.52\u00b0C \u2192 84.46\u00b0C) while preserving identical exogenous background conditions.",
+    "horizon_effects": {
+      "1": {
+        "delta_t_core": -10.589584350585938,
+        "delta_f_cool": 3.1688613891601562,
+        "delta_p_sys": 0.20653891563415527,
+        "delta_l_cpu": -11.394168853759766,
+        "delta_p_elec": -0.47000718116760254
+      },
+      "5": {
+        "delta_t_core": -7.9002838134765625,
+        "delta_f_cool": -2.6467666625976562,
+        "delta_p_sys": -0.028624296188354492,
+        "delta_l_cpu": -4.908695220947266,
+        "delta_p_elec": -0.21135544776916504
+      },
+      "10": {
+        "delta_t_core": -6.263427734375,
+        "delta_f_cool": -5.325935363769531,
+        "delta_p_sys": -0.10534119606018066,
+        "delta_l_cpu": -3.3605690002441406,
+        "delta_p_elec": -0.145766019821167
+      },
+      "20": {
+        "delta_t_core": -3.7121734619140625,
+        "delta_f_cool": -6.068336486816406,
+        "delta_p_sys": -0.16045856475830078,
+        "delta_l_cpu": -1.56439208984375,
+        "delta_p_elec": -0.06914329528808594
+      },
+      "40": {
+        "delta_t_core": -1.4140243530273438,
+        "delta_f_cool": -5.555728912353516,
+        "delta_p_sys": -0.15801358222961426,
+        "delta_l_cpu": -0.6856460571289062,
+        "delta_p_elec": -0.03054523468017578
+      }
+    }
+  },
+  "twin_world_integrity": {
+    "replay_mode": "TWIN_WORLD_FROZEN_EXOGENOUS",
+    "shared_exogenous_conditions": true,
+    "identical_pre_intervention_history": true,
+    "abduction_method": "POSTERIOR_LATENT_INFERENCE_Q_PHI"
+  },
+  "safety_comparison": {
+    "factual_thermal_margin_c": 8.481719970703125,
+    "factual_pressure_margin_bar": 2.449610710144043,
+    "factual_flow_margin_l_min": 28.191909790039062,
+    "counterfactual_thermal_margin_c": 10.54302978515625,
+    "counterfactual_pressure_margin_bar": 2.3803365230560303,
+    "counterfactual_flow_margin_l_min": 25.12189483642578,
+    "factual_safety_state": "SAFE",
+    "counterfactual_safety_state": "SAFE",
+    "safety_transition": "SAFE -> SAFE",
+    "outcome_classification": "INTERVENTION_PRESERVES_SAFETY"
+  },
+  "uncertainty": {
+    "aleatoric_sigma": 0.48925426602363586,
+    "epistemic_sigma": 1.5418990850448608,
+    "latent_novelty_d": 0.0,
+    "support_threshold": 15.0,
+    "within_support": true
+  },
+  "provenance": {
+    "source_evidence_hash": null,
+    "counterfactual_engine_version": "v1.0_pearl_level3",
+    "model_version": "baseline_005",
+    "dataset_version": "unified_v1_40_40_20",
+    "episode_id": "ep_test_00000",
+    "counterfactual_id": "cf_ep_test_00000_t20_A_throttle_20",
+    "intervention_time": 20,
+    "timestamp_utc": "2026-09-11T12:00:00Z",
+    "counterfactual_hash": "71f55be06ceaf0d25d75b8c779313ae0ed67a5043150ee12815c0b5161bd9edc"
+  }
+}

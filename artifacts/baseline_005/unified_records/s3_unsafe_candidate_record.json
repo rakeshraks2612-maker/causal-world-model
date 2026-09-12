@@ -1,0 +1,266 @@
+{
+  "decision": {
+    "recommendation": null,
+    "decision_status": "NO_ACTION_REQUIRED",
+    "abstention_reason": null
+  },
+  "trust": {
+    "trust_state": "MODEL_TRUSTED",
+    "reconstruction_residual_t_core": 0.85,
+    "reconstruction_residual_8d": 0.95,
+    "latent_novelty_d": 3.8,
+    "epistemic_uncertainty_sigma": 1.8,
+    "tau_residual_t": 6.0,
+    "tau_novelty": 15.0,
+    "trust_reason": "Observations match representation space."
+  },
+  "causal_reasoning": {
+    "summary": {
+      "headline": "Throttle CPU workload to 0.2%",
+      "mechanism": "Throttling CPU compute workload directly lowers electrical power consumption, diminishing internal Joule heating generation and stabilizing core temperature.",
+      "effect_direction": "REDUCE_CORE_TEMPERATURE"
+    },
+    "intervention": {
+      "target": "throttle",
+      "value": 0.2,
+      "intervention_type": "ACTION",
+      "baseline_value": null
+    },
+    "causal_chain": {
+      "root_actuator": "throttle",
+      "target_outcome": "T_core",
+      "nodes": [
+        {
+          "variable": "A_throttle",
+          "relationship": "ACTUATOR_INPUT",
+          "predicted_direction": "DECREASE",
+          "predicted_delta": null,
+          "evidence_available": true
+        },
+        {
+          "variable": "L_cpu",
+          "relationship": "DIRECT_DESCENDANT",
+          "predicted_direction": "DECREASE",
+          "predicted_delta": null,
+          "evidence_available": false
+        },
+        {
+          "variable": "P_elec",
+          "relationship": "MEDIATED_DESCENDANT",
+          "predicted_direction": "DECREASE",
+          "predicted_delta": null,
+          "evidence_available": false
+        },
+        {
+          "variable": "T_core",
+          "relationship": "FINAL_OUTCOME",
+          "predicted_direction": "STABLE",
+          "predicted_delta": null,
+          "evidence_available": false
+        }
+      ],
+      "all_affected_descendants": [
+        "cpu_load",
+        "core_temperature"
+      ]
+    },
+    "predicted_effects": {
+      "baseline_peak_t_core": null,
+      "intervened_peak_t_core": null,
+      "delta_t_core": null,
+      "baseline_min_flow": null,
+      "intervened_min_flow": null,
+      "delta_flow": null,
+      "counterfactual_statement": "Under the modeled intervention, `None` optimizes thermal-fluid equilibrium."
+    },
+    "rejected_alternatives": [],
+    "decision_margin": {
+      "best_candidate": null,
+      "second_best_candidate": null,
+      "decision_strength": "ZERO_MARGIN",
+      "decision_margin": null,
+      "best_utility": null,
+      "second_best_utility": null
+    },
+    "abstention_details": null,
+    "trust_qualification": "MODEL_TRUSTED (Validated: Operating within calibrated in-distribution latent support)",
+    "provenance": {
+      "source_evidence_hash": "dec_hash_s3_unsafe",
+      "model_version": "baseline_005",
+      "dataset_version": "v2.1",
+      "planner_version": "v1.2",
+      "benchmark_version": "v1.0",
+      "scenario_id": "scenario_03",
+      "timestamp_utc": "2026-09-11T12:00:00Z"
+    }
+  },
+  "counterfactual": null,
+  "safety": {
+    "overall_state": "UNSAFE",
+    "is_safe": false,
+    "constraints": {
+      "thermal": {
+        "name": "thermal",
+        "variable_symbol": "T_core",
+        "unit": "\u00b0C",
+        "raw_prediction": 94.5,
+        "uncertainty_sigma": 1.8,
+        "k_multiplier": 2.0,
+        "effective_value": 98.1,
+        "threshold": 95.0,
+        "comparison_operator": "<",
+        "margin": -3.0999999999999943,
+        "normalized_headroom_pct": -4.133333333333326,
+        "is_passed": false,
+        "is_marginal": false,
+        "violation_message": "T_core effective (98.10\u00b0C) exceeds thermal limit (95.0\u00b0C) by 3.10\u00b0C."
+      },
+      "pressure": {
+        "name": "pressure",
+        "variable_symbol": "P_sys",
+        "unit": "bar",
+        "raw_prediction": 4.1,
+        "uncertainty_sigma": 0.2,
+        "k_multiplier": 2.0,
+        "effective_value": 4.5,
+        "threshold": 5.5,
+        "comparison_operator": "<",
+        "margin": 1.0,
+        "normalized_headroom_pct": 20.0,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      },
+      "flow": {
+        "name": "flow",
+        "variable_symbol": "F_cool",
+        "unit": "L/min",
+        "raw_prediction": 18.0,
+        "uncertainty_sigma": 1.0,
+        "k_multiplier": 2.0,
+        "effective_value": 16.0,
+        "threshold": 8.0,
+        "comparison_operator": ">",
+        "margin": 8.0,
+        "normalized_headroom_pct": 15.384615384615385,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      },
+      "latent_support": {
+        "name": "latent_support",
+        "variable_symbol": "D_latent",
+        "unit": "d_M",
+        "raw_prediction": 3.8,
+        "uncertainty_sigma": null,
+        "k_multiplier": 0.0,
+        "effective_value": 3.8,
+        "threshold": 15.0,
+        "comparison_operator": "<=",
+        "margin": 11.2,
+        "normalized_headroom_pct": 74.66666666666666,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      }
+    },
+    "limiting_constraint": {
+      "constraint_name": "thermal",
+      "variable_symbol": "T_core",
+      "raw_margin": -3.0999999999999943,
+      "unit": "\u00b0C",
+      "normalized_headroom_pct": -4.133333333333326,
+      "rationale": "Hard safety boundary breached: Thermal exceeds limit with dimensionless normalized violation score 0.041 (4.1% over span, raw breach: 3.10 \u00b0C).",
+      "normalized_violation_score": 0.04133333333333326
+    },
+    "violations": [
+      {
+        "constraint_code": "THERMAL_LIMIT_EXCEEDED",
+        "variable_symbol": "T_core",
+        "observed_effective_value": 98.1,
+        "threshold": 95.0,
+        "margin_violated_by": 3.0999999999999943,
+        "severity": "UNSAFE",
+        "message": "T_core effective (98.10\u00b0C) exceeds thermal limit (95.0\u00b0C) by 3.10\u00b0C."
+      }
+    ],
+    "uncertainty_adjusted": true,
+    "provenance": {
+      "source_evidence_hash": "dec_hash_s3_unsafe",
+      "safety_engine_version": "v1.2_authoritative_gate",
+      "model_version": "baseline_005",
+      "scenario_id": "scenario_03",
+      "candidate_id": null,
+      "timestamp_utc": "2026-09-11T12:00:00Z",
+      "safety_hash": "21c4998d3a67021323ed825e9933605b3d14fc230725a15259194b793ebbc2c6"
+    }
+  },
+  "abstention": {
+    "abstained": false,
+    "abstention_type": "NONE",
+    "headline": "System Fully Operational: Recommendation Emitted",
+    "primary_reason": "All telemetry matches representation space and candidate simulations passed trust bounds.",
+    "evidence": [
+      {
+        "metric_name": "Thermal Reconstruction Residual (R_T)",
+        "observed_value": 0.85,
+        "threshold": 6.0,
+        "excess": -5.15,
+        "direction": "WITHIN_LIMITS",
+        "unit": "\u00b0C",
+        "is_trigger": false
+      },
+      {
+        "metric_name": "Multivariate 8D Reconstruction Residual (R_8D)",
+        "observed_value": 0.95,
+        "threshold": 1.9,
+        "excess": -0.95,
+        "direction": "WITHIN_LIMITS",
+        "unit": "z-norm",
+        "is_trigger": false
+      },
+      {
+        "metric_name": "Latent Manifold Novelty Distance (D_latent)",
+        "observed_value": 3.8,
+        "threshold": 15.0,
+        "excess": -11.2,
+        "direction": "WITHIN_LIMITS",
+        "unit": "d_M",
+        "is_trigger": false
+      }
+    ],
+    "affected_decision": "NO_ABSTENTION",
+    "blocked_actions": [],
+    "safety_implication": "Predictive simulations are considered decision-grade.",
+    "recommended_next_step": "Proceed with recommended autonomous intervention plan.",
+    "provenance": {
+      "source_evidence_hash": "dec_hash_s3_unsafe",
+      "engine_version": "v1.0_authoritative_abstention",
+      "model_version": "baseline_005",
+      "scenario_id": "scenario_03",
+      "timestamp_utc": "2026-09-11T12:00:00Z",
+      "abstention_hash": "40b13c03423cb18d1dbf0257e1451cde53ecaa0acdaa6f0f5a15b7599ea04a11"
+    }
+  },
+  "decision_quality": {
+    "utility_score": null,
+    "second_best_candidate": null,
+    "second_best_utility": null,
+    "decision_margin": null,
+    "alternatives_rejected": []
+  },
+  "provenance": {
+    "model_version": "baseline_005",
+    "dataset_version": "v2.1",
+    "planner_version": "v1.2",
+    "benchmark_version": "v1.0",
+    "unified_engine_version": "v1.0_unified_assembly",
+    "scenario_id": "scenario_03",
+    "timestamp_utc": "2026-09-11T12:00:00Z",
+    "decision_evidence_hash": "dec_hash_s3_unsafe",
+    "safety_hash": "21c4998d3a67021323ed825e9933605b3d14fc230725a15259194b793ebbc2c6",
+    "abstention_hash": "40b13c03423cb18d1dbf0257e1451cde53ecaa0acdaa6f0f5a15b7599ea04a11",
+    "counterfactual_hash": null,
+    "unified_record_hash": "563a79909ead192bd0cefd73afe822c805332dfe5d01ea3b2dd393981f59b91b"
+  }
+}

@@ -1,0 +1,766 @@
+{
+  "experiment_1_residual_distributions": {
+    "b004_control": {
+      "model": "B004 (Control)",
+      "classes": {
+        "class_a_nominal": {
+          "t_core_residual": {
+            "mean": 1.3308025156656902,
+            "median": 0.7353248596191406,
+            "p95": 4.546778106689442,
+            "p99": 15.834178962707506,
+            "max": 21.485401153564453
+          },
+          "obs_8d_norm_residual": {
+            "mean": 0.21653716881945728,
+            "median": 0.1553027108311653,
+            "p95": 0.5622254937887189,
+            "p99": 1.8553556990623468,
+            "max": 2.0419352054595947
+          }
+        },
+        "class_b_high_safe": {
+          "t_core_residual": {
+            "mean": 1.2582359339396159,
+            "median": 0.7960357666015625,
+            "p95": 2.837295913696286,
+            "p99": 16.33275177001949,
+            "max": 19.878952026367188
+          },
+          "obs_8d_norm_residual": {
+            "mean": 0.2848695243373513,
+            "median": 0.22827637940645218,
+            "p95": 0.5446809321641921,
+            "p99": 1.8268108499050117,
+            "max": 2.158149480819702
+          }
+        },
+        "class_c_boundary": {
+          "t_core_residual": {
+            "mean": 3.6459217478434245,
+            "median": 3.643268585205078,
+            "p95": 6.789563369750975,
+            "p99": 8.961872940063476,
+            "max": 13.200958251953125
+          },
+          "obs_8d_norm_residual": {
+            "mean": 0.6176833026905855,
+            "median": 0.5578243136405945,
+            "p95": 1.2436622262001027,
+            "p99": 2.462383222579956,
+            "max": 2.908315658569336
+          }
+        },
+        "class_d_runaway": {
+          "t_core_residual": {
+            "mean": 4.5699880549112954,
+            "median": 4.627494812011719,
+            "p95": 5.631976318359375,
+            "p99": 12.336668167114201,
+            "max": 24.84821319580078
+          },
+          "obs_8d_norm_residual": {
+            "mean": 1.3734576954841613,
+            "median": 1.30510812997818,
+            "p95": 2.0946473836898805,
+            "p99": 2.7844420742988576,
+            "max": 3.33967924118042
+          }
+        },
+        "class_e_acute_shocks": {
+          "t_core_residual": {
+            "mean": 4.911535395304362,
+            "median": 3.6173019409179688,
+            "p95": 13.425828552246088,
+            "p99": 16.302236022949202,
+            "max": 17.525203704833984
+          },
+          "obs_8d_norm_residual": {
+            "mean": 0.9720478840172291,
+            "median": 0.5720379948616028,
+            "p95": 2.1879494905471804,
+            "p99": 2.3061677098274225,
+            "max": 2.4444124698638916
+          }
+        }
+      },
+      "scenarios": {
+        "S1": {
+          "scenario_id": "scenario_01_do_nothing",
+          "t_star": 40,
+          "true_t_core": 82.03272742806607,
+          "rec_t_core": 82.40091705322266,
+          "t_core_residual": 0.3681896251565888,
+          "obs_8d_norm_residual": 0.09900268912315369
+        },
+        "S2": {
+          "scenario_id": "scenario_02_valve",
+          "t_star": 40,
+          "true_t_core": 90.63643233882199,
+          "rec_t_core": 90.35124969482422,
+          "t_core_residual": 0.2851826439977714,
+          "obs_8d_norm_residual": 0.25800231099128723
+        },
+        "S3": {
+          "scenario_id": "scenario_03_throttle",
+          "t_star": 40,
+          "true_t_core": 86.81949344269952,
+          "rec_t_core": 86.8265609741211,
+          "t_core_residual": 0.007067531421569129,
+          "obs_8d_norm_residual": 0.06928493082523346
+        },
+        "S4": {
+          "scenario_id": "scenario_04_pump",
+          "t_star": 40,
+          "true_t_core": 85.04874142439913,
+          "rec_t_core": 84.6742172241211,
+          "t_core_residual": 0.37452420027803157,
+          "obs_8d_norm_residual": 0.1586889624595642
+        },
+        "S5": {
+          "scenario_id": "scenario_05_combined",
+          "t_star": 40,
+          "true_t_core": 91.86594422629511,
+          "rec_t_core": 90.9328384399414,
+          "t_core_residual": 0.9331057863537069,
+          "obs_8d_norm_residual": 0.17113888263702393
+        },
+        "S6": {
+          "scenario_id": "scenario_06_all_unsafe",
+          "t_star": 30,
+          "true_t_core": 120.36945664515476,
+          "rec_t_core": 88.80985260009766,
+          "t_core_residual": 31.5596040450571,
+          "obs_8d_norm_residual": 1.66486656665802
+        }
+      }
+    },
+    "variant_2_shock_weighted": {
+      "model": "Variant 2 (Shock-Weighted)",
+      "classes": {
+        "class_a_nominal": {
+          "t_core_residual": {
+            "mean": 1.3136000366210938,
+            "median": 0.8849754333496094,
+            "p95": 2.6702014923095683,
+            "p99": 12.324982070922841,
+            "max": 15.877361297607422
+          },
+          "obs_8d_norm_residual": {
+            "mean": 0.2246575119756162,
+            "median": 0.18679401278495789,
+            "p95": 0.3072529613971707,
+            "p99": 1.6801502513885498,
+            "max": 2.0152792930603027
+          }
+        },
+        "class_b_high_safe": {
+          "t_core_residual": {
+            "mean": 1.8743176193237305,
+            "median": 1.4340629577636719,
+            "p95": 3.497302627563471,
+            "p99": 21.59523994445797,
+            "max": 25.038253784179688
+          },
+          "obs_8d_norm_residual": {
+            "mean": 0.2862577386622628,
+            "median": 0.23083876818418503,
+            "p95": 0.5931850105524004,
+            "p99": 1.7812459778785696,
+            "max": 2.092836618423462
+          }
+        },
+        "class_c_boundary": {
+          "t_core_residual": {
+            "mean": 3.347900952657064,
+            "median": 3.0393943786621094,
+            "p95": 7.411383819580076,
+            "p99": 11.366970062255827,
+            "max": 17.38018035888672
+          },
+          "obs_8d_norm_residual": {
+            "mean": 0.4938777720232805,
+            "median": 0.40473151206970215,
+            "p95": 1.1907885551452615,
+            "p99": 2.354569404125213,
+            "max": 2.8544652462005615
+          }
+        },
+        "class_d_runaway": {
+          "t_core_residual": {
+            "mean": 2.0850314331054687,
+            "median": 1.016326904296875,
+            "p95": 8.23717651367187,
+            "p99": 11.738987960815427,
+            "max": 17.971389770507812
+          },
+          "obs_8d_norm_residual": {
+            "mean": 0.8314161215722561,
+            "median": 0.7845195233821869,
+            "p95": 1.2149678170680998,
+            "p99": 2.706433606147766,
+            "max": 3.311675548553467
+          }
+        },
+        "class_e_acute_shocks": {
+          "t_core_residual": {
+            "mean": 4.102318389892578,
+            "median": 4.727848052978516,
+            "p95": 9.819002914428708,
+            "p99": 14.764142570495597,
+            "max": 18.172962188720703
+          },
+          "obs_8d_norm_residual": {
+            "mean": 0.72879822392265,
+            "median": 0.6745196282863617,
+            "p95": 1.5429409563541405,
+            "p99": 1.7458693814277628,
+            "max": 1.9204167127609253
+          }
+        }
+      },
+      "scenarios": {
+        "S1": {
+          "scenario_id": "scenario_01_do_nothing",
+          "t_star": 40,
+          "true_t_core": 82.03272742806607,
+          "rec_t_core": 83.48258972167969,
+          "t_core_residual": 1.44986229361362,
+          "obs_8d_norm_residual": 0.16701391339302063
+        },
+        "S2": {
+          "scenario_id": "scenario_02_valve",
+          "t_star": 40,
+          "true_t_core": 90.63643233882199,
+          "rec_t_core": 92.49964904785156,
+          "t_core_residual": 1.8632167090295724,
+          "obs_8d_norm_residual": 0.22210606932640076
+        },
+        "S3": {
+          "scenario_id": "scenario_03_throttle",
+          "t_star": 40,
+          "true_t_core": 86.81949344269952,
+          "rec_t_core": 86.3012466430664,
+          "t_core_residual": 0.5182467996331184,
+          "obs_8d_norm_residual": 0.19563326239585876
+        },
+        "S4": {
+          "scenario_id": "scenario_04_pump",
+          "t_star": 40,
+          "true_t_core": 85.04874142439913,
+          "rec_t_core": 85.11417388916016,
+          "t_core_residual": 0.06543246476103093,
+          "obs_8d_norm_residual": 0.14812614023685455
+        },
+        "S5": {
+          "scenario_id": "scenario_05_combined",
+          "t_star": 40,
+          "true_t_core": 91.86594422629511,
+          "rec_t_core": 92.49958038330078,
+          "t_core_residual": 0.6336361570056681,
+          "obs_8d_norm_residual": 0.15023766458034515
+        },
+        "S6": {
+          "scenario_id": "scenario_06_all_unsafe",
+          "t_star": 30,
+          "true_t_core": 120.36945664515476,
+          "rec_t_core": 87.61848449707031,
+          "t_core_residual": 32.75097214808444,
+          "obs_8d_norm_residual": 1.7677924633026123
+        }
+      }
+    }
+  },
+  "experiment_2_separability_and_calibration": {
+    "b004_control": {
+      "roc_auc_t_core": 0.8994988637117117,
+      "roc_auc_8d_norm": 0.9323597056625538,
+      "calibration_results": {
+        "thresh_T_p98": {
+          "threshold": 13.862370376586908,
+          "precision": 0.4032258064516129,
+          "recall": 0.013877324451845684,
+          "fpr": 0.018988965871182963,
+          "fnr": 0.9861226755481544,
+          "tp": 50,
+          "fp": 74,
+          "tn": 3823,
+          "fn": 3553
+        },
+        "thresh_T_p95": {
+          "threshold": 5.670974731445311,
+          "precision": 0.80893536121673,
+          "recall": 0.23619206217041355,
+          "fpr": 0.05157813702848345,
+          "fnr": 0.7638079378295864,
+          "tp": 851,
+          "fp": 201,
+          "tn": 3696,
+          "fn": 2752
+        },
+        "thresh_8d_p98": {
+          "threshold": 1.80551070690155,
+          "precision": 0.8824476650563607,
+          "recall": 0.1520954759922287,
+          "fpr": 0.018732358224275082,
+          "fnr": 0.8479045240077713,
+          "tp": 548,
+          "fp": 73,
+          "tn": 3824,
+          "fn": 3055
+        }
+      },
+      "benchmark_scenarios_evaluation": {
+        "S1": {
+          "scenario_id": "scenario_01_do_nothing",
+          "true_T": 82.03272742806607,
+          "rec_T": 82.40091705322266,
+          "r_T": 0.3681896251565888,
+          "r_8d": 0.09900268912315369,
+          "flagged_unsafe_T_98": false,
+          "flagged_unsafe_8d_98": false
+        },
+        "S2": {
+          "scenario_id": "scenario_02_valve",
+          "true_T": 90.63643233882199,
+          "rec_T": 90.35124969482422,
+          "r_T": 0.2851826439977714,
+          "r_8d": 0.25800231099128723,
+          "flagged_unsafe_T_98": false,
+          "flagged_unsafe_8d_98": false
+        },
+        "S3": {
+          "scenario_id": "scenario_03_throttle",
+          "true_T": 86.81949344269952,
+          "rec_T": 86.8265609741211,
+          "r_T": 0.007067531421569129,
+          "r_8d": 0.06928493082523346,
+          "flagged_unsafe_T_98": false,
+          "flagged_unsafe_8d_98": false
+        },
+        "S4": {
+          "scenario_id": "scenario_04_pump",
+          "true_T": 85.04874142439913,
+          "rec_T": 84.6742172241211,
+          "r_T": 0.37452420027803157,
+          "r_8d": 0.1586889624595642,
+          "flagged_unsafe_T_98": false,
+          "flagged_unsafe_8d_98": false
+        },
+        "S5": {
+          "scenario_id": "scenario_05_combined",
+          "true_T": 91.86594422629511,
+          "rec_T": 90.9328384399414,
+          "r_T": 0.9331057863537069,
+          "r_8d": 0.17113888263702393,
+          "flagged_unsafe_T_98": false,
+          "flagged_unsafe_8d_98": false
+        },
+        "S6": {
+          "scenario_id": "scenario_06_all_unsafe",
+          "true_T": 120.36945664515476,
+          "rec_T": 88.80985260009766,
+          "r_T": 31.5596040450571,
+          "r_8d": 1.66486656665802,
+          "flagged_unsafe_T_98": true,
+          "flagged_unsafe_8d_98": false
+        }
+      }
+    },
+    "variant_2_shock_weighted": {
+      "roc_auc_t_core": 0.7075382181942728,
+      "roc_auc_8d_norm": 0.9136554083355536,
+      "calibration_results": {
+        "thresh_T_p98": {
+          "threshold": 12.758359298706042,
+          "precision": 0.14606741573033707,
+          "recall": 0.0036081043574798777,
+          "fpr": 0.019502181164998716,
+          "fnr": 0.9963918956425202,
+          "tp": 13,
+          "fp": 76,
+          "tn": 3821,
+          "fn": 3590
+        },
+        "thresh_T_p95": {
+          "threshold": 6.8848083496093695,
+          "precision": 0.5992141453831041,
+          "recall": 0.08465167915625868,
+          "fpr": 0.05234795996920708,
+          "fnr": 0.9153483208437413,
+          "tp": 305,
+          "fp": 204,
+          "tn": 3693,
+          "fn": 3298
+        },
+        "thresh_8d_p98": {
+          "threshold": 1.689069743156433,
+          "precision": 0.40458015267175573,
+          "recall": 0.014709963918956424,
+          "fpr": 0.020015396458814474,
+          "fnr": 0.9852900360810436,
+          "tp": 53,
+          "fp": 78,
+          "tn": 3819,
+          "fn": 3550
+        }
+      },
+      "benchmark_scenarios_evaluation": {
+        "S1": {
+          "scenario_id": "scenario_01_do_nothing",
+          "true_T": 82.03272742806607,
+          "rec_T": 83.48258972167969,
+          "r_T": 1.44986229361362,
+          "r_8d": 0.16701391339302063,
+          "flagged_unsafe_T_98": false,
+          "flagged_unsafe_8d_98": false
+        },
+        "S2": {
+          "scenario_id": "scenario_02_valve",
+          "true_T": 90.63643233882199,
+          "rec_T": 92.49964904785156,
+          "r_T": 1.8632167090295724,
+          "r_8d": 0.22210606932640076,
+          "flagged_unsafe_T_98": false,
+          "flagged_unsafe_8d_98": false
+        },
+        "S3": {
+          "scenario_id": "scenario_03_throttle",
+          "true_T": 86.81949344269952,
+          "rec_T": 86.3012466430664,
+          "r_T": 0.5182467996331184,
+          "r_8d": 0.19563326239585876,
+          "flagged_unsafe_T_98": false,
+          "flagged_unsafe_8d_98": false
+        },
+        "S4": {
+          "scenario_id": "scenario_04_pump",
+          "true_T": 85.04874142439913,
+          "rec_T": 85.11417388916016,
+          "r_T": 0.06543246476103093,
+          "r_8d": 0.14812614023685455,
+          "flagged_unsafe_T_98": false,
+          "flagged_unsafe_8d_98": false
+        },
+        "S5": {
+          "scenario_id": "scenario_05_combined",
+          "true_T": 91.86594422629511,
+          "rec_T": 92.49958038330078,
+          "r_T": 0.6336361570056681,
+          "r_8d": 0.15023766458034515,
+          "flagged_unsafe_T_98": false,
+          "flagged_unsafe_8d_98": false
+        },
+        "S6": {
+          "scenario_id": "scenario_06_all_unsafe",
+          "true_T": 120.36945664515476,
+          "rec_T": 87.61848449707031,
+          "r_T": 32.75097214808444,
+          "r_8d": 1.7677924633026123,
+          "flagged_unsafe_T_98": true,
+          "flagged_unsafe_8d_98": true
+        }
+      }
+    }
+  },
+  "experiment_3_progressive_s6_reconstruction": {
+    "b004_control": {
+      "Config_A_89C_Baseline": {
+        "description": "89\u00b0C nominal equilibrium across all channels",
+        "true_T_core": 89.34123384084499,
+        "rec_T_core": 87.80419921875,
+        "pred_forward_T_core": 87.88121795654297,
+        "residual_T_core": 1.5370346220949926,
+        "residual_8d_norm": 0.2685468792915344,
+        "latent_norm": 7.338294506072998,
+        "latent_mahalanobis_d": 5.0507562064634755,
+        "latent_step_displacement": 0.008132373914122581,
+        "latent_displacement_from_nom": 0.0,
+        "aleatoric_sigma_latent": 0.4687913954257965
+      },
+      "Config_B_89C_Plus_120C_Shock": {
+        "description": "89\u00b0C baseline + 120\u00b0C single-channel thermal shock at t=30",
+        "true_T_core": 120.37,
+        "rec_T_core": 88.11307525634766,
+        "pred_forward_T_core": 88.19410705566406,
+        "residual_T_core": 32.25692474365235,
+        "residual_8d_norm": 1.7059868574142456,
+        "latent_norm": 7.550085067749023,
+        "latent_mahalanobis_d": 5.09976324342436,
+        "latent_step_displacement": 0.4332638382911682,
+        "latent_displacement_from_nom": 0.4358058571815491,
+        "aleatoric_sigma_latent": 0.4685157835483551
+      },
+      "Config_C_89C_Plus_Valve_Closed": {
+        "description": "89\u00b0C baseline + valve 0% closed / flow choked",
+        "true_T_core": 89.34123384084499,
+        "rec_T_core": 128.17764282226562,
+        "pred_forward_T_core": 131.07394409179688,
+        "residual_T_core": 38.83640898142063,
+        "residual_8d_norm": 2.5647811889648438,
+        "latent_norm": 7.575629711151123,
+        "latent_mahalanobis_d": 7.743913508983209,
+        "latent_step_displacement": 0.004890628159046173,
+        "latent_displacement_from_nom": 12.13794994354248,
+        "aleatoric_sigma_latent": 0.4474058151245117
+      },
+      "Config_D_89C_Plus_Valve_Closed_Low_Load": {
+        "description": "89\u00b0C baseline + valve closed + low workload",
+        "true_T_core": 89.34123384084499,
+        "rec_T_core": 85.06757354736328,
+        "pred_forward_T_core": 87.4014663696289,
+        "residual_T_core": 4.273660293481711,
+        "residual_8d_norm": 2.6328623294830322,
+        "latent_norm": 10.084609031677246,
+        "latent_mahalanobis_d": 9.478945862108453,
+        "latent_step_displacement": 0.01571512408554554,
+        "latent_displacement_from_nom": 15.319910049438477,
+        "aleatoric_sigma_latent": 0.4648239314556122
+      },
+      "Config_E_Valve_Closed_Low_Load_Plus_120C_Shock": {
+        "description": "Valve closed + low load + 120\u00b0C shock at t=30",
+        "true_T_core": 120.37,
+        "rec_T_core": 85.81462097167969,
+        "pred_forward_T_core": 87.75737762451172,
+        "residual_T_core": 34.55537902832032,
+        "residual_8d_norm": 3.181931972503662,
+        "latent_norm": 9.99488639831543,
+        "latent_mahalanobis_d": 9.704362475036405,
+        "latent_step_displacement": 0.35662198066711426,
+        "latent_displacement_from_nom": 15.218230247497559,
+        "aleatoric_sigma_latent": 0.4626212418079376
+      },
+      "Config_F_Full_S6_History": {
+        "description": "Exact Full S6 observation and action history",
+        "true_T_core": 120.36945664515476,
+        "rec_T_core": 88.80985260009766,
+        "pred_forward_T_core": 88.78709411621094,
+        "residual_T_core": 31.5596040450571,
+        "residual_8d_norm": 1.66486656665802,
+        "latent_norm": 7.6690168380737305,
+        "latent_mahalanobis_d": 6.03920944064378,
+        "latent_step_displacement": 0.4355314373970032,
+        "latent_displacement_from_nom": 1.5036143064498901,
+        "aleatoric_sigma_latent": 0.4676276743412018
+      }
+    },
+    "variant_2_shock_weighted": {
+      "Config_A_89C_Baseline": {
+        "description": "89\u00b0C nominal equilibrium across all channels",
+        "true_T_core": 89.34123384084499,
+        "rec_T_core": 87.08535766601562,
+        "pred_forward_T_core": 87.12399291992188,
+        "residual_T_core": 2.2558761748293676,
+        "residual_8d_norm": 0.33678433299064636,
+        "latent_norm": 3.5934839248657227,
+        "latent_mahalanobis_d": 3.6211558525009235,
+        "latent_step_displacement": 0.012776310555636883,
+        "latent_displacement_from_nom": 0.0,
+        "aleatoric_sigma_latent": 0.23287662863731384
+      },
+      "Config_B_89C_Plus_120C_Shock": {
+        "description": "89\u00b0C baseline + 120\u00b0C single-channel thermal shock at t=30",
+        "true_T_core": 120.37,
+        "rec_T_core": 87.6070785522461,
+        "pred_forward_T_core": 87.63124084472656,
+        "residual_T_core": 32.76292144775391,
+        "residual_8d_norm": 1.753028392791748,
+        "latent_norm": 3.741023302078247,
+        "latent_mahalanobis_d": 3.7940143596460025,
+        "latent_step_displacement": 0.3783038258552551,
+        "latent_displacement_from_nom": 0.3824058771133423,
+        "aleatoric_sigma_latent": 0.23211635649204254
+      },
+      "Config_C_89C_Plus_Valve_Closed": {
+        "description": "89\u00b0C baseline + valve 0% closed / flow choked",
+        "true_T_core": 89.34123384084499,
+        "rec_T_core": 132.3431396484375,
+        "pred_forward_T_core": 134.82562255859375,
+        "residual_T_core": 43.00190580759251,
+        "residual_8d_norm": 2.7372348308563232,
+        "latent_norm": 5.724308490753174,
+        "latent_mahalanobis_d": 7.322724904812411,
+        "latent_step_displacement": 0.005597577430307865,
+        "latent_displacement_from_nom": 7.614778518676758,
+        "aleatoric_sigma_latent": 0.2049432247877121
+      },
+      "Config_D_89C_Plus_Valve_Closed_Low_Load": {
+        "description": "89\u00b0C baseline + valve closed + low workload",
+        "true_T_core": 89.34123384084499,
+        "rec_T_core": 91.72342681884766,
+        "pred_forward_T_core": 94.4348373413086,
+        "residual_T_core": 2.3821929780026636,
+        "residual_8d_norm": 2.6097970008850098,
+        "latent_norm": 7.363438129425049,
+        "latent_mahalanobis_d": 14.571255189253375,
+        "latent_step_displacement": 0.009593994356691837,
+        "latent_displacement_from_nom": 9.31486701965332,
+        "aleatoric_sigma_latent": 0.2149675041437149
+      },
+      "Config_E_Valve_Closed_Low_Load_Plus_120C_Shock": {
+        "description": "Valve closed + low load + 120\u00b0C shock at t=30",
+        "true_T_core": 120.37,
+        "rec_T_core": 92.99922943115234,
+        "pred_forward_T_core": 95.2329330444336,
+        "residual_T_core": 27.37077056884766,
+        "residual_8d_norm": 2.975917100906372,
+        "latent_norm": 7.303645610809326,
+        "latent_mahalanobis_d": 14.773841098308854,
+        "latent_step_displacement": 0.2396625131368637,
+        "latent_displacement_from_nom": 9.253375053405762,
+        "aleatoric_sigma_latent": 0.21503996849060059
+      },
+      "Config_F_Full_S6_History": {
+        "description": "Exact Full S6 observation and action history",
+        "true_T_core": 120.36945664515476,
+        "rec_T_core": 87.61848449707031,
+        "pred_forward_T_core": 87.64924621582031,
+        "residual_T_core": 32.75097214808444,
+        "residual_8d_norm": 1.7677924633026123,
+        "latent_norm": 3.6705338954925537,
+        "latent_mahalanobis_d": 4.293509165096157,
+        "latent_step_displacement": 0.3694939613342285,
+        "latent_displacement_from_nom": 0.44883090257644653,
+        "aleatoric_sigma_latent": 0.2319280356168747
+      }
+    }
+  },
+  "experiment_4_counterfactual_context_test": {
+    "b004_control": {
+      "1_Normal_History": {
+        "context_description": "Nominal steady-state (T_core \u2248 75\u00b0C, load 60%, valve 60%)",
+        "history_T_before_shock": 75.0,
+        "true_T_shock": 120.37,
+        "rec_T_shock": 76.03336334228516,
+        "residual_T_core": 44.33663665771485,
+        "residual_8d_norm": 3.2739169597625732,
+        "latent_norm": 7.015488147735596,
+        "latent_mahalanobis_d": 6.3483135570793365,
+        "latent_step_displacement": 2.14325213432312
+      },
+      "2_High_Temperature_History": {
+        "context_description": "High-safe thermal regime (T_core \u2248 92\u00b0C, high load 80%)",
+        "history_T_before_shock": 92.0,
+        "true_T_shock": 120.37,
+        "rec_T_shock": 93.45529174804688,
+        "residual_T_core": 26.91470825195313,
+        "residual_8d_norm": 2.0420498847961426,
+        "latent_norm": 8.76073169708252,
+        "latent_mahalanobis_d": 6.719887854239066,
+        "latent_step_displacement": 0.46069803833961487
+      },
+      "3_Low_Load_History": {
+        "context_description": "Low-load regime (T_core \u2248 65\u00b0C, load 20%)",
+        "history_T_before_shock": 65.0,
+        "true_T_shock": 120.37,
+        "rec_T_shock": 56.21327209472656,
+        "residual_T_core": 64.15672790527344,
+        "residual_8d_norm": 5.915724277496338,
+        "latent_norm": 7.933891296386719,
+        "latent_mahalanobis_d": 9.643659768557827,
+        "latent_step_displacement": 2.6310744285583496
+      },
+      "4_Valve_Closed_History": {
+        "context_description": "Valve-closed bottleneck (valve 5%, flow 5 L/min)",
+        "history_T_before_shock": 85.0,
+        "true_T_shock": 120.37,
+        "rec_T_shock": 94.913330078125,
+        "residual_T_core": 25.456669921875005,
+        "residual_8d_norm": 4.075850009918213,
+        "latent_norm": 6.4262213706970215,
+        "latent_mahalanobis_d": 9.049226696621034,
+        "latent_step_displacement": 2.8129191398620605
+      },
+      "5_Valve_Closed_Plus_Low_Load_History": {
+        "context_description": "Valve closed (5%) + low load (20%)",
+        "history_T_before_shock": 78.0,
+        "true_T_shock": 120.37,
+        "rec_T_shock": 79.44636535644531,
+        "residual_T_core": 40.92363464355469,
+        "residual_8d_norm": 6.090697288513184,
+        "latent_norm": 7.639326095581055,
+        "latent_mahalanobis_d": 12.876649235264908,
+        "latent_step_displacement": 3.7313802242279053
+      },
+      "6_Exact_S6_History": {
+        "context_description": "Exact 30-step historical trajectory from Scenario 6",
+        "history_T_before_shock": 91.17875461801681,
+        "true_T_shock": 120.37,
+        "rec_T_shock": 88.80985260009766,
+        "residual_T_core": 31.56014739990235,
+        "residual_8d_norm": 1.66486656665802,
+        "latent_norm": 7.6690168380737305,
+        "latent_mahalanobis_d": 6.03920944064378,
+        "latent_step_displacement": 0.4355314373970032
+      }
+    },
+    "variant_2_shock_weighted": {
+      "1_Normal_History": {
+        "context_description": "Nominal steady-state (T_core \u2248 75\u00b0C, load 60%, valve 60%)",
+        "history_T_before_shock": 75.0,
+        "true_T_shock": 120.37,
+        "rec_T_shock": 75.96968078613281,
+        "residual_T_core": 44.40031921386719,
+        "residual_8d_norm": 3.295572280883789,
+        "latent_norm": 3.643423318862915,
+        "latent_mahalanobis_d": 6.303331468483406,
+        "latent_step_displacement": 1.0133064985275269
+      },
+      "2_High_Temperature_History": {
+        "context_description": "High-safe thermal regime (T_core \u2248 92\u00b0C, high load 80%)",
+        "history_T_before_shock": 92.0,
+        "true_T_shock": 120.37,
+        "rec_T_shock": 93.93875122070312,
+        "residual_T_core": 26.43124877929688,
+        "residual_8d_norm": 2.031111478805542,
+        "latent_norm": 4.652287483215332,
+        "latent_mahalanobis_d": 5.685235345038094,
+        "latent_step_displacement": 0.3124605119228363
+      },
+      "3_Low_Load_History": {
+        "context_description": "Low-load regime (T_core \u2248 65\u00b0C, load 20%)",
+        "history_T_before_shock": 65.0,
+        "true_T_shock": 120.37,
+        "rec_T_shock": 53.92896270751953,
+        "residual_T_core": 66.44103729248047,
+        "residual_8d_norm": 6.140237331390381,
+        "latent_norm": 4.503070831298828,
+        "latent_mahalanobis_d": 6.358427224468758,
+        "latent_step_displacement": 1.5934089422225952
+      },
+      "4_Valve_Closed_History": {
+        "context_description": "Valve-closed bottleneck (valve 5%, flow 5 L/min)",
+        "history_T_before_shock": 85.0,
+        "true_T_shock": 120.37,
+        "rec_T_shock": 104.55916595458984,
+        "residual_T_core": 15.81083404541016,
+        "residual_8d_norm": 4.172018527984619,
+        "latent_norm": 4.03891134262085,
+        "latent_mahalanobis_d": 11.115631113302632,
+        "latent_step_displacement": 1.733955979347229
+      },
+      "5_Valve_Closed_Plus_Low_Load_History": {
+        "context_description": "Valve closed (5%) + low load (20%)",
+        "history_T_before_shock": 78.0,
+        "true_T_shock": 120.37,
+        "rec_T_shock": 82.66151428222656,
+        "residual_T_core": 37.70848571777344,
+        "residual_8d_norm": 6.04815149307251,
+        "latent_norm": 5.194227695465088,
+        "latent_mahalanobis_d": 14.417013300348344,
+        "latent_step_displacement": 2.699049234390259
+      },
+      "6_Exact_S6_History": {
+        "context_description": "Exact 30-step historical trajectory from Scenario 6",
+        "history_T_before_shock": 91.17875461801681,
+        "true_T_shock": 120.37,
+        "rec_T_shock": 87.61848449707031,
+        "residual_T_core": 32.75151550292969,
+        "residual_8d_norm": 1.7677924633026123,
+        "latent_norm": 3.6705338954925537,
+        "latent_mahalanobis_d": 4.293509165096157,
+        "latent_step_displacement": 0.3694939613342285
+      }
+    }
+  }
+}

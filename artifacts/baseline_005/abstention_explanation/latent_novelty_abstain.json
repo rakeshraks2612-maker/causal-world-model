@@ -1,0 +1,50 @@
+{
+  "abstained": true,
+  "abstention_type": "LATENT_NOVELTY",
+  "headline": "Candidate Evaluation Blocked: Latent Manifold Novelty Exceeded",
+  "primary_reason": "Latent Novelty Boundary Breached: D_latent = 18.40 exceeds support threshold 15.00 by 3.40.",
+  "evidence": [
+    {
+      "metric_name": "Thermal Reconstruction Residual (R_T)",
+      "observed_value": 1.45,
+      "threshold": 6.0,
+      "excess": -4.55,
+      "direction": "WITHIN_LIMITS",
+      "unit": "\u00b0C",
+      "is_trigger": false
+    },
+    {
+      "metric_name": "Multivariate 8D Reconstruction Residual (R_8D)",
+      "observed_value": 0.92,
+      "threshold": 1.9,
+      "excess": -0.9799999999999999,
+      "direction": "WITHIN_LIMITS",
+      "unit": "z-norm",
+      "is_trigger": false
+    },
+    {
+      "metric_name": "Latent Manifold Novelty Distance (D_latent)",
+      "observed_value": 18.4,
+      "threshold": 15.0,
+      "excess": 3.3999999999999986,
+      "direction": "GREATER_THAN_THRESHOLD",
+      "unit": "d_M",
+      "is_trigger": true
+    }
+  ],
+  "affected_decision": "CANDIDATE_SEARCH_ABORTED",
+  "blocked_actions": [
+    "out_of_distribution_candidate_execution",
+    "unsupported_latent_rollout"
+  ],
+  "safety_implication": "Candidate trajectory traverses an unsupported region of the latent state space (D_latent > 15.0). Dynamics extrapolation cannot be certified.",
+  "recommended_next_step": "Restrict intervention search space to supported manifold envelope or require operator confirmation.",
+  "provenance": {
+    "source_evidence_hash": "parent_decision_hash_novelty",
+    "engine_version": "v1.0_authoritative_abstention",
+    "model_version": "baseline_005",
+    "scenario_id": "scenario_novelty_test",
+    "timestamp_utc": "2026-09-11T12:00:00Z",
+    "abstention_hash": "d845ceb65f1ab48b3c8e8761a12399fa54275ef8fa6118b5be54bc961ac0522d"
+  }
+}

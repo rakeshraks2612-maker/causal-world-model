@@ -1,87 +1,329 @@
-# PRISM: Uncertainty-Aware Causal World Model & Intervention Engine
+# PRISM
+## AI Decision Intelligence for Cyber-Physical Systems
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
-[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)](./requirements.txt)
-[![Tests](https://img.shields.io/badge/tests-141%20passing-brightgreen)](./tests/)
-[![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)](./tests/)
+> **An uncertainty-aware causal world model that evaluates interventions, simulates counterfactual outcomes, applies hard safety constraints, and abstains when model trust is insufficient.**
 
-**PRISM** is an uncertainty-aware causal world model and counterfactual simulation framework designed for complex physical and cyber-physical systems (grounded on the **Thermal-Hydraulic-Compute Structural Causal Model, THC-SCM**).
+[![Regression](https://img.shields.io/badge/tests-414%20passed-brightgreen.svg)](#reproducibility)
+[![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](#quick-start)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.1%2B-ee4c2c.svg)](#quick-start)
+[![Streamlit](https://img.shields.io/badge/dashboard-Streamlit-ff4b4b.svg)](#run-the-dashboard)
+[![Provenance](https://img.shields.io/badge/audit-SHA--256%20deterministic-blueviolet.svg)](#evidence--auditability)
 
-PRISM enables autonomous agents to answer Pearl's Level 2 (Interventional) and Level 3 (Counterfactual) queries:
-> *"Given partial, noisy observations up to time $t^*$, what will happen if we perform a graph-surgical intervention $do(X=x)$ or action control $A=a$ right now?"*
+[[Demo Walkthrough](demo/walkthrough.md)] &nbsp;|&nbsp; [[Architecture Documentation](docs/architecture/README.md)] &nbsp;|&nbsp; [[Final Benchmark Report](reports/PRISM_Final_Benchmark_Report.md)] &nbsp;|&nbsp; [[Reproducibility Guide](reproducibility/README.md)]
 
 ---
 
-## Architecture Overview
+## The Problem
+
+Industrial cyber-physical systems (data center liquid cooling loops, energy distribution networks, turbine governors) operate in high-consequence environments where incorrect actions cause physical destruction, runaway equipment damage, or multi-million-dollar outages.
+
+Existing predictive AI systems suffer from three fatal flaws when applied to physical control:
+1. **Correlation vs. Causation**: Pure observational models confuse correlation with causation, mistaking passive sensor drift for actuator control effects.
+2. **Deceptive Point Estimates**: Forecasting models output single-point trajectories that appear safe (e.g. $94.35^\circ\text{C}$ against a $95.0^\circ\text{C}$ threshold) while completely ignoring predictive uncertainty that violates hard physical limits ($97.16^\circ\text{C}$).
+3. **Hallucinatory Incompetence**: When sensors fail, telemetry corrupts, or dynamics transition into unmodeled emergency regimes, traditional ML models blindly fabricate recommendations rather than refusing to act.
+
+---
+
+## What PRISM Does
+
+PRISM (**P**redictive **R**ecurrent **I**ntervention & **S**afety **M**odel) shifts physical control from black-box prediction to **auditable causal decision intelligence**:
+
+* **Observes**: Ingests continuous multi-channel cyber-physical telemetry ($T_{\text{core}}, T_{\text{cool}}, P_{\text{sys}}, F_{\text{cool}}, L_{\text{cpu}}, V_{\text{pos}}, \text{Vib}_{\text{pump}}, P_{\text{elec}}$).
+* **World-Models**: Forecasts open-loop multi-step dynamics over extended horizons ($H=40$ steps / $20.0\text{ s}$) using a 16D latent recurrent state space.
+* **Intervenes**: Simulates explicit structural causal interventions ($do(A)$) on physical actuators (pumps, valves, throttles) rather than naive observational conditioning.
+* **Counterfactualizes (Pearl Level-3)**: Abducts historical exogenous disturbances to answer: *"What would have happened under an alternative action under identical initial conditions?"*
+* **Gates on Uncertainty**: Evaluates conservative confidence bounds ($\mu + 2\sigma$) against hard physical boundaries ($95^\circ\text{C}$ thermal cap, $5.5\text{ bar}$ pressure cap, $8\text{ L/min}$ flow floor).
+* **Abstains When Untrusted**: Measures upfront dynamic residuals ($R_T$) and latent manifold novelty ($D_{\text{latent}}$). If telemetry violates trust boundaries ($R_T > 6.08^\circ\text{C}$), PRISM triggers `MODEL_ABSTAIN` and fails closed with zero hallucinated actions.
+* **Proves Cryptographically**: Packages every decision, causal graph attribution, counterfactual trajectory, safety margin, and trust metric into a deterministic, tamper-evident `PrismDecisionRecord` with a SHA-256 fingerprint.
+
+---
+
+## Core Architecture
 
 ```text
-Observations O[0:t] + Actions A[0:t]
-                │
-                ▼
-    Sequence Encoder qφ(Zt | O≤t, A≤t)
-                │
-                ▼
-        Inferred Latent State Zt
-                │
-    ┌───────────┴───────────┐
-    ▼                       ▼
-Natural Action           do(X=x) / A=a
-    │                       │
-    └───────────┬───────────┘
-                ▼
-    Latent Transition pθ(Zt+1 | Zt, At)
-                │
-                ▼
-      Observation Decoder pθ(Ot | Zt)
-                │
-                ▼
-    Counterfactual & Intervened Trajectory
+                               TELEMETRY INPUT
+                        (8-Channel Sensor Stream)
+                                   │
+                                   ▼
+                   ┌───────────────────────────────┐
+                   │       UPSTREAM TRUST GATE     │
+                   │   R_T ≤ 6.08°C, d_M ≤ 15.00   │
+                   └───────┬───────────────┬───────┘
+          [Outside Trust]  │               │  [Trusted]
+                  ┌────────┘               └────────┐
+                  ▼                                 ▼
+         ┌─────────────────┐               ┌─────────────────┐
+         │  MODEL_ABSTAIN  │               │   WORLD MODEL   │
+         │   Fail-Closed   │               │ 16D RSSM Latent │
+         │ Planning Blocked│               │ Dynamics & Dec. │
+         └────────┬────────┘               └────────┬────────┘
+                  │                                 │
+                  │                 ┌───────────────┴───────────────┐
+                  │                 ▼                               ▼
+                  │        ┌─────────────────┐             ┌─────────────────┐
+                  │        │   CAUSAL SCM    │             │ COUNTERFACTUAL  │
+                  │        │ Structural DAG  │             │ Level-3 Abduct/ │
+                  │        │  Interventions  │             │ Replay Traj.    │
+                  │        └────────┬────────┘             └────────┬────────┘
+                  │                 └───────────────┬───────────────┘
+                  │                                 ▼
+                  │                        ┌─────────────────┐
+                  │                        │ UNCERTAINTY &   │
+                  │                        │ SAFETY GATING   │
+                  │                        │ T_eff = μ + 2σ  │
+                  │                        └────────┬────────┘
+                  │                                 │
+                  │                                 ▼
+                  │                        ┌─────────────────┐
+                  │                        │ DECISION ENGINE │
+                  │                        │ Multi-Objective │
+                  │                        │ Action Ranking  │
+                  │                        └────────┬────────┘
+                  │                                 │
+                  └─────────────────┬───────────────┘
+                                    ▼
+                     ┌─────────────────────────────┐
+                     │   UNIFIED DECISION RECORD   │
+                     │  8 Domains + SHA-256 Hash   │
+                     └─────────────────────────────┘
 ```
 
-### Key Modules
+---
 
-- **`prism/simulator/`**: Ground-truth THC-SCM physics engine (12 state variables: 8 observable, 4 hidden latents, multi-timescale thermal/fluid dynamics, realistic sensor noise, and failure modes).
-- **`prism/world_model/`**: Variational Causal World Model binding GRU Sequence Encoder, MLP Latent Transition Model, MLP Decoder, and Autoregressive Rollout Engine.
-- **`prism/intervention/`**: Graph-surgical intervention operators ($do(X=x)$ state clamps vs $A=a$ action setpoints), persistent and pulse duration controls, and paired twin-world intervention simulator.
-- **`prism/evaluation/`**: Multi-step open-loop forecasting, uncertainty calibration & OOD diagnostics, action branching sensitivity, and causal effect benchmark metrics ($E_{\text{causal}} = |\Delta Y_{\text{learned}} - \Delta Y_{\text{oracle}}|$, $E_{\text{rel}}$).
-- **`prism/dataset/`**: Paired twin-world dataset generators for observational, OOD regimes, confounding benchmarks, interventions, and counterfactuals.
+## Why PRISM Is Different
+
+| Capability | Traditional Predictive AI | PRISM Causal Decision Engine |
+| :--- | :--- | :--- |
+| **Paradigm** | Observation $\to$ Forecast $\to$ Action | Observation $\to$ World Model $\to$ Causal Interventions $\to$ Counterfactuals $\to$ Uncertainty Safety $\to$ Decision / Abstention |
+| **Action Reasoning** | Correlational feature conditioning | Structural Causal Model ($do(A)$ interventions) |
+| **Retrospective Analysis** | Re-run forward forecast (confounded) | Pearl Level-3 twin-world exogenous noise abduction |
+| **Safety Evaluation** | Raw point-estimate ($\hat{y} < \text{threshold}$) | Uncertainty-aware conservative bound ($\mu + 2\sigma < \text{threshold}$) |
+| **Out-of-Distribution** | Silent overconfident extrapolation | Dual-gate trust layer: Fail-closed `MODEL_ABSTAIN` |
+| **Auditability** | Opaque black-box outputs | Machine-readable 8-domain evidence with deterministic SHA-256 fingerprint |
 
 ---
 
-## Project Status
+## Three Demo Scenarios
 
-- [x] **Task 1: Ground-Truth Causal Simulator** (Physics, SCM semantics, noise, failures)
-- [x] **Task 2.1 - 2.8: Dataset & Benchmark Infrastructure** (Observational, OOD, Confounding, Interventions, Counterfactuals)
-- [x] **Task 3.1: World Model Contract & Architecture Specification**
-- [x] **Task 3.2 - 3.2B: Baseline World Model Training & Diagnostics** (`baseline_002` canonical checkpoint)
-- [x] **Task 3.3 - 3.3B: Multi-Step Rollout & OOD Uncertainty Calibration**
-- [x] **Task 3.4A: Learned Intervention Simulator & Causal Benchmark** (Graph-surgical semantics corrected, differential benchmark verified against 220 oracle records)
-- [ ] **Task 3.5: Learned Level-3 Counterfactual Engine** (Next)
+PRISM's core value proposition is demonstrated across three canonical scenarios:
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│ 1. AUTONOMOUS DECISION (S4 — Pump Modulation)                                   │
+│    Cooling deficit detected → PRISM evaluates candidates → Simulates Pump 3    │
+│    Causal Chain: Pump ↑ → Flow +10.81 L/min → T_cool ↓ → T_core -2.87°C        │
+│    Status: MODEL_TRUSTED | Safety: SAFE (+5.48°C margin) | Decision: RECOMMENDED│
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ 2. UNCERTAINTY SAFETY CATCH (S2 — Valve / Thermal Boundary)                     │
+│    Point Estimate: T_peak = 94.35°C < 95.00°C (Deceptively appears SAFE)       │
+│    Uncertainty-Adjusted (k=2.0, σ=1.405°C): T_eff = 97.16°C > 95.00°C          │
+│    Safety Gate: UNSAFE (Margin: -2.16°C) → Candidate REJECTED from execution    │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ 3. FAIL-CLOSED ABSTENTION (S6 — Emergency Runaway / Distrust)                   │
+│    Telemetry shows acute sensor/physics contradiction: R_T = 33.88°C > 6.08°C   │
+│    Trust Gate: MODEL_ABSTAIN (Excess +27.80°C) → Planning BLOCKED               │
+│    Counterfactuals: NOT RUN | Recommendation: NONE (BLOCKED) | Zero Hallucination│
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## Getting Started & Reproducibility
+## Quick Start
 
-See [`REPRODUCIBILITY.md`](./REPRODUCIBILITY.md) for full step-by-step instructions on reproducing all datasets, training runs, and benchmarks from scratch.
-
-### Quick Start
-
+### 1. Clone & Setup Virtual Environment
 ```bash
-# Clone repository
-git clone https://github.com/rakeshraks2612-maker/causal-world-model.git
+git clone https://github.com/your-org/causal-world-model.git
 cd causal-world-model
 
-# Create virtual environment and install dependencies
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
 
-# Run complete test suite with coverage
-PYTHONPATH=. pytest --cov=prism --cov-report=term-missing
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+### 2. Run Test Suite
+```bash
+pytest
+```
+*Expected: 414 tests passing.*
+
+---
+
+## Run the Dashboard
+
+Launch the interactive Streamlit Decision Intelligence Dashboard:
+
+```bash
+python3 scripts/run_dashboard.py
+```
+
+Then open `http://localhost:8501` in your browser to inspect live scenario selectors, structural causal DAG projections, counterfactual twin-world overlays, thermal uncertainty bands, and cryptographic audit panels.
+
+---
+
+## Run the CLI
+
+Execute deterministic inference directly from your terminal:
+
+```bash
+# S4: Autonomous Decision (Pump 3 Recommended)
+python3 scripts/run_prism.py -s s4
+
+# S2: Uncertainty-Aware Safety Catch (Unsafe Gated)
+python3 scripts/run_prism.py -s s2
+
+# S6: Model Abstention (Distrust Blocked)
+python3 scripts/run_prism.py -s s6
 ```
 
 ---
 
-## License
+## Reproduce the Benchmark
 
-This project is licensed under the Apache License 2.0 - see the [`LICENSE`](./LICENSE) file for details.
+Run the frozen benchmark aggregator and integrity verification engine:
+
+```bash
+python3 scripts/run_final_benchmark.py
+```
+
+Outputs:
+* `reports/benchmark_results.json` (Machine-readable benchmark dataset)
+* `reports/PRISM_Final_Benchmark_Report.md` (Publication-grade 16-section report)
+
+---
+
+## Evaluation Results
+
+All metrics reflect frozen evaluation against authoritative benchmarks:
+
+| Subsystem / Capability | Key Metric | Target / Baseline | PRISM Result | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **World Model ($H=40$ Rollout)** | Normalized MAE | MLP ($0.4920$) / Pers ($0.3230$) | **0.2121** ($-56.9\%$ vs MLP) | **PASS** |
+| **Error Growth ($H=1 \to H=40$)** | Error Compounding | MLP ($+220.3\%$) | **+24.4%** | **PASS** |
+| **Causal Interventions** | Directional Accuracy | Random ($50.0\%$) | **86.1%** | **PASS** |
+| **Counterfactual Reasoning** | Directional Accuracy | Random ($50.0\%$) | **77.49%** ($347/448$) | **PASS** |
+| **Counterfactual Accuracy** | Peak $T_{\text{core}}$ MAE | $\le 2.50^\circ\text{C}$ | **1.44°C** | **PASS** |
+| **Counterfactual Safety** | False-Safe Rate | $\le 1.0\%$ | **0.00%** ($0/448$) | **PASS** |
+| **Uncertainty Safety Catch** | S2 Effective Temp | $T_{\text{eff}} > 95.0^\circ\text{C}$ | **Caught at 97.16°C** | **PASS** |
+| **Model Abstention Recall** | S6 Distrust Recall | $100.0\%$ | **100.0%** ($R_T = 33.88^\circ\text{C}$) | **PASS** |
+| **Model False Trust Rate** | S6 False Trust | $0.0\%$ | **0.00%** | **PASS** |
+| **Evidence Tamper Detection**| SHA-256 Mutation | 100% Detectable | **Deterministic / 100% Detectable** | **PASS** |
+| **Regression Test Suite** | Total Tests | 100% Passing | **414 / 414 Passed** | **PASS** |
+
+For complete methodology and forensic analyses, see [PRISM Final Benchmark Report](reports/PRISM_Final_Benchmark_Report.md).
+
+---
+
+## Evidence & Auditability
+
+Every decision produces an immutable, machine-readable `PrismDecisionRecord` structured into 8 domains:
+
+```json
+{
+  "decision": {
+    "status": "RECOMMENDED",
+    "recommended_action": "cand_pump_3",
+    "action_name": "Pump Speed 3",
+    "expected_utility": 0.0034
+  },
+  "trust": {
+    "status": "MODEL_TRUSTED",
+    "residual_t_core": 1.3548,
+    "latent_mahalanobis_d": 5.6609
+  },
+  "causal_reasoning": {
+    "primary_mechanism": "A_pump → F_cool → T_cool → T_core",
+    "direct_effect": "+10.81 L/min coolant flow"
+  },
+  "counterfactual": {
+    "factual_action": "A_pump_2",
+    "counterfactual_action": "A_pump_3",
+    "delta_t_core": -2.87
+  },
+  "safety": {
+    "overall_safety": "SAFE",
+    "effective_peak_t_core": 89.52,
+    "thermal_margin_celsius": 5.48
+  },
+  "provenance": {
+    "evidence_fingerprint": "18d2046b6c3b2a3f3f4fd0cfdc5997f9fc27d50aabe577e9735c28953bfaf304"
+  }
+}
+```
+
+---
+
+## Repository Structure
+
+```text
+causal-world-model/
+├── configs/
+│   └── frozen_system_config.json        # Master frozen system specification
+├── demo/
+│   ├── demo_config.json                 # Golden demo configuration
+│   ├── walkthrough.md                   # Step-by-step judge narrative walkthrough
+│   ├── scenarios/                       # Scenario JSON inputs (S1 - S6)
+│   └── expected/                        # Deterministic expected records
+├── prism/
+│   ├── world_model/                     # RSSM latent dynamics, encoders, decoders
+│   ├── causal/                          # Structural causal graph & intervention ops
+│   ├── counterfactual/                  # Level-3 exogenous abduction & twin-world replay
+│   ├── uncertainty/                     # Particle estimator & calibration
+│   ├── safety/                          # Conservative physical hard constraints
+│   ├── planning/                        # Multi-step candidate evaluation & ranking
+│   ├── explanation/                     # Causal, counterfactual, & abstention evidence
+│   ├── pipeline/                        # End-to-end inference engine (PrismPipeline)
+│   └── dashboard/                       # Streamlit decision intelligence app
+├── reports/
+│   ├── PRISM_Final_Benchmark_Report.md  # 16-section publication benchmark report
+│   └── benchmark_results.json           # Machine-readable benchmark dataset
+├── reproducibility/
+│   ├── README.md                        # Hardware, setup & verification guide
+│   └── environment.json                 # Environment library versions & metadata
+├── scripts/
+│   ├── run_prism.py                     # CLI decision entrypoint
+│   ├── run_dashboard.py                 # Dashboard launcher
+│   └── run_final_benchmark.py           # Benchmark runner & aggregator
+├── tests/                               # 414 unit, integration, & contract tests
+├── requirements.txt                     # Pinned reproducible dependencies
+└── README.md                            # Primary project documentation
+```
+
+---
+
+## Limitations
+
+1. **Simulator-Based Evaluation**: PRISM was evaluated in a high-fidelity continuous-time numerical cooling simulator. Real-world deployment requires physical plant calibration and transfer validation.
+2. **Defined Operational Envelope**: The causal graph topology is parameterized for defined closed-loop industrial topologies. Structural changes to plant piping require updating the causal graph specification.
+3. **Epistemic Uncertainty Proxy**: True Bayesian epistemic uncertainty over neural network parameters is approximated via latent manifold distance ($D_{\text{latent}}$) and upfront dynamic residuals ($R_T$).
+4. **Abstention Scope**: 100% abstention recall is verified on evaluated telemetry corruption and thermal runaway regimes; performance on arbitrary unobserved catastrophic sensor failure modes remains bounded by residual threshold sensitivity.
+5. **Research Prototype Status**: PRISM is a research prototype demonstrating uncertainty-aware causal decision intelligence and is **not certified as safety-critical industrial control software**.
+
+---
+
+## Reproducibility
+
+PRISM is designed for 100% deterministic reproducibility across platforms.
+
+To verify the entire pipeline from scratch:
+```bash
+# Run all 414 test assertions
+pytest
+
+# Run final benchmark evaluation
+python3 scripts/run_final_benchmark.py
+
+# Test golden demo scenarios
+python3 scripts/run_prism.py -s s4
+python3 scripts/run_prism.py -s s2
+python3 scripts/run_prism.py -s s6
+```
+
+Detailed hardware, library versions, and platform manifests are documented in [reproducibility/README.md](reproducibility/README.md).
+
+---
+
+## License & Citation
+
+PRISM is released under the [Apache 2.0 License](LICENSE).

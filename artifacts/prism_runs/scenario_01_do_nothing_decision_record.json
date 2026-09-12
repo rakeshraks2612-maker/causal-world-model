@@ -1,0 +1,278 @@
+{
+  "decision": {
+    "recommendation": "cand_do_nothing",
+    "decision_status": "NO_ACTION_REQUIRED",
+    "abstention_reason": null
+  },
+  "trust": {
+    "trust_state": "MODEL_TRUSTED",
+    "reconstruction_residual_t_core": 1.1013668102151826,
+    "reconstruction_residual_8d": 0.16912725567817688,
+    "latent_novelty_d": 5.1294699923426545,
+    "epistemic_uncertainty_sigma": 1.6263798475265503,
+    "tau_residual_t": 6.08,
+    "tau_novelty": 15.0,
+    "trust_reason": "Nominal in-distribution telemetry. Model predictions validated for planning."
+  },
+  "causal_reasoning": {
+    "summary": {
+      "headline": "Maintain baseline operation (DO NOTHING)",
+      "mechanism": "Current operating state is in stable equilibrium. No intervention provides sufficient risk-adjusted benefit.",
+      "effect_direction": "NOMINAL_EQUILIBRIUM"
+    },
+    "intervention": {
+      "target": "none",
+      "value": null,
+      "intervention_type": "NONE",
+      "baseline_value": null
+    },
+    "causal_chain": {
+      "root_actuator": "none",
+      "target_outcome": "T_core",
+      "nodes": [
+        {
+          "variable": "None",
+          "relationship": "ACTUATOR_INPUT",
+          "predicted_direction": "STABLE",
+          "predicted_delta": null,
+          "evidence_available": true
+        }
+      ],
+      "all_affected_descendants": []
+    },
+    "predicted_effects": {
+      "baseline_peak_t_core": 86.82894134521484,
+      "intervened_peak_t_core": 86.82894134521484,
+      "delta_t_core": 0.0,
+      "baseline_min_flow": 40.603477478027344,
+      "intervened_min_flow": 40.603477478027344,
+      "delta_flow": 0.0,
+      "counterfactual_statement": "Under the modeled baseline, the system remains safely within operating bounds (Peak T_core = 86.83\u00b0C). Intervention is unnecessary."
+    },
+    "rejected_alternatives": [
+      {
+        "candidate_id": "cand_valve_85",
+        "reason_code": "LOWER_UTILITY",
+        "reason_explanation": "Sub-optimal utility (\u0394U = -0.0298) compared to recommended action; higher operational/thermal cost.",
+        "utility_score": -0.051673234426842796,
+        "peak_t_core": 87.19609069824219
+      },
+      {
+        "candidate_id": "cand_pump_4",
+        "reason_code": "LATENT_NOVELTY",
+        "reason_explanation": "Rejected because the predicted trajectory entered a region outside the model's validated latent support (D_M = 15.20 > 15.00).",
+        "utility_score": -999.9796323627139,
+        "peak_t_core": 84.87053680419922
+      },
+      {
+        "candidate_id": "cand_throttle_30",
+        "reason_code": "LOWER_UTILITY",
+        "reason_explanation": "Sub-optimal utility (\u0394U = -1.0297) compared to recommended action; higher operational/thermal cost.",
+        "utility_score": -1.0514986547526586,
+        "peak_t_core": 77.6872787475586
+      }
+    ],
+    "decision_margin": {
+      "best_candidate": "cand_do_nothing",
+      "second_best_candidate": "cand_valve_85",
+      "decision_strength": "POSITIVE_MARGIN",
+      "decision_margin": 0.029845639926938117,
+      "best_utility": -0.02182759449990468,
+      "second_best_utility": -0.051673234426842796
+    },
+    "abstention_details": null,
+    "trust_qualification": "MODEL_TRUSTED (Validated: Operating within calibrated in-distribution latent support)",
+    "provenance": {
+      "source_evidence_hash": "37f645108cd11bd3cb8415423557e36f2d7e8bc30ab0ac6c35d44c7967a12677",
+      "model_version": "baseline_005",
+      "dataset_version": "unified_v1_40_40_20",
+      "planner_version": "v1.2_trust_gated",
+      "benchmark_version": "v1.0",
+      "scenario_id": "scenario_01_do_nothing",
+      "timestamp_utc": "2026-09-12T13:27:59.108656+00:00"
+    }
+  },
+  "counterfactual": null,
+  "safety": {
+    "overall_state": "MARGINAL",
+    "is_safe": true,
+    "constraints": {
+      "thermal": {
+        "name": "thermal",
+        "variable_symbol": "T_core",
+        "unit": "\u00b0C",
+        "raw_prediction": 86.82894134521484,
+        "uncertainty_sigma": 1.6263798475265503,
+        "k_multiplier": 2.0,
+        "effective_value": 90.08170104026794,
+        "threshold": 95.0,
+        "comparison_operator": "<",
+        "margin": 4.918298959732056,
+        "normalized_headroom_pct": 6.557731946309407,
+        "is_passed": true,
+        "is_marginal": true,
+        "violation_message": null
+      },
+      "pressure": {
+        "name": "pressure",
+        "variable_symbol": "P_sys",
+        "unit": "bar",
+        "raw_prediction": 3.1790201663970947,
+        "uncertainty_sigma": null,
+        "k_multiplier": 2.0,
+        "effective_value": 3.1790201663970947,
+        "threshold": 5.5,
+        "comparison_operator": "<",
+        "margin": 2.3209798336029053,
+        "normalized_headroom_pct": 46.419596672058105,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      },
+      "flow": {
+        "name": "flow",
+        "variable_symbol": "F_cool",
+        "unit": "L/min",
+        "raw_prediction": 40.603477478027344,
+        "uncertainty_sigma": null,
+        "k_multiplier": 2.0,
+        "effective_value": 40.603477478027344,
+        "threshold": 8.0,
+        "comparison_operator": ">",
+        "margin": 32.603477478027344,
+        "normalized_headroom_pct": 62.69899515005258,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      },
+      "latent_support": {
+        "name": "latent_support",
+        "variable_symbol": "D_latent",
+        "unit": "d_M",
+        "raw_prediction": 5.1294699923426545,
+        "uncertainty_sigma": null,
+        "k_multiplier": 0.0,
+        "effective_value": 5.1294699923426545,
+        "threshold": 15.0,
+        "comparison_operator": "<=",
+        "margin": 9.870530007657345,
+        "normalized_headroom_pct": 65.8035333843823,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      }
+    },
+    "limiting_constraint": {
+      "constraint_name": "thermal",
+      "variable_symbol": "T_core",
+      "raw_margin": 4.918298959732056,
+      "unit": "\u00b0C",
+      "normalized_headroom_pct": 6.557731946309407,
+      "rationale": "Thermal has the tightest operating buffer (+4.92 \u00b0C, 6.6% headroom).",
+      "normalized_violation_score": 0.0
+    },
+    "violations": [],
+    "uncertainty_adjusted": true,
+    "provenance": {
+      "source_evidence_hash": "37f645108cd11bd3cb8415423557e36f2d7e8bc30ab0ac6c35d44c7967a12677",
+      "safety_engine_version": "v1.2_authoritative_gate",
+      "model_version": "baseline_005",
+      "scenario_id": "scenario_01_do_nothing",
+      "candidate_id": "cand_do_nothing",
+      "timestamp_utc": "2026-09-12T13:27:59.108656+00:00",
+      "safety_hash": "0eaeba4685558559aabc8db54ed884050d4312348d77ca83adfabf28ea4ea58d"
+    }
+  },
+  "abstention": {
+    "abstained": false,
+    "abstention_type": "NONE",
+    "headline": "System Fully Operational: Recommendation Emitted",
+    "primary_reason": "All telemetry matches representation space and candidate simulations passed trust bounds.",
+    "evidence": [
+      {
+        "metric_name": "Thermal Reconstruction Residual (R_T)",
+        "observed_value": 1.1013668102151826,
+        "threshold": 6.08,
+        "excess": -4.9786331897848175,
+        "direction": "WITHIN_LIMITS",
+        "unit": "\u00b0C",
+        "is_trigger": false
+      },
+      {
+        "metric_name": "Multivariate 8D Reconstruction Residual (R_8D)",
+        "observed_value": 0.16912725567817688,
+        "threshold": 1.9,
+        "excess": -1.730872744321823,
+        "direction": "WITHIN_LIMITS",
+        "unit": "z-norm",
+        "is_trigger": false
+      },
+      {
+        "metric_name": "Latent Manifold Novelty Distance (D_latent)",
+        "observed_value": 5.1294699923426545,
+        "threshold": 15.0,
+        "excess": -9.870530007657345,
+        "direction": "WITHIN_LIMITS",
+        "unit": "d_M",
+        "is_trigger": false
+      }
+    ],
+    "affected_decision": "NO_ABSTENTION",
+    "blocked_actions": [],
+    "safety_implication": "Predictive simulations are considered decision-grade.",
+    "recommended_next_step": "Proceed with recommended autonomous intervention plan.",
+    "provenance": {
+      "source_evidence_hash": "37f645108cd11bd3cb8415423557e36f2d7e8bc30ab0ac6c35d44c7967a12677",
+      "engine_version": "v1.0_authoritative_abstention",
+      "model_version": "baseline_005",
+      "scenario_id": "scenario_01_do_nothing",
+      "timestamp_utc": "2026-09-12T13:27:59.108656+00:00",
+      "abstention_hash": "34102189629993891bb876521eae78c46c3fb2bd3890fccb216e784d5384467f"
+    }
+  },
+  "decision_quality": {
+    "utility_score": -0.02182759449990468,
+    "second_best_candidate": "cand_valve_85",
+    "second_best_utility": -0.051673234426842796,
+    "decision_margin": 0.029845639926938117,
+    "alternatives_rejected": [
+      {
+        "candidate_id": "cand_valve_85",
+        "is_safe": true,
+        "utility_score": -0.051673234426842796,
+        "peak_t_core": 87.19609069824219,
+        "safety_violations": []
+      },
+      {
+        "candidate_id": "cand_pump_4",
+        "is_safe": false,
+        "utility_score": -999.9796323627139,
+        "peak_t_core": 84.87053680419922,
+        "safety_violations": [
+          "Latent manifold novelty (15.20) exceeds epistemic support limit (15.00)."
+        ]
+      },
+      {
+        "candidate_id": "cand_throttle_30",
+        "is_safe": true,
+        "utility_score": -1.0514986547526586,
+        "peak_t_core": 77.6872787475586,
+        "safety_violations": []
+      }
+    ]
+  },
+  "provenance": {
+    "model_version": "baseline_005",
+    "dataset_version": "v2.1",
+    "planner_version": "v1.2",
+    "benchmark_version": "v1.0",
+    "unified_engine_version": "v1.0_unified_assembly",
+    "scenario_id": "scenario_01_do_nothing",
+    "timestamp_utc": "2026-09-12T13:27:59.108656+00:00",
+    "decision_evidence_hash": "37f645108cd11bd3cb8415423557e36f2d7e8bc30ab0ac6c35d44c7967a12677",
+    "safety_hash": "0eaeba4685558559aabc8db54ed884050d4312348d77ca83adfabf28ea4ea58d",
+    "abstention_hash": "34102189629993891bb876521eae78c46c3fb2bd3890fccb216e784d5384467f",
+    "counterfactual_hash": null,
+    "unified_record_hash": "a5d0be2ca971dfb27cc0ba8950a03237fcb3afcc4f01abf7405a4bd502479ad3"
+  }
+}

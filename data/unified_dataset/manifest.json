@@ -1,0 +1,13 @@
+{
+  "dataset_name": "baseline_005_unified_dataset",
+  "total_train_episodes": 150,
+  "total_val_episodes": 32,
+  "timesteps_per_episode": 120,
+  "total_train_timesteps": 18000,
+  "total_val_timesteps": 3840,
+  "proportions": {
+    "sustained_closed_loop_pid": 0.4,
+    "orthogonal_multi_actuator_excitation": 0.4,
+    "multichannel_acute_transients": 0.2
+  }
+}

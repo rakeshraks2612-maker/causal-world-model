@@ -1,0 +1,110 @@
+{
+  "factual_world": {
+    "episode_id": "ep_test_00000",
+    "intervention_time": 20,
+    "planning_horizon": 80,
+    "historical_t_core_at_t_star": 81.22813965174848,
+    "historical_f_cool_at_t_star": 39.03989121362913,
+    "historical_p_sys_at_t_star": 3.164374606127324,
+    "abduced_latent_norm": 12.414533615112305,
+    "abduced_latent_std_mean": 0.48925426602363586
+  },
+  "intervention": {
+    "intervention_target": "A_pump",
+    "original_value": 80.9915984281194,
+    "counterfactual_value": 4.0,
+    "intervention_type": "ACTION",
+    "formal_notation": "do(A_pump = 4.0)"
+  },
+  "counterfactual_world": {
+    "peak_t_core": 86.44581604003906,
+    "max_p_sys": 3.567521572113037,
+    "min_f_cool": 37.62321472167969,
+    "mean_l_cpu": 66.89707946777344,
+    "mean_p_elec": 2.649972677230835,
+    "failure_state": false,
+    "time_to_failure": null
+  },
+  "causal_effect": {
+    "delta_t_core_peak": -0.0724639892578125,
+    "delta_p_sys_max": 0.5171322822570801,
+    "delta_f_cool_min": 1.431304931640625,
+    "delta_l_cpu_mean": -0.0453948974609375,
+    "delta_p_elec_mean": -0.0019881725311279297,
+    "primary_effect_direction": "INCREASES_COOLANT_FLOW",
+    "causal_interpretation": "Under counterfactual replay do(A_pump=4.0), coolant flow increases by +1.43 L/min (36.19 \u2192 37.62 L/min).",
+    "horizon_effects": {
+      "1": {
+        "delta_t_core": -1.1639862060546875,
+        "delta_f_cool": 3.46917724609375,
+        "delta_p_sys": 0.6543970108032227,
+        "delta_l_cpu": -0.2336273193359375,
+        "delta_p_elec": -0.010649442672729492
+      },
+      "5": {
+        "delta_t_core": -0.21370697021484375,
+        "delta_f_cool": 0.6489181518554688,
+        "delta_p_sys": 0.033989667892456055,
+        "delta_l_cpu": -0.03981781005859375,
+        "delta_p_elec": -0.0018372535705566406
+      },
+      "10": {
+        "delta_t_core": -0.08232879638671875,
+        "delta_f_cool": 0.14332199096679688,
+        "delta_p_sys": 0.010534048080444336,
+        "delta_l_cpu": -0.03876495361328125,
+        "delta_p_elec": -0.0016901493072509766
+      },
+      "20": {
+        "delta_t_core": -0.048980712890625,
+        "delta_f_cool": -0.12335968017578125,
+        "delta_p_sys": -0.003319978713989258,
+        "delta_l_cpu": -0.01999664306640625,
+        "delta_p_elec": -0.0008938312530517578
+      },
+      "40": {
+        "delta_t_core": -0.21469879150390625,
+        "delta_f_cool": 0.14352798461914062,
+        "delta_p_sys": 0.011541366577148438,
+        "delta_l_cpu": -0.06560516357421875,
+        "delta_p_elec": -0.0028891563415527344
+      }
+    }
+  },
+  "twin_world_integrity": {
+    "replay_mode": "TWIN_WORLD_FROZEN_EXOGENOUS",
+    "shared_exogenous_conditions": true,
+    "identical_pre_intervention_history": true,
+    "abduction_method": "POSTERIOR_LATENT_INFERENCE_Q_PHI"
+  },
+  "safety_comparison": {
+    "factual_thermal_margin_c": 8.481719970703125,
+    "factual_pressure_margin_bar": 2.449610710144043,
+    "factual_flow_margin_l_min": 28.191909790039062,
+    "counterfactual_thermal_margin_c": 8.554183959960938,
+    "counterfactual_pressure_margin_bar": 1.932478427886963,
+    "counterfactual_flow_margin_l_min": 29.623214721679688,
+    "factual_safety_state": "SAFE",
+    "counterfactual_safety_state": "SAFE",
+    "safety_transition": "SAFE -> SAFE",
+    "outcome_classification": "INTERVENTION_PRESERVES_SAFETY"
+  },
+  "uncertainty": {
+    "aleatoric_sigma": 0.48925426602363586,
+    "epistemic_sigma": 1.5418990850448608,
+    "latent_novelty_d": 0.0,
+    "support_threshold": 15.0,
+    "within_support": true
+  },
+  "provenance": {
+    "source_evidence_hash": null,
+    "counterfactual_engine_version": "v1.0_pearl_level3",
+    "model_version": "baseline_005",
+    "dataset_version": "unified_v1_40_40_20",
+    "episode_id": "ep_test_00000",
+    "counterfactual_id": "cf_ep_test_00000_t20_A_pump_4",
+    "intervention_time": 20,
+    "timestamp_utc": "2026-09-11T12:00:00Z",
+    "counterfactual_hash": "85e8ecce21a103b780d88c309153122582bdfbb8e6d422207843c8f84e948944"
+  }
+}

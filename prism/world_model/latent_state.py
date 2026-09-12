@@ -82,16 +82,23 @@ class ObservationDistribution:
         eps = torch.randn_like(self.mean)
         return self.mean + self.std * eps
 
-    def masked_log_prob(self, target: Tensor, mask: Optional[Tensor] = None) -> Tensor:
-        """Compute Gaussian log-likelihood over valid (unmasked) observation channels."""
+    def masked_log_prob(
+        self,
+        target: Tensor,
+        mask: Optional[Tensor] = None,
+        weights: Optional[Tensor] = None,
+    ) -> Tensor:
+        """Compute Gaussian log-likelihood over valid observation channels, with optional weighting."""
         diff_sq = (target - self.mean) ** 2
         element_log_p = -0.5 * (math.log(2.0 * math.pi) + self.logvar + diff_sq / (self.variance + 1e-8))
 
         if mask is not None:
             mask_bool = mask.bool() if mask.dtype != torch.bool else mask
             element_log_p = element_log_p * mask_bool.float()
-            # Average or sum over observed channels
-            return torch.sum(element_log_p, dim=-1)
+
+        if weights is not None:
+            w = weights.unsqueeze(-1) if weights.ndim == element_log_p.ndim - 1 else weights
+            element_log_p = element_log_p * w.float()
 
         return torch.sum(element_log_p, dim=-1)
 

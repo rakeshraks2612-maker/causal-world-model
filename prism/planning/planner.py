@@ -92,6 +92,7 @@ class InterventionPlanner:
         custom_candidates: Optional[List[Any]] = None,
         intervention_time: Optional[int] = None,
         horizons: Tuple[int, ...] = (1, 5, 10, 20, 40),
+        trust_evaluator: Optional[Any] = None,
     ) -> PlanRecommendation:
         """Find optimal safety-constrained intervention given historical context."""
         import time
@@ -99,6 +100,34 @@ class InterventionPlanner:
 
         t_pre = historical_observations.shape[0] if isinstance(historical_observations, np.ndarray) else historical_observations.shape[1]
         t_star = intervention_time if intervention_time is not None else (t_pre - 1)
+
+        # 0. Upfront Model Trust & Anomaly Gateway
+        if trust_evaluator is not None:
+            raw_obs = historical_observations if isinstance(historical_observations, np.ndarray) else historical_observations[0].cpu().numpy()
+            raw_act = historical_actions if isinstance(historical_actions, np.ndarray) else historical_actions[0].cpu().numpy()
+            mask_np = np.ones_like(raw_obs, dtype=bool)
+            trust_diag = trust_evaluator.evaluate_trust(raw_obs, mask_np, raw_act, t_star)
+            if hasattr(trust_diag, "state") and str(trust_diag.state) in ["model_abstain", "ModelTrustState.MODEL_ABSTAIN"]:
+                elapsed_ms = (time.perf_counter() - start_t) * 1000.0
+                explanation = CausalExplanation(
+                    summary=f"Decision Blocked: Model Trust Layer triggered ABSTAIN",
+                    diagnosis=f"Severe observation/latent inconsistency detected at decision point (t*={t_star}). Model-based forecasting is untrusted.",
+                    recommended_action="ABSTAIN",
+                    physical_mechanism=trust_diag.rationale,
+                    counterfactual_contrast="No candidate simulations permitted under unmodeled or inconsistent regime.",
+                    rejected_alternatives=[],
+                    confidence_level="VERY_LOW_ANOMALY",
+                    safety_verdict="ABSTAIN_REQUIRED",
+                )
+                return PlanRecommendation(
+                    recommended_candidate=None,
+                    should_abstain=True,
+                    abstention_reason=f"Model Trust Layer Aborted: {trust_diag.rationale}",
+                    all_evaluated_candidates=[],
+                    explanation=explanation,
+                    baseline_simulation=None,  # type: ignore
+                    planning_time_ms=elapsed_ms,
+                )
 
         # Ensure future_actions covers maximum horizon
         max_h = max(horizons)

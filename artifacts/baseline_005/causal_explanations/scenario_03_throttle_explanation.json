@@ -1,0 +1,110 @@
+{
+  "summary": {
+    "headline": "Throttle CPU workload to 50.0%",
+    "mechanism": "Throttling CPU compute workload directly lowers electrical power consumption, diminishing internal Joule heating generation and stabilizing core temperature.",
+    "effect_direction": "REDUCE_CORE_TEMPERATURE"
+  },
+  "intervention": {
+    "target": "L_cpu",
+    "value": 50.0,
+    "intervention_type": "STATE",
+    "baseline_value": null
+  },
+  "causal_chain": {
+    "root_actuator": "L_cpu",
+    "target_outcome": "T_core",
+    "nodes": [
+      {
+        "variable": "A_throttle",
+        "relationship": "ACTUATOR_INPUT",
+        "predicted_direction": "DECREASE",
+        "predicted_delta": null,
+        "evidence_available": true
+      },
+      {
+        "variable": "L_cpu",
+        "relationship": "DIRECT_DESCENDANT",
+        "predicted_direction": "DECREASE",
+        "predicted_delta": null,
+        "evidence_available": false
+      },
+      {
+        "variable": "P_elec",
+        "relationship": "MEDIATED_DESCENDANT",
+        "predicted_direction": "DECREASE",
+        "predicted_delta": null,
+        "evidence_available": false
+      },
+      {
+        "variable": "T_core",
+        "relationship": "FINAL_OUTCOME",
+        "predicted_direction": "DECREASE",
+        "predicted_delta": -6.700767517089844,
+        "evidence_available": true
+      }
+    ],
+    "all_affected_descendants": [
+      "L_cpu",
+      "P_elec",
+      "T_core"
+    ]
+  },
+  "predicted_effects": {
+    "baseline_peak_t_core": 88.56104278564453,
+    "intervened_peak_t_core": 81.86027526855469,
+    "delta_t_core": -6.700767517089844,
+    "baseline_min_flow": 39.065589904785156,
+    "intervened_min_flow": 45.36468505859375,
+    "delta_flow": 5.667320251464844,
+    "counterfactual_statement": "Under the modeled intervention, `cand_throttle_50` is predicted to increase coolant flow by +5.67 L/min and reduce peak core temperature by 6.70\u00b0C relative to the factual baseline trajectory."
+  },
+  "rejected_alternatives": [
+    {
+      "candidate_id": "cand_do_nothing",
+      "reason_code": "LOWER_UTILITY",
+      "reason_explanation": "Sub-optimal utility (\u0394U = -0.3244) compared to recommended action; higher operational/thermal cost.",
+      "utility_score": -0.15850429933675259,
+      "peak_t_core": 88.56104278564453
+    },
+    {
+      "candidate_id": "cand_throttle_20",
+      "reason_code": "LATENT_NOVELTY",
+      "reason_explanation": "Rejected because the predicted trajectory entered a region outside the model's validated latent support (D_M = 15.03 > 15.00).",
+      "utility_score": -1000.1260711268932,
+      "peak_t_core": 81.73029327392578
+    },
+    {
+      "candidate_id": "cand_valve_100",
+      "reason_code": "LATENT_NOVELTY",
+      "reason_explanation": "Rejected because the predicted trajectory entered a region outside the model's validated latent support (D_M = 16.03 > 15.00).",
+      "utility_score": -1000.2150973692387,
+      "peak_t_core": 91.55564880371094
+    },
+    {
+      "candidate_id": "cand_pump_4",
+      "reason_code": "LATENT_NOVELTY",
+      "reason_explanation": "Rejected because the predicted trajectory entered a region outside the model's validated latent support (D_M = 15.47 > 15.00).",
+      "utility_score": -1000.0689119648401,
+      "peak_t_core": 85.77357482910156
+    }
+  ],
+  "decision_margin": {
+    "best_candidate": "cand_throttle_50",
+    "second_best_candidate": "cand_do_nothing",
+    "decision_strength": "POSITIVE_MARGIN",
+    "decision_margin": 0.32439704861809654,
+    "best_utility": 0.16589274928134395,
+    "second_best_utility": -0.15850429933675259
+  },
+  "abstention_details": null,
+  "trust_qualification": "MODEL_TRUSTED (Validated: Operating within calibrated in-distribution latent support)",
+  "provenance": {
+    "source_evidence_hash": "ce10b604f2a6befcff31c3458c434e3c12e7b10d6605842c75138c42de9dde82",
+    "model_version": "baseline_005",
+    "dataset_version": "unified_v1_40_40_20",
+    "planner_version": "v1.2_trust_gated",
+    "benchmark_version": "v1.0",
+    "scenario_id": "scenario_03_throttle",
+    "timestamp_utc": "2026-09-11T12:00:00Z"
+  }
+}

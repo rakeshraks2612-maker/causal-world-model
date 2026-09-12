@@ -1,0 +1,321 @@
+{
+  "decision": {
+    "recommendation": "cand_throttle_50",
+    "decision_status": "RECOMMENDED",
+    "abstention_reason": null
+  },
+  "trust": {
+    "trust_state": "MODEL_TRUSTED",
+    "reconstruction_residual_t_core": 1.5376407205315559,
+    "reconstruction_residual_8d": 0.524518609046936,
+    "latent_novelty_d": 6.501998007411176,
+    "epistemic_uncertainty_sigma": 1.657236099243164,
+    "tau_residual_t": 6.08,
+    "tau_novelty": 15.0,
+    "trust_reason": "Nominal in-distribution telemetry. Model predictions validated for planning."
+  },
+  "causal_reasoning": {
+    "summary": {
+      "headline": "Throttle CPU workload to 50.0%",
+      "mechanism": "Throttling CPU compute workload directly lowers electrical power consumption, diminishing internal Joule heating generation and stabilizing core temperature.",
+      "effect_direction": "REDUCE_CORE_TEMPERATURE"
+    },
+    "intervention": {
+      "target": "L_cpu",
+      "value": 50.0,
+      "intervention_type": "STATE",
+      "baseline_value": null
+    },
+    "causal_chain": {
+      "root_actuator": "L_cpu",
+      "target_outcome": "T_core",
+      "nodes": [
+        {
+          "variable": "A_throttle",
+          "relationship": "ACTUATOR_INPUT",
+          "predicted_direction": "DECREASE",
+          "predicted_delta": null,
+          "evidence_available": true
+        },
+        {
+          "variable": "L_cpu",
+          "relationship": "DIRECT_DESCENDANT",
+          "predicted_direction": "DECREASE",
+          "predicted_delta": null,
+          "evidence_available": false
+        },
+        {
+          "variable": "P_elec",
+          "relationship": "MEDIATED_DESCENDANT",
+          "predicted_direction": "DECREASE",
+          "predicted_delta": null,
+          "evidence_available": false
+        },
+        {
+          "variable": "T_core",
+          "relationship": "FINAL_OUTCOME",
+          "predicted_direction": "DECREASE",
+          "predicted_delta": -6.700767517089844,
+          "evidence_available": true
+        }
+      ],
+      "all_affected_descendants": [
+        "L_cpu",
+        "P_elec",
+        "T_core"
+      ]
+    },
+    "predicted_effects": {
+      "baseline_peak_t_core": 88.56104278564453,
+      "intervened_peak_t_core": 81.86027526855469,
+      "delta_t_core": -6.700767517089844,
+      "baseline_min_flow": 39.065589904785156,
+      "intervened_min_flow": 45.36468505859375,
+      "delta_flow": 5.667320251464844,
+      "counterfactual_statement": "Under the modeled intervention, `cand_throttle_50` is predicted to increase coolant flow by +5.67 L/min and reduce peak core temperature by 6.70\u00b0C relative to the factual baseline trajectory."
+    },
+    "rejected_alternatives": [
+      {
+        "candidate_id": "cand_do_nothing",
+        "reason_code": "LOWER_UTILITY",
+        "reason_explanation": "Sub-optimal utility (\u0394U = -0.3244) compared to recommended action; higher operational/thermal cost.",
+        "utility_score": -0.15850429933675259,
+        "peak_t_core": 88.56104278564453
+      },
+      {
+        "candidate_id": "cand_throttle_20",
+        "reason_code": "LATENT_NOVELTY",
+        "reason_explanation": "Rejected because the predicted trajectory entered a region outside the model's validated latent support (D_M = 15.03 > 15.00).",
+        "utility_score": -1000.1260711268932,
+        "peak_t_core": 81.73029327392578
+      },
+      {
+        "candidate_id": "cand_valve_100",
+        "reason_code": "LATENT_NOVELTY",
+        "reason_explanation": "Rejected because the predicted trajectory entered a region outside the model's validated latent support (D_M = 16.03 > 15.00).",
+        "utility_score": -1000.2150973692387,
+        "peak_t_core": 91.55564880371094
+      },
+      {
+        "candidate_id": "cand_pump_4",
+        "reason_code": "LATENT_NOVELTY",
+        "reason_explanation": "Rejected because the predicted trajectory entered a region outside the model's validated latent support (D_M = 15.47 > 15.00).",
+        "utility_score": -1000.0689119648401,
+        "peak_t_core": 85.77357482910156
+      }
+    ],
+    "decision_margin": {
+      "best_candidate": "cand_throttle_50",
+      "second_best_candidate": "cand_do_nothing",
+      "decision_strength": "POSITIVE_MARGIN",
+      "decision_margin": 0.32439704861809654,
+      "best_utility": 0.16589274928134395,
+      "second_best_utility": -0.15850429933675259
+    },
+    "abstention_details": null,
+    "trust_qualification": "MODEL_TRUSTED (Validated: Operating within calibrated in-distribution latent support)",
+    "provenance": {
+      "source_evidence_hash": "79fc521c8ab55c417959b84c3fd5a698abdc3056d775aabfa60e7002378d22d1",
+      "model_version": "baseline_005",
+      "dataset_version": "unified_v1_40_40_20",
+      "planner_version": "v1.2_trust_gated",
+      "benchmark_version": "v1.0",
+      "scenario_id": "scenario_03_throttle",
+      "timestamp_utc": "2026-09-11T18:26:09.750741+00:00"
+    }
+  },
+  "counterfactual": null,
+  "safety": {
+    "overall_state": "MARGINAL",
+    "is_safe": true,
+    "constraints": {
+      "thermal": {
+        "name": "thermal",
+        "variable_symbol": "T_core",
+        "unit": "\u00b0C",
+        "raw_prediction": 81.86027526855469,
+        "uncertainty_sigma": 1.657236099243164,
+        "k_multiplier": 2.0,
+        "effective_value": 85.17474746704102,
+        "threshold": 95.0,
+        "comparison_operator": "<",
+        "margin": 9.825252532958984,
+        "normalized_headroom_pct": 13.100336710611979,
+        "is_passed": true,
+        "is_marginal": true,
+        "violation_message": null
+      },
+      "pressure": {
+        "name": "pressure",
+        "variable_symbol": "P_sys",
+        "unit": "bar",
+        "raw_prediction": 3.750551223754883,
+        "uncertainty_sigma": null,
+        "k_multiplier": 2.0,
+        "effective_value": 3.750551223754883,
+        "threshold": 5.5,
+        "comparison_operator": "<",
+        "margin": 1.7494487762451172,
+        "normalized_headroom_pct": 34.988975524902344,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      },
+      "flow": {
+        "name": "flow",
+        "variable_symbol": "F_cool",
+        "unit": "L/min",
+        "raw_prediction": 45.36468505859375,
+        "uncertainty_sigma": null,
+        "k_multiplier": 2.0,
+        "effective_value": 45.36468505859375,
+        "threshold": 8.0,
+        "comparison_operator": ">",
+        "margin": 37.36468505859375,
+        "normalized_headroom_pct": 71.85516357421875,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      },
+      "latent_support": {
+        "name": "latent_support",
+        "variable_symbol": "D_latent",
+        "unit": "d_M",
+        "raw_prediction": 6.501998007411176,
+        "uncertainty_sigma": null,
+        "k_multiplier": 0.0,
+        "effective_value": 6.501998007411176,
+        "threshold": 15.0,
+        "comparison_operator": "<=",
+        "margin": 8.498001992588824,
+        "normalized_headroom_pct": 56.653346617258826,
+        "is_passed": true,
+        "is_marginal": false,
+        "violation_message": null
+      }
+    },
+    "limiting_constraint": {
+      "constraint_name": "thermal",
+      "variable_symbol": "T_core",
+      "raw_margin": 9.825252532958984,
+      "unit": "\u00b0C",
+      "normalized_headroom_pct": 13.100336710611979,
+      "rationale": "Thermal has the tightest operating buffer (+9.83 \u00b0C, 13.1% headroom).",
+      "normalized_violation_score": 0.0
+    },
+    "violations": [],
+    "uncertainty_adjusted": true,
+    "provenance": {
+      "source_evidence_hash": "79fc521c8ab55c417959b84c3fd5a698abdc3056d775aabfa60e7002378d22d1",
+      "safety_engine_version": "v1.2_authoritative_gate",
+      "model_version": "baseline_005",
+      "scenario_id": "scenario_03_throttle",
+      "candidate_id": "cand_throttle_50",
+      "timestamp_utc": "2026-09-11T18:26:09.750741+00:00",
+      "safety_hash": "9c1850fd50a640b77365cf6e9e563a8ca687ae3e731a75e4abf0171b3e658ae7"
+    }
+  },
+  "abstention": {
+    "abstained": false,
+    "abstention_type": "NONE",
+    "headline": "System Fully Operational: Recommendation Emitted",
+    "primary_reason": "All telemetry matches representation space and candidate simulations passed trust bounds.",
+    "evidence": [
+      {
+        "metric_name": "Thermal Reconstruction Residual (R_T)",
+        "observed_value": 1.5376407205315559,
+        "threshold": 6.08,
+        "excess": -4.542359279468444,
+        "direction": "WITHIN_LIMITS",
+        "unit": "\u00b0C",
+        "is_trigger": false
+      },
+      {
+        "metric_name": "Multivariate 8D Reconstruction Residual (R_8D)",
+        "observed_value": 0.524518609046936,
+        "threshold": 1.9,
+        "excess": -1.3754813909530639,
+        "direction": "WITHIN_LIMITS",
+        "unit": "z-norm",
+        "is_trigger": false
+      },
+      {
+        "metric_name": "Latent Manifold Novelty Distance (D_latent)",
+        "observed_value": 6.501998007411176,
+        "threshold": 15.0,
+        "excess": -8.498001992588824,
+        "direction": "WITHIN_LIMITS",
+        "unit": "d_M",
+        "is_trigger": false
+      }
+    ],
+    "affected_decision": "NO_ABSTENTION",
+    "blocked_actions": [],
+    "safety_implication": "Predictive simulations are considered decision-grade.",
+    "recommended_next_step": "Proceed with recommended autonomous intervention plan.",
+    "provenance": {
+      "source_evidence_hash": "79fc521c8ab55c417959b84c3fd5a698abdc3056d775aabfa60e7002378d22d1",
+      "engine_version": "v1.0_authoritative_abstention",
+      "model_version": "baseline_005",
+      "scenario_id": "scenario_03_throttle",
+      "timestamp_utc": "2026-09-11T18:26:09.750741+00:00",
+      "abstention_hash": "59d5e42d1784f5c734553c3e41595ba0d37022064a1a3e1aaf3b4464f67bdfad"
+    }
+  },
+  "decision_quality": {
+    "utility_score": 0.16589274928134395,
+    "second_best_candidate": "cand_do_nothing",
+    "second_best_utility": -0.15850429933675259,
+    "decision_margin": 0.32439704861809654,
+    "alternatives_rejected": [
+      {
+        "candidate_id": "cand_do_nothing",
+        "is_safe": true,
+        "utility_score": -0.15850429933675259,
+        "peak_t_core": 88.56104278564453,
+        "safety_violations": []
+      },
+      {
+        "candidate_id": "cand_throttle_20",
+        "is_safe": false,
+        "utility_score": -1000.1260711268932,
+        "peak_t_core": 81.73029327392578,
+        "safety_violations": [
+          "Latent manifold novelty (15.03) exceeds epistemic support limit (15.00)."
+        ]
+      },
+      {
+        "candidate_id": "cand_valve_100",
+        "is_safe": false,
+        "utility_score": -1000.2150973692387,
+        "peak_t_core": 91.55564880371094,
+        "safety_violations": [
+          "Latent manifold novelty (16.03) exceeds epistemic support limit (15.00)."
+        ]
+      },
+      {
+        "candidate_id": "cand_pump_4",
+        "is_safe": false,
+        "utility_score": -1000.0689119648401,
+        "peak_t_core": 85.77357482910156,
+        "safety_violations": [
+          "Latent manifold novelty (15.47) exceeds epistemic support limit (15.00)."
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "model_version": "baseline_005",
+    "dataset_version": "v2.1",
+    "planner_version": "v1.2",
+    "benchmark_version": "v1.0",
+    "unified_engine_version": "v1.0_unified_assembly",
+    "scenario_id": "scenario_03_throttle",
+    "timestamp_utc": "2026-09-11T18:26:09.750741+00:00",
+    "decision_evidence_hash": "79fc521c8ab55c417959b84c3fd5a698abdc3056d775aabfa60e7002378d22d1",
+    "safety_hash": "9c1850fd50a640b77365cf6e9e563a8ca687ae3e731a75e4abf0171b3e658ae7",
+    "abstention_hash": "59d5e42d1784f5c734553c3e41595ba0d37022064a1a3e1aaf3b4464f67bdfad",
+    "counterfactual_hash": null,
+    "unified_record_hash": "f1044989592c54f0ebf56eaf510b8f424d89fe36fbba3987b2eb631ca47594cf"
+  }
+}

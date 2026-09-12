@@ -2,6 +2,7 @@
 .venv/
 venv/
 ENV/
+env/
 
 # Python bytecode & caches
 __pycache__/
@@ -14,7 +15,14 @@ htmlcov/
 # Operating system files
 .DS_Store
 Thumbs.db
+*.swp
+*.swo
+*~
 
-# Large artifacts & generated data
-artifacts/
-data/
+# IDE & Editor files
+.vscode/
+.idea/
+
+# Large temporary caches (keep canonical artifacts/ and data/ tracked)
+*.log
+*.tmp

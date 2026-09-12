@@ -1,0 +1,50 @@
+{
+  "abstained": true,
+  "abstention_type": "MODEL_ABSTAIN",
+  "headline": "Autonomous Planning Aborted: Model Trust Boundary Exceeded",
+  "primary_reason": "Model Trust Gateway Triggered: Thermal reconstruction residual R_T = 33.88\u00b0C exceeds trust threshold 6.00\u00b0C by 27.88\u00b0C.",
+  "evidence": [
+    {
+      "metric_name": "Thermal Reconstruction Residual (R_T)",
+      "observed_value": 33.88,
+      "threshold": 6.0,
+      "excess": 27.880000000000003,
+      "direction": "GREATER_THAN_THRESHOLD",
+      "unit": "\u00b0C",
+      "is_trigger": true
+    },
+    {
+      "metric_name": "Multivariate 8D Reconstruction Residual (R_8D)",
+      "observed_value": 1.82,
+      "threshold": 1.9,
+      "excess": -0.07999999999999985,
+      "direction": "WITHIN_LIMITS",
+      "unit": "z-norm",
+      "is_trigger": false
+    },
+    {
+      "metric_name": "Latent Manifold Novelty Distance (D_latent)",
+      "observed_value": 2.45,
+      "threshold": 15.0,
+      "excess": -12.55,
+      "direction": "WITHIN_LIMITS",
+      "unit": "d_M",
+      "is_trigger": false
+    }
+  ],
+  "affected_decision": "RECOMMENDATION_BLOCKED",
+  "blocked_actions": [
+    "candidate_intervention_selection",
+    "counterfactual_recommendation_emission"
+  ],
+  "safety_implication": "World model forecasts are untrusted due to high reconstruction residual. Autonomous control is withheld to prevent ungrounded actuation.",
+  "recommended_next_step": "Hold current actuator states, flag telemetry anomaly to operator, and perform human-in-the-loop diagnostic.",
+  "provenance": {
+    "source_evidence_hash": "parent_decision_hash_s6",
+    "engine_version": "v1.0_authoritative_abstention",
+    "model_version": "baseline_005",
+    "scenario_id": "scenario_06",
+    "timestamp_utc": "2026-09-11T12:00:00Z",
+    "abstention_hash": "7350de4703601b00588b3494fab99970f08a4487366b0ef493b53706dbf17b5a"
+  }
+}

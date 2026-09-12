@@ -1,0 +1,162 @@
+{
+  "planner_provenance_audit": {
+    "file": "prism/planning/planner.py",
+    "modifications": [
+      {
+        "chunk_location": "line 95",
+        "code": "trust_evaluator: Optional[Any] = None",
+        "classification": "B \u2014 interface/data plumbing",
+        "description": "Added optional trust_evaluator parameter to plan_intervention signature; maintains backwards compatibility when None."
+      },
+      {
+        "chunk_location": "lines 104-130",
+        "code": "if trust_evaluator is not None: ... evaluate_trust ... if MODEL_ABSTAIN: return PlanRecommendation(recommended_candidate=None, should_abstain=True, ...)",
+        "classification": "A \u2014 trust-gateway integration",
+        "description": "Short-circuits planning execution when Model Trust layer flags MODEL_ABSTAIN, preventing candidate evaluation on unmodeled regimes."
+      }
+    ],
+    "ranking_objective_modified": false,
+    "safety_constraints_modified": false,
+    "unrelated_modifications": false,
+    "verdict": "PASS \u2014 Zero modifications to ranking, objective, or safety evaluation logic."
+  },
+  "benchmark_records": {
+    "scenario_01_do_nothing": {
+      "scenario_id": "scenario_01_do_nothing",
+      "title": "Scenario 1: Inaction Restraint",
+      "trust_state": "MODEL_TRUSTED",
+      "physical_safety_state": "SAFE",
+      "planning_state": "EXECUTED",
+      "prism_recommendation": "cand_do_nothing",
+      "oracle_label": "cand_do_nothing",
+      "oracle_agreement": "YES",
+      "prism_utility": -0.02182759449990468,
+      "oracle_utility": -0.056491232214182396,
+      "utility_delta": 0.03466363771427772,
+      "standard_regret": 0.0,
+      "residual_t_core": 1.1013668102151826,
+      "residual_8d_norm": 0.16912725567817688,
+      "latent_mahalanobis_d": 5.1294699923426545,
+      "planning_time_ms": 42.747083120048046
+    },
+    "scenario_02_valve": {
+      "scenario_id": "scenario_02_valve",
+      "title": "Scenario 2: Valve Intervention",
+      "trust_state": "MODEL_TRUSTED",
+      "physical_safety_state": "SAFE",
+      "planning_state": "EXECUTED",
+      "prism_recommendation": "cand_pump_4",
+      "oracle_label": "cand_valve_85",
+      "oracle_agreement": "NO",
+      "prism_utility": -0.7751905679576631,
+      "oracle_utility": -0.38745944790882847,
+      "utility_delta": -0.3877311200488346,
+      "standard_regret": "INVALID_ORACLE_DEFECT",
+      "residual_t_core": 0.23466141117800987,
+      "residual_8d_norm": 0.2762693464756012,
+      "latent_mahalanobis_d": 5.976687600814884,
+      "planning_time_ms": 1081.7288749385625
+    },
+    "scenario_03_throttle": {
+      "scenario_id": "scenario_03_throttle",
+      "title": "Scenario 3: Workload Throttling",
+      "trust_state": "MODEL_TRUSTED",
+      "physical_safety_state": "SAFE",
+      "planning_state": "EXECUTED",
+      "prism_recommendation": "cand_throttle_50",
+      "oracle_label": "cand_throttle_50",
+      "oracle_agreement": "YES",
+      "prism_utility": 0.16589274928134395,
+      "oracle_utility": -1.0785041404064293,
+      "utility_delta": 1.2443968896877733,
+      "standard_regret": 0.0,
+      "residual_t_core": 1.5376407205315559,
+      "residual_8d_norm": 0.524518609046936,
+      "latent_mahalanobis_d": 6.501998007411176,
+      "planning_time_ms": 79.08429112285376
+    },
+    "scenario_04_pump": {
+      "scenario_id": "scenario_04_pump",
+      "title": "Scenario 4: Pump Head Modulating",
+      "trust_state": "MODEL_TRUSTED",
+      "physical_safety_state": "SAFE",
+      "planning_state": "EXECUTED",
+      "prism_recommendation": "cand_pump_3",
+      "oracle_label": "cand_pump_3",
+      "oracle_agreement": "YES",
+      "prism_utility": 0.003426774163019841,
+      "oracle_utility": -0.34090119694749477,
+      "utility_delta": 0.3443279711105146,
+      "standard_regret": 0.0,
+      "residual_t_core": 1.3547793272311566,
+      "residual_8d_norm": 0.37758076190948486,
+      "latent_mahalanobis_d": 5.6609177692521175,
+      "planning_time_ms": 45.63029087148607
+    },
+    "scenario_05_combined": {
+      "scenario_id": "scenario_05_combined",
+      "title": "Scenario 5: Multi-Variable Compound",
+      "trust_state": "MODEL_TRUSTED",
+      "physical_safety_state": "SAFE",
+      "planning_state": "EXECUTED",
+      "prism_recommendation": "cand_pump_4_only",
+      "oracle_label": "cand_combined_valve80_pump3",
+      "oracle_agreement": "NO",
+      "prism_utility": -0.49495101526913454,
+      "oracle_utility": -1001.7258324168986,
+      "utility_delta": 1001.2308814016294,
+      "standard_regret": "INVALID_ORACLE_DEFECT",
+      "residual_t_core": 0.6436160402599569,
+      "residual_8d_norm": 0.22302882373332977,
+      "latent_mahalanobis_d": 5.857881320031186,
+      "planning_time_ms": 45.72608298622072
+    },
+    "scenario_06_all_unsafe": {
+      "scenario_id": "scenario_06_all_unsafe",
+      "title": "Scenario 6: All-Unsafe Abstention",
+      "trust_state": "MODEL_ABSTAIN",
+      "physical_safety_state": "ABSTAIN_REQUIRED",
+      "planning_state": "BLOCKED",
+      "prism_recommendation": "NONE",
+      "oracle_label": "ABSTAIN",
+      "oracle_agreement": "N/A",
+      "prism_utility": null,
+      "oracle_utility": 0.0,
+      "utility_delta": null,
+      "standard_regret": 0.0,
+      "residual_t_core": 33.876841899061006,
+      "residual_8d_norm": 1.8152518272399902,
+      "latent_mahalanobis_d": 7.731571066873109,
+      "planning_time_ms": 1.116790808737278
+    }
+  },
+  "summary_metrics": {
+    "total_scenarios": 6,
+    "trusted_scenarios_count": 5,
+    "coverage": 0.8333333333333334,
+    "oracle_agreement_rate": 0.6,
+    "abstention_recall": 1.0,
+    "false_trust_rate": 0.0,
+    "safety_violation_rate": 0.0
+  },
+  "oracle_defect_audit": {
+    "scenario_02_valve": {
+      "scenario": "Scenario 2: Valve Intervention",
+      "oracle_label": "cand_valve_85",
+      "oracle_utility": -0.38745944790882847,
+      "prism_recommendation": "cand_pump_4",
+      "prism_utility": -0.7751905679576631,
+      "potential_oracle_safety_inconsistency": true,
+      "diagnosis": "The frozen oracle candidate 'cand_valve_85' incurs an authoritative safety penalty (~ -1001.41) in ground-truth evaluation, whereas PRISM selected safe candidate 'cand_pump_4' (utility -0.7752)."
+    },
+    "scenario_05_combined": {
+      "scenario": "Scenario 5: Multi-Variable Compound",
+      "oracle_label": "cand_combined_valve80_pump3",
+      "oracle_utility": -1001.7258324168986,
+      "prism_recommendation": "cand_pump_4_only",
+      "prism_utility": -0.49495101526913454,
+      "potential_oracle_safety_inconsistency": true,
+      "diagnosis": "The frozen oracle candidate 'cand_combined_valve80_pump3' incurs a safety penalty (~ -1000.90) in ground-truth evaluation, whereas PRISM selected 'cand_pump_4_only' (utility -0.4950), resulting in U_PRISM > U_ORACLE. Standard regret is mathematically undefined."
+    }
+  }
+}

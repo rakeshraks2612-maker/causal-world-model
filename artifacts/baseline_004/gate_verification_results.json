@@ -1,0 +1,452 @@
+{
+  "gate_sensitivity": {
+    "trajectory_divergence_1_3": 25.459308624267578,
+    "sensitivity_table": [
+      {
+        "horizon": 1,
+        "P1_Flow": 41.84477233886719,
+        "P3_Flow": 47.775577545166016,
+        "delta_Flow": 5.930805206298828,
+        "P1_Press": 3.042797088623047,
+        "P3_Press": 3.912627935409546,
+        "delta_Press": 0.869830846786499,
+        "P1_Tcore": 85.06494140625,
+        "P3_Tcore": 84.79100799560547,
+        "delta_Tcore": -0.27393341064453125,
+        "delta_Tcool": -0.038417816162109375,
+        "delta_Vib": 4.182451248168945
+      },
+      {
+        "horizon": 5,
+        "P1_Flow": 25.467693328857422,
+        "P3_Flow": 43.55088806152344,
+        "delta_Flow": 18.083194732666016,
+        "P1_Press": 2.3528122901916504,
+        "P3_Press": 4.252927303314209,
+        "delta_Press": 1.9001150131225586,
+        "P1_Tcore": 102.2869644165039,
+        "P3_Tcore": 86.08599090576172,
+        "delta_Tcore": -16.200973510742188,
+        "delta_Tcool": 6.479068756103516,
+        "delta_Vib": 8.604418754577637
+      },
+      {
+        "horizon": 10,
+        "P1_Flow": 23.662961959838867,
+        "P3_Flow": 42.835636138916016,
+        "delta_Flow": 19.17267417907715,
+        "P1_Press": 2.3116374015808105,
+        "P3_Press": 4.242255687713623,
+        "delta_Press": 1.9306182861328125,
+        "P1_Tcore": 106.09068298339844,
+        "P3_Tcore": 86.56636047363281,
+        "delta_Tcore": -19.524322509765625,
+        "delta_Tcool": 7.572471618652344,
+        "delta_Vib": 8.666373252868652
+      },
+      {
+        "horizon": 20,
+        "P1_Flow": 22.61943244934082,
+        "P3_Flow": 43.7831916809082,
+        "delta_Flow": 21.163759231567383,
+        "P1_Press": 2.303621768951416,
+        "P3_Press": 4.313778400421143,
+        "delta_Press": 2.0101566314697266,
+        "P1_Tcore": 108.96186065673828,
+        "P3_Tcore": 86.958740234375,
+        "delta_Tcore": -22.00312042236328,
+        "delta_Tcool": 8.596977233886719,
+        "delta_Vib": 8.944714546203613
+      },
+      {
+        "horizon": 40,
+        "P1_Flow": 20.99198341369629,
+        "P3_Flow": 44.67170715332031,
+        "delta_Flow": 23.679723739624023,
+        "P1_Press": 2.286813735961914,
+        "P3_Press": 4.356949806213379,
+        "delta_Press": 2.070136070251465,
+        "P1_Tcore": 112.3118667602539,
+        "P3_Tcore": 87.70134735107422,
+        "delta_Tcore": -24.610519409179688,
+        "delta_Tcool": 9.990924835205078,
+        "delta_Vib": 9.04843521118164
+      }
+    ],
+    "mean_delta_F": 20.430269241333008,
+    "mean_delta_P": 1.9528541564941406,
+    "mean_delta_Tcore": -20.481098175048828
+  },
+  "gate_causal_direction": {
+    "pass": true,
+    "flow_increasing": true,
+    "pressure_increasing": true,
+    "core_temp_decreasing": true
+  },
+  "gate_action_discrimination": {
+    "pass": true,
+    "h40_flows_p1_p4": [
+      20.99198341369629,
+      33.51686477661133,
+      44.67170715332031,
+      47.32440948486328
+    ],
+    "h40_pressures_p1_p4": [
+      2.286813735961914,
+      2.9820542335510254,
+      4.356949806213379,
+      4.926220893859863
+    ],
+    "h40_tcores_p1_p4": [
+      112.3118667602539,
+      99.38444519042969,
+      87.70134735107422,
+      86.25657653808594
+    ]
+  },
+  "scenario_04_results": {
+    "prism_selected": "cand_pump_3",
+    "oracle_optimal": "cand_pump_3",
+    "agreement_pass": true,
+    "decision_class": "RECOMMEND",
+    "utility_regret": 0.0,
+    "candidates": [
+      {
+        "candidate_id": "cand_do_nothing",
+        "target": "A_pump",
+        "value": 1.0,
+        "is_safe": false,
+        "safety_violations": [
+          "Peak core temperature (95.20\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+        ],
+        "safety_result": {
+          "is_safe": false,
+          "severity": "UNSAFE",
+          "thermal_safe": false,
+          "pressure_safe": true,
+          "flow_safe": true,
+          "support_safe": true,
+          "violations": [
+            "Peak core temperature (95.20\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ],
+          "violation_reasons": [
+            "THERMAL_LIMIT_EXCEEDED"
+          ],
+          "margin_thermal": -0.19620513916015625,
+          "margin_pressure": 2.2482454776763916,
+          "margin_flow": 29.814807891845703,
+          "margin_support": 7.6193671226501465
+        },
+        "utility_score": -1000.773388891387,
+        "peak_t_core": 95.19620513916016,
+        "max_pressure": 3.2517545223236084,
+        "min_flow": 37.8148078918457,
+        "mean_cpu_load": 68.66863250732422,
+        "mean_power": 2.7292239665985107,
+        "failure_probability": 0.0,
+        "latent_novelty": 7.3806328773498535,
+        "causal_delta_t_core": 0.0,
+        "causal_delta_f_cool": 0.0,
+        "cost_breakdown": {
+          "performance_benefit": 0.6866863250732422,
+          "thermal_penalty": 1.435075216460168,
+          "pressure_penalty": 0.0,
+          "pump_cost": 0.025,
+          "actuation_cost": 0.0,
+          "throttle_cost": 0.0,
+          "flush_cost": 0.0,
+          "complexity_penalty": 0.0,
+          "total_cost": 1.4600752164601678,
+          "net_utility": -1000.773388891387,
+          "is_safe": false,
+          "safety_violations": [
+            "Peak core temperature (95.20\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ],
+          "safety_result": {
+            "is_safe": false,
+            "severity": "UNSAFE",
+            "thermal_safe": false,
+            "pressure_safe": true,
+            "flow_safe": true,
+            "support_safe": true,
+            "violations": [
+              "Peak core temperature (95.20\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+            ],
+            "violation_reasons": [
+              "THERMAL_LIMIT_EXCEEDED"
+            ],
+            "margin_thermal": -0.19620513916015625,
+            "margin_pressure": 2.2482454776763916,
+            "margin_flow": 29.814807891845703,
+            "margin_support": 7.6193671226501465
+          }
+        }
+      },
+      {
+        "candidate_id": "cand_pump_3",
+        "target": "A_pump",
+        "value": 3.0,
+        "is_safe": true,
+        "safety_violations": [],
+        "safety_result": {
+          "is_safe": true,
+          "severity": "MARGINAL",
+          "thermal_safe": true,
+          "pressure_safe": true,
+          "flow_safe": true,
+          "support_safe": true,
+          "violations": [],
+          "violation_reasons": [],
+          "margin_thermal": 9.694602966308594,
+          "margin_pressure": 1.0974788665771484,
+          "margin_flow": 42.54077911376953,
+          "margin_support": 7.78915548324585
+        },
+        "utility_score": 0.07406699347785117,
+        "peak_t_core": 85.3053970336914,
+        "max_pressure": 4.402521133422852,
+        "min_flow": 50.54077911376953,
+        "mean_cpu_load": 67.2145767211914,
+        "mean_power": 2.67033314704895,
+        "failure_probability": 0.0,
+        "latent_novelty": 7.21084451675415,
+        "causal_delta_t_core": -2.8966751098632812,
+        "causal_delta_f_cool": 10.192428588867188,
+        "cost_breakdown": {
+          "performance_benefit": 0.6721457672119141,
+          "thermal_penalty": 0.5230787737340629,
+          "pressure_penalty": 0.0,
+          "pump_cost": 0.07500000000000001,
+          "actuation_cost": 0.0,
+          "throttle_cost": 0.0,
+          "flush_cost": 0.0,
+          "complexity_penalty": 0.0,
+          "total_cost": 0.5980787737340629,
+          "net_utility": 0.07406699347785117,
+          "is_safe": true,
+          "safety_violations": [],
+          "safety_result": {
+            "is_safe": true,
+            "severity": "MARGINAL",
+            "thermal_safe": true,
+            "pressure_safe": true,
+            "flow_safe": true,
+            "support_safe": true,
+            "violations": [],
+            "violation_reasons": [],
+            "margin_thermal": 9.694602966308594,
+            "margin_pressure": 1.0974788665771484,
+            "margin_flow": 42.54077911376953,
+            "margin_support": 7.78915548324585
+          }
+        }
+      },
+      {
+        "candidate_id": "cand_pump_4",
+        "target": "A_pump",
+        "value": 4.0,
+        "is_safe": true,
+        "safety_violations": [],
+        "safety_result": {
+          "is_safe": true,
+          "severity": "MARGINAL",
+          "thermal_safe": true,
+          "pressure_safe": true,
+          "flow_safe": true,
+          "support_safe": true,
+          "violations": [],
+          "violation_reasons": [],
+          "margin_thermal": 10.327217102050781,
+          "margin_pressure": 0.2705392837524414,
+          "margin_flow": 47.242156982421875,
+          "margin_support": 5.687623977661133
+        },
+        "utility_score": -0.12226964242831073,
+        "peak_t_core": 84.67278289794922,
+        "max_pressure": 5.229460716247559,
+        "min_flow": 55.242156982421875,
+        "mean_cpu_load": 67.22291564941406,
+        "mean_power": 2.6697704792022705,
+        "failure_probability": 0.0,
+        "latent_novelty": 9.312376022338867,
+        "causal_delta_t_core": -3.2689437866210938,
+        "causal_delta_f_cool": 14.84542465209961,
+        "cost_breakdown": {
+          "performance_benefit": 0.6722291564941406,
+          "thermal_penalty": 0.47566058404818384,
+          "pressure_penalty": 0.21883821487426758,
+          "pump_cost": 0.1,
+          "actuation_cost": 0.0,
+          "throttle_cost": 0.0,
+          "flush_cost": 0.0,
+          "complexity_penalty": 0.0,
+          "total_cost": 0.7944987989224513,
+          "net_utility": -0.12226964242831073,
+          "is_safe": true,
+          "safety_violations": [],
+          "safety_result": {
+            "is_safe": true,
+            "severity": "MARGINAL",
+            "thermal_safe": true,
+            "pressure_safe": true,
+            "flow_safe": true,
+            "support_safe": true,
+            "violations": [],
+            "violation_reasons": [],
+            "margin_thermal": 10.327217102050781,
+            "margin_pressure": 0.2705392837524414,
+            "margin_flow": 47.242156982421875,
+            "margin_support": 5.687623977661133
+          }
+        }
+      },
+      {
+        "candidate_id": "cand_valve_85",
+        "target": "A_valve",
+        "value": 85.0,
+        "is_safe": false,
+        "safety_violations": [
+          "Peak core temperature (96.67\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+        ],
+        "safety_result": {
+          "is_safe": false,
+          "severity": "UNSAFE",
+          "thermal_safe": false,
+          "pressure_safe": true,
+          "flow_safe": true,
+          "support_safe": true,
+          "violations": [
+            "Peak core temperature (96.67\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ],
+          "violation_reasons": [
+            "THERMAL_LIMIT_EXCEEDED"
+          ],
+          "margin_thermal": -1.6678695678710938,
+          "margin_pressure": 2.2895054817199707,
+          "margin_flow": 28.168441772460938,
+          "margin_support": 7.953073501586914
+        },
+        "utility_score": -1000.9315576646369,
+        "peak_t_core": 96.6678695678711,
+        "max_pressure": 3.2104945182800293,
+        "min_flow": 36.16844177246094,
+        "mean_cpu_load": 69.31986236572266,
+        "mean_power": 2.757451057434082,
+        "failure_probability": 0.0,
+        "latent_novelty": 7.046926498413086,
+        "causal_delta_t_core": 1.9404373168945312,
+        "causal_delta_f_cool": -2.0008010864257812,
+        "cost_breakdown": {
+          "performance_benefit": 0.6931986236572265,
+          "thermal_penalty": 1.5947562882940822,
+          "pressure_penalty": 0.0,
+          "pump_cost": 0.025,
+          "actuation_cost": 0.005000000000000001,
+          "throttle_cost": 0.0,
+          "flush_cost": 0.0,
+          "complexity_penalty": 0.0,
+          "total_cost": 1.624756288294082,
+          "net_utility": -1000.9315576646369,
+          "is_safe": false,
+          "safety_violations": [
+            "Peak core temperature (96.67\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+          ],
+          "safety_result": {
+            "is_safe": false,
+            "severity": "UNSAFE",
+            "thermal_safe": false,
+            "pressure_safe": true,
+            "flow_safe": true,
+            "support_safe": true,
+            "violations": [
+              "Peak core temperature (96.67\u00b0C) exceeds hard threshold (95.00\u00b0C)."
+            ],
+            "violation_reasons": [
+              "THERMAL_LIMIT_EXCEEDED"
+            ],
+            "margin_thermal": -1.6678695678710938,
+            "margin_pressure": 2.2895054817199707,
+            "margin_flow": 28.168441772460938,
+            "margin_support": 7.953073501586914
+          }
+        }
+      },
+      {
+        "candidate_id": "cand_throttle_50",
+        "target": "A_throttle",
+        "value": 50.0,
+        "is_safe": true,
+        "safety_violations": [],
+        "safety_result": {
+          "is_safe": true,
+          "severity": "MARGINAL",
+          "thermal_safe": true,
+          "pressure_safe": true,
+          "flow_safe": true,
+          "support_safe": true,
+          "violations": [],
+          "violation_reasons": [],
+          "margin_thermal": 5.299224853515625,
+          "margin_pressure": 2.234232187271118,
+          "margin_flow": 32.73882293701172,
+          "margin_support": 6.856104850769043
+        },
+        "utility_score": -1.1116577362671094,
+        "peak_t_core": 89.70077514648438,
+        "max_pressure": 3.265767812728882,
+        "min_flow": 40.73882293701172,
+        "mean_cpu_load": 67.51034545898438,
+        "mean_power": 2.6778602600097656,
+        "failure_probability": 0.0,
+        "latent_novelty": 8.143895149230957,
+        "causal_delta_t_core": -2.3451919555664062,
+        "causal_delta_f_cool": 2.433544158935547,
+        "cost_breakdown": {
+          "performance_benefit": 0.6751034545898438,
+          "thermal_penalty": 0.8912106275608291,
+          "pressure_penalty": 0.0,
+          "pump_cost": 0.025,
+          "actuation_cost": 0.0,
+          "throttle_cost": 0.8705505632961241,
+          "flush_cost": 0.0,
+          "complexity_penalty": 0.0,
+          "total_cost": 1.7867611908569532,
+          "net_utility": -1.1116577362671094,
+          "is_safe": true,
+          "safety_violations": [],
+          "safety_result": {
+            "is_safe": true,
+            "severity": "MARGINAL",
+            "thermal_safe": true,
+            "pressure_safe": true,
+            "flow_safe": true,
+            "support_safe": true,
+            "violations": [],
+            "violation_reasons": [],
+            "margin_thermal": 5.299224853515625,
+            "margin_pressure": 2.234232187271118,
+            "margin_flow": 32.73882293701172,
+            "margin_support": 6.856104850769043
+          }
+        }
+      }
+    ]
+  },
+  "generalization_regression": {
+    "scenario_01": {
+      "selected": "cand_valve_85",
+      "oracle": "cand_do_nothing",
+      "pass": false
+    },
+    "scenario_02": {
+      "selected": "cand_throttle_30",
+      "oracle": "cand_valve_85",
+      "pass": false
+    },
+    "scenario_03": {
+      "selected": "cand_do_nothing",
+      "oracle": "cand_throttle_50",
+      "pass": false
+    }
+  }
+}
