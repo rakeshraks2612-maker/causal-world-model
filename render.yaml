@@ -26,8 +26,8 @@ services:
     runtime: python
     plan: free
     buildCommand: ./render-build.sh
-    startCommand: streamlit run scripts/run_dashboard.py --server.port $PORT --server.address 0.0.0.0 --server.headless true
-    healthCheckPath: /_stcore/health
+    startCommand: python scripts/run_web.py
+    healthCheckPath: /
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.2
