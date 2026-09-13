@@ -117,13 +117,13 @@
     "abstention_details": null,
     "trust_qualification": "MODEL_TRUSTED (Validated: Operating within calibrated in-distribution latent support)",
     "provenance": {
-      "source_evidence_hash": "e21069e603b604bef4696ba3cc59c2b613a21ae221d329100926b89cac437039",
+      "source_evidence_hash": "dbddfe41e7a9aecb1ea74d0e3a477163444c4eb95d2ab253dd405f970de40cbf",
       "model_version": "baseline_005",
       "dataset_version": "unified_v1_40_40_20",
       "planner_version": "v1.2_trust_gated",
       "benchmark_version": "v1.0",
       "scenario_id": "scenario_02_valve",
-      "timestamp_utc": "2026-09-12T13:42:39.946030+00:00"
+      "timestamp_utc": "2026-09-13T03:07:54.707729+00:00"
     }
   },
   "counterfactual": null,
@@ -218,13 +218,13 @@
     ],
     "uncertainty_adjusted": true,
     "provenance": {
-      "source_evidence_hash": "e21069e603b604bef4696ba3cc59c2b613a21ae221d329100926b89cac437039",
+      "source_evidence_hash": "dbddfe41e7a9aecb1ea74d0e3a477163444c4eb95d2ab253dd405f970de40cbf",
       "safety_engine_version": "v1.2_authoritative_gate",
       "model_version": "baseline_005",
       "scenario_id": "scenario_02_valve",
       "candidate_id": "cand_pump_4",
-      "timestamp_utc": "2026-09-12T13:42:39.946030+00:00",
-      "safety_hash": "ce351f34a351468bde881768507dceb4f3e078b52fb18c2932e5c8daea66670f"
+      "timestamp_utc": "2026-09-13T03:07:54.707729+00:00",
+      "safety_hash": "240d2f64242895a2b48fa9310b9c9d111fda388fe30dfaec71eecbc042789bd1"
     }
   },
   "abstention": {
@@ -266,12 +266,12 @@
     "safety_implication": "Predictive simulations are considered decision-grade.",
     "recommended_next_step": "Proceed with recommended autonomous intervention plan.",
     "provenance": {
-      "source_evidence_hash": "e21069e603b604bef4696ba3cc59c2b613a21ae221d329100926b89cac437039",
+      "source_evidence_hash": "dbddfe41e7a9aecb1ea74d0e3a477163444c4eb95d2ab253dd405f970de40cbf",
       "engine_version": "v1.0_authoritative_abstention",
       "model_version": "baseline_005",
       "scenario_id": "scenario_02_valve",
-      "timestamp_utc": "2026-09-12T13:42:39.946030+00:00",
-      "abstention_hash": "081828327436bfc905b08234a31611cf8b6a969f55916495e47ea0635a6f9a86"
+      "timestamp_utc": "2026-09-13T03:07:54.707729+00:00",
+      "abstention_hash": "d726c10f41a916e05f695b416f501945cb8927f4ca3193ba47cea8baeda0ac55"
     }
   },
   "decision_quality": {
@@ -323,11 +323,11 @@
     "benchmark_version": "v1.0",
     "unified_engine_version": "v1.0_unified_assembly",
     "scenario_id": "scenario_02_valve",
-    "timestamp_utc": "2026-09-12T13:42:39.946030+00:00",
-    "decision_evidence_hash": "e21069e603b604bef4696ba3cc59c2b613a21ae221d329100926b89cac437039",
-    "safety_hash": "ce351f34a351468bde881768507dceb4f3e078b52fb18c2932e5c8daea66670f",
-    "abstention_hash": "081828327436bfc905b08234a31611cf8b6a969f55916495e47ea0635a6f9a86",
+    "timestamp_utc": "2026-09-13T03:07:54.707729+00:00",
+    "decision_evidence_hash": "dbddfe41e7a9aecb1ea74d0e3a477163444c4eb95d2ab253dd405f970de40cbf",
+    "safety_hash": "240d2f64242895a2b48fa9310b9c9d111fda388fe30dfaec71eecbc042789bd1",
+    "abstention_hash": "d726c10f41a916e05f695b416f501945cb8927f4ca3193ba47cea8baeda0ac55",
     "counterfactual_hash": null,
-    "unified_record_hash": "7f54c15e81bc9a829da6c1ea9cf8513d013022cdaf5ec796a2e5fa75e75d5989"
+    "unified_record_hash": "29d819f2eff701a47f552b494133b4fed958cb3cd1300839b26220ba43fd4126"
   }
 }

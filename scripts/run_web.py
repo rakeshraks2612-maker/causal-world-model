@@ -16,6 +16,14 @@ WEB_DIR = REPO_ROOT / "prism" / "dashboard" / "web"
 
 
 class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
+    extensions_map = http.server.SimpleHTTPRequestHandler.extensions_map.copy()
+    extensions_map.update({
+        ".svg": "image/svg+xml",
+        ".ico": "image/x-icon",
+        ".png": "image/png",
+        ".html": "text/html; charset=utf-8",
+    })
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(WEB_DIR), **kwargs)
 
