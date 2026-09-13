@@ -28,7 +28,12 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         super().__init__(*args, directory=str(WEB_DIR), **kwargs)
 
     def end_headers(self):
-        self.send_header("Cache-Control", "public, max-age=3600")
+        if "favicon" in self.path or self.path.endswith(".html") or self.path == "/" or self.path == "":
+            self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+            self.send_header("Pragma", "no-cache")
+            self.send_header("Expires", "0")
+        else:
+            self.send_header("Cache-Control", "public, max-age=3600")
         self.send_header("Access-Control-Allow-Origin", "*")
         super().end_headers()
 
