@@ -31,9 +31,17 @@ from prism.dashboard.spa_renderer import build_dashboard_html
 def configure_page() -> None:
     """Set up Streamlit layout and custom design system."""
     favicon_path = REPO_ROOT / "prism" / "dashboard" / "web" / "favicon.png"
+    icon_obj = "💎"
+    if favicon_path.exists():
+        try:
+            from PIL import Image
+            icon_obj = Image.open(favicon_path)
+        except Exception:
+            icon_obj = str(favicon_path)
+
     st.set_page_config(
         page_title="PRISM · Superintelligence for physical judgment",
-        page_icon=str(favicon_path) if favicon_path.exists() else "💎",
+        page_icon=icon_obj,
         layout="wide",
         initial_sidebar_state="collapsed",
     )

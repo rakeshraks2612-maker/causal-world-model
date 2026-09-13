@@ -15,7 +15,34 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 APP_PATH = REPO_ROOT / "prism" / "dashboard" / "app.py"
 
 
+def patch_streamlit_static():
+    """Overwrite Streamlit's default static favicon and title with official PRISM assets."""
+    try:
+        import streamlit
+        import shutil
+        st_static = Path(streamlit.__file__).parent / "static"
+        src_favicon = REPO_ROOT / "prism" / "dashboard" / "web" / "favicon.png"
+        src_svg = REPO_ROOT / "prism" / "dashboard" / "web" / "favicon.svg"
+        src_ico = REPO_ROOT / "prism" / "dashboard" / "web" / "favicon.ico"
+        if st_static.exists():
+            if src_favicon.exists():
+                shutil.copyfile(src_favicon, st_static / "favicon.png")
+            if src_svg.exists():
+                shutil.copyfile(src_svg, st_static / "favicon.svg")
+            if src_ico.exists():
+                shutil.copyfile(src_ico, st_static / "favicon.ico")
+            index_path = st_static / "index.html"
+            if index_path.exists():
+                html = index_path.read_text(encoding="utf-8")
+                html = html.replace("<title>Streamlit</title>", "<title>PRISM · Superintelligence for physical judgment</title>")
+                html = html.replace('href="./favicon.png"', 'href="./favicon.png?v=prism"')
+                index_path.write_text(html, encoding="utf-8")
+    except Exception as e:
+        print(f"Notice: could not patch streamlit static assets: {e}")
+
+
 def main():
+    patch_streamlit_static()
     port = os.environ.get("PORT", "8501")
     if "--port" in sys.argv:
         idx = sys.argv.index("--port")

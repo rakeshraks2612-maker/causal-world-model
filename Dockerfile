@@ -35,6 +35,13 @@ COPY tests/ tests/
 # Install PRISM in editable mode
 RUN pip install -e .
 
+# Patch Streamlit static assets with official PRISM logo
+RUN python -c "\
+import streamlit, shutil; \
+from pathlib import Path; \
+st_s = Path(streamlit.__file__).parent / 'static'; \
+[shutil.copyfile(f, st_s / f.name) for f in Path('prism/dashboard/web').glob('favicon.*') if st_s.exists()]"
+
 # Expose ports
 EXPOSE 8000 10000
 
