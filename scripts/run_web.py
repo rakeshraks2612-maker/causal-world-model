@@ -27,8 +27,39 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(WEB_DIR), **kwargs)
 
+    def _is_cron_or_health(self) -> bool:
+        clean_path = self.path.split("?")[0].rstrip("/")
+        if clean_path in ("/health", "/ping", "/healthz", "/_health", "/status"):
+            return True
+        user_agent = self.headers.get("User-Agent", "").lower()
+        if any(bot in user_agent for bot in ("cron-job", "uptimerobot", "betteruptime", "pingdom", "freshping", "statuscake")):
+            return True
+        return False
+
+    def do_GET(self):
+        if self._is_cron_or_health():
+            msg = b'{"status":"ok"}'
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(msg)))
+            self.end_headers()
+            self.wfile.write(msg)
+            return
+
+        super().do_GET()
+
+    def do_HEAD(self):
+        if self._is_cron_or_health():
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", "15")
+            self.end_headers()
+            return
+
+        super().do_HEAD()
+
     def end_headers(self):
-        if "favicon" in self.path or self.path.endswith(".html") or self.path == "/" or self.path == "":
+        if "favicon" in self.path or self.path.endswith(".html") or self.path in ("/", "") or self._is_cron_or_health():
             self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
             self.send_header("Pragma", "no-cache")
             self.send_header("Expires", "0")
